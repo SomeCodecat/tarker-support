@@ -1,5 +1,6 @@
 "use client";
 
+import { Info } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Badge, Panel, ScreenHeader, StatTile } from "@/components/ui";
 import { cn } from "@/lib/cn";
@@ -61,7 +62,10 @@ export function MapsScreen() {
               <StatTile label="Players" value={detail.players} />
               <StatTile label="Raid" value={detail.duration} />
               <StatTile label="Quests" value={detail.quests} accent />
-              <StatTile label="Extracts" value={detail.extracts.length} />
+              <StatTile
+                label="Extracts"
+                value={detail.extracts.map(() => "·").join("")}
+              />
             </div>
           </div>
 
@@ -105,6 +109,15 @@ export function MapsScreen() {
                 </div>
                 <p className="text-body text-fg-2">{detail.hot}</p>
               </section>
+            </div>
+
+            <div className="mt-[14px] flex items-center gap-[8px] border border-[#3a3115] bg-[#1a1710] px-[12px] py-[8px] font-mono text-[10px]">
+              <Info className="shrink-0 text-accent" size={14} />
+              <span className="text-[#c9a24b]">
+                GAP FLAG — no Map type in slice1 types.ts. tarkov.dev exposes
+                a maps query (name, players, extracts, bosses, spawns); extract
+                requirements & boss chances shown are mocked to that shape.
+              </span>
             </div>
           </div>
         </Panel>

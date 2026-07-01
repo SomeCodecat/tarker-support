@@ -2,15 +2,22 @@
 
 import { ChevronRight, Warehouse } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Badge, Panel, ScreenHeader, TypeTile } from "@/components/ui";
+import { Panel, ScreenHeader } from "@/components/ui";
 import { hideout } from "@/lib/mock";
-import type { HideoutReqRow } from "@/lib/types";
 
 const defaultOpenId = "generator";
 
+interface HideoutDisplayRequirement {
+  itemId?: string;
+  short?: string;
+  name?: string;
+  count: number;
+  tier?: string;
+}
+
 interface HideoutDisplayLevel {
   level: number;
-  itemRequirements: HideoutReqRow[];
+  itemRequirements: HideoutDisplayRequirement[];
 }
 
 interface HideoutDisplayStation {
@@ -19,7 +26,7 @@ interface HideoutDisplayStation {
   levels: HideoutDisplayLevel[];
 }
 
-const stations = hideout as unknown as HideoutDisplayStation[];
+const stations: HideoutDisplayStation[] = hideout;
 
 export function HideoutScreen() {
   const [hideoutOpenId, setHideoutOpenId] = useState<string | null>(
@@ -95,20 +102,19 @@ function LevelGroup({ level }: { level: HideoutDisplayLevel }) {
   return (
     <div className="border border-border bg-surface-2">
       <div className="flex items-center gap-[8px] border-b border-border-subtle px-[12px] py-[7px]">
-        <span className="bg-accent px-[8px] py-[2px] font-mono text-badge font-bold uppercase text-accent-ink">
-          LEVEL {level.level}
+        <span className="bg-accent px-[8px] py-[2px] font-mono text-[11px] font-bold text-bg">
+          LVL {level.level}
         </span>
-        <span className="font-mono text-meta text-dim">
+        <span className="font-mono text-[10px] text-dim">
           {level.itemRequirements.length} item requirements
         </span>
       </div>
 
       {level.itemRequirements.length > 0 ? (
-        <div className="divide-y divide-border-subtle">
+        <div>
           {level.itemRequirements.map((requirement) => (
             <RequirementRow
               key={`${level.level}-${requirement.short}-${requirement.name}`}
-              level={level.level}
               requirement={requirement}
             />
           ))}
@@ -123,27 +129,31 @@ function LevelGroup({ level }: { level: HideoutDisplayLevel }) {
 }
 
 function RequirementRow({
-  level,
   requirement,
 }: {
-  level: number;
-  requirement: HideoutReqRow;
+  requirement: HideoutDisplayRequirement;
 }) {
+  const itemCode = requirement.short ?? requirement.itemId ?? "";
+  const itemName = requirement.name ?? requirement.itemId ?? "";
+  const tierColor = requirement.tier ?? "#b98a3c";
+
   return (
-    <div className="flex items-center gap-[10px] px-[12px] py-[7px]">
-      <span className="w-[44px] shrink-0 font-mono text-mono font-semibold text-accent">
-        {requirement.count}×
+    <div className="flex items-center gap-[10px] border-b border-[#191e18] px-[12px] py-[6px]">
+      <span
+        className="flex size-[24px] shrink-0 items-center justify-center border border-l-[2px] border-border-strong bg-bg px-[3px] text-center font-mono text-[7px] font-semibold leading-tight"
+        style={{
+          borderLeftColor: tierColor,
+          color: tierColor,
+        }}
+      >
+        {itemCode}
       </span>
-      <TypeTile
-        short={requirement.short}
-        color={requirement.tier}
-        size={32}
-        className="text-[9px]"
-      />
-      <span className="min-w-0 flex-1 truncate font-sans text-name text-fg">
-        {requirement.name}
+      <span className="min-w-0 flex-1 truncate font-sans text-[12px] text-fg">
+        {itemName}
       </span>
-      <Badge variant="level">LVL {level}</Badge>
+      <span className="shrink-0 text-right font-mono text-[12px] font-semibold text-accent">
+        ×{requirement.count}
+      </span>
     </div>
   );
 }

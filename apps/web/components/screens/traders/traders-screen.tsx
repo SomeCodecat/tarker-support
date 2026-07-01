@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Clock3, Star } from "lucide-react";
+import { ArrowRight, Clock3, Info, Star } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Badge, Panel, ScreenHeader } from "@/components/ui";
 import { loyaltyTemplate, traders } from "@/lib/mock";
@@ -182,6 +182,15 @@ function TraderDetail({ trader }: { trader: Trader }) {
             ))}
           </div>
         </section>
+
+        <div className="mt-[14px] flex items-center gap-[8px] border border-[#3a3115] bg-[#1a1710] px-[12px] py-[8px] font-mono text-[10px]">
+          <Info className="shrink-0 text-accent" size={14} />
+          <span className="text-[#c9a24b]">
+            GAP FLAG — no Trader type in types.ts. Only Task.traderName +
+            SellVenue.source exist. Loyalty, rep, resets & barters are mocked;
+            need a new tarkov.dev traders query.
+          </span>
+        </div>
       </div>
     </Panel>
   );
@@ -198,7 +207,11 @@ function Monogram({ trader, active, size }: MonogramProps) {
     <span
       className={[
         "flex shrink-0 items-center justify-center border border-border-strong bg-bg font-display font-bold",
-        active ? "text-accent" : "text-muted",
+        active
+          ? size === "lg"
+            ? "text-accent"
+            : "text-fg"
+          : "text-fg-2",
         size === "lg" ? "size-[52px] text-[22px]" : "size-[32px] text-[13px]",
       ].join(" ")}
     >
