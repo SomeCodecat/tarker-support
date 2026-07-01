@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 import { z } from "zod";
-import type { Item } from "../types.js";
+import type { Item } from "../types";
 
 export const ITEMS_QUERY = gql`
   {

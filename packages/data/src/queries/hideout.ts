@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 import { z } from "zod";
-import type { HideoutStation } from "../types.js";
+import type { HideoutStation } from "../types";
 
 export const HIDEOUT_QUERY = gql`
   {

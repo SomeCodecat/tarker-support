@@ -1,4 +1,4 @@
-import type { Item, Task, HideoutStation, RequirementsIndex, RequirementsEntry } from "./types.js";
+import type { Item, Task, HideoutStation, RequirementsIndex, RequirementsEntry } from "./types";
 
 export function buildRequirementsIndex(items: Item[], tasks: Task[], hideout: HideoutStation[]): RequirementsIndex {
   const index: RequirementsIndex = {};
