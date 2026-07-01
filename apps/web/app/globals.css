@@ -1,26 +1,166 @@
 @import "tailwindcss";
 
+@theme {
+  --color-bg: #0d100e;
+  --color-surface: #12160f;
+  --color-surface-2: #10130f;
+  --color-elevated: #151a13;
+  --color-active: #1e241d;
+  --color-active-2: #20261e;
+  --color-hover: #191e18;
+  --color-good-bg: #131c13;
+  --color-fir-bg: #0f1817;
+  --color-sold-bg: #0f120e;
+
+  --color-border: #262d25;
+  --color-border-strong: #333b31;
+  --color-border-subtle: #1c221b;
+  --color-good-border: #2e4a2b;
+  --color-fir-border: #2f4f4c;
+
+  --color-fg: #e6e4da;
+  --color-fg-2: #b8b6ac;
+  --color-muted: #8b9184;
+  --color-dim: #5f665c;
+  --color-faint: #454c44;
+
+  --color-accent: #e8b923;
+  --color-accent-ink: #0d100e;
+  --color-good: #6ea862;
+  --color-hideout: #7d9b6a;
+  --color-lime: #9ccb4f;
+  --color-fir: #5aa9a0;
+  --color-danger: #c15b4e;
+  --color-info: #7fa8c9;
+  --color-warn: #e0913c;
+  --color-mark: #9a86c4;
+  --color-gold: #c9a24b;
+  --color-gold-2: #c9964b;
+
+  --text-title: 19px;
+  --text-title--line-height: 1.15;
+  --text-heading: 16px;
+  --text-heading--line-height: 1.2;
+  --text-stat: 16px;
+  --text-stat--line-height: 1.2;
+  --text-price: 13px;
+  --text-price--line-height: 1.25;
+  --text-nav: 12.5px;
+  --text-nav--line-height: 1.1;
+  --text-name: 12.5px;
+  --text-name--line-height: 1.2;
+  --text-mono: 12px;
+  --text-mono--line-height: 1.2;
+  --text-body: 11.5px;
+  --text-body--line-height: 1.35;
+  --text-meta: 10px;
+  --text-meta--line-height: 1.25;
+  --text-label: 9.5px;
+  --text-label--line-height: 1.2;
+  --text-tag: 9px;
+  --text-tag--line-height: 1.2;
+  --text-kicker: 8.5px;
+  --text-kicker--line-height: 1.2;
+  --text-badge: 8px;
+  --text-badge--line-height: 1.2;
+
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --radius: 0;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --accent: var(--color-accent);
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  min-height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans), sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) var(--color-bg);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border: 1px solid var(--color-bg);
+}
+
+.grid-backdrop {
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.022) 0 1px, transparent 1px 32px),
+    var(--color-bg);
+}
+
+@keyframes ts-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@keyframes ts-pulse {
+  0%,
+  100% {
+    opacity: 0.38;
+  }
+  50% {
+    opacity: 0.76;
+  }
+}
+
+@keyframes ts-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 859px) {
+  .text-title {
+    font-size: 16px;
+  }
 }

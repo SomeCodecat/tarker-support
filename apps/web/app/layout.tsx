@@ -1,21 +1,34 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Barlow_Semi_Condensed,
+  Chakra_Petch,
+  JetBrains_Mono,
+} from "next/font/google";
+import { AppShell } from "@/components/shell/app-shell";
 import "./globals.css";
-import { Nav } from "@/components/nav";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const display = Chakra_Petch({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-display",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const sans = Barlow_Semi_Condensed({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sans",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
   title: "Tarkov Support",
-  description: "A companion app for Escape from Tarkov: items, ammo, quests, traders, and hideout.",
+  description:
+    "A companion app for Escape from Tarkov: items, ammo, quests, traders, and hideout.",
 };
 
 export default function RootLayout({
@@ -26,11 +39,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${display.variable} ${sans.variable} ${mono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-neutral-950 text-neutral-100">
-        <Nav />
-        <main className="p-4">{children}</main>
+      <body className="min-h-full bg-bg text-fg">
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );
