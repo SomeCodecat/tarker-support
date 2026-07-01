@@ -4,6 +4,6 @@ import { loadItems } from "@/lib/data/items";
 export const revalidate = 86400; // 24h ISR, matches @tarker/data cache TTL
 
 export default async function ItemsPage() {
-  const items = await loadItems();
-  return <ItemsScreen items={items} />;
+  const { data, degraded } = await loadItems();
+  return <ItemsScreen degraded={degraded} items={data} />;
 }

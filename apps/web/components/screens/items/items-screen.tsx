@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { EmptyState, FilterChip, Money, ScreenHeader, SortArrow, TypeTile } from "@/components/ui";
+import { Badge, EmptyState, FilterChip, Money, ScreenHeader, SortArrow, TypeTile } from "@/components/ui";
 import { useApp } from "@/lib/app-context";
 import { typeColor } from "@/lib/colors";
 import { rub } from "@/lib/format";
@@ -201,7 +201,7 @@ function ItemCard({ item, onOpen }: { item: Item; onOpen(id: string): void }) {
   );
 }
 
-export function ItemsScreen({ items }: { items: Item[] }) {
+export function ItemsScreen({ degraded = false, items }: { degraded?: boolean; items: Item[] }) {
   const { openItem, search } = useApp();
   const [filter, setFilter] = useState<ItemFilter>("all");
   const [sort, setSort] = useState<SortState>({ key: "name", dir: 1 });
@@ -221,8 +221,11 @@ export function ItemsScreen({ items }: { items: Item[] }) {
     <section className="space-y-[16px]">
       <ScreenHeader
         right={
-          <div className="font-mono text-meta uppercase tracking-[0.08em] text-dim">
-            {rows.length} results
+          <div className="flex items-center gap-[8px]">
+            {degraded ? <Badge variant="sample" /> : null}
+            <div className="font-mono text-meta uppercase tracking-[0.08em] text-dim">
+              {rows.length} results
+            </div>
           </div>
         }
         subtitle="database"

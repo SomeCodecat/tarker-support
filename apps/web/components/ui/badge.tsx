@@ -19,6 +19,7 @@ const badgeVariants = cva(
         partial: "border-accent bg-surface-2 text-accent",
         level: "border-border-strong bg-transparent text-muted",
         best: "border-good bg-good text-bg",
+        sample: "border-warn bg-transparent text-warn",
       },
     },
     defaultVariants: {
@@ -60,6 +61,8 @@ function defaultBadgeText(variant: BadgeProps["variant"]): string {
       return "PARTIAL";
     case "best":
       return "BEST";
+    case "sample":
+      return "SAMPLE DATA";
     case "level":
     default:
       return "";
