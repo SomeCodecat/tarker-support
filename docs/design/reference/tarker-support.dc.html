@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+:root{--accent:#e8b923}
+html,body{margin:0;padding:0;height:100%}
+body{background:#0d100e;color:#e6e4da;font-family:'Barlow Semi Condensed',system-ui,sans-serif;-webkit-font-smoothing:antialiased;touch-action:manipulation;-webkit-tap-highlight-color:rgba(232,185,35,.14)}
+::-webkit-scrollbar{width:13.5px;height:13.5px}
+::-webkit-scrollbar-track{background:#0d100e}
+::-webkit-scrollbar-thumb{background:#2a312a;border-radius:0}
+::-webkit-scrollbar-thumb:hover{background:#3a433a}
+input::placeholder{color:#5f665c}
+@keyframes tsblink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes tspulse{0%,100%{opacity:.3}50%{opacity:.7}}
+@keyframes tsspin{to{transform:rotate(360deg)}}
+</style>
+</helmet>
+<div style="display:flex;height:100vh;width:100%;overflow:hidden;background:#0d100e;--accent:{{ accent }}">
+
+  <aside style="width:315px;flex:none;display:{{ L.aside }};flex-direction:column;background:#10130f;border-right:1.5px solid #262d25">
+    <div style="display:flex;align-items:center;gap:15px;padding:24px 24px 21px;border-bottom:1.5px solid #262d25">
+      <div style="width:45px;height:45px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--accent);color:#10130f">
+        <svg width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V5Z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+      </div>
+      <div style="line-height:1">
+        <div style="font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:21px;letter-spacing:2.25px;color:#e6e4da">TARKER</div>
+        <div style="font-family:'Chakra Petch',sans-serif;font-weight:500;font-size:13.5px;letter-spacing:4.5px;color:#8b9184;margin-top:3px">SUPPORT</div>
+      </div>
+    </div>
+
+    <nav style="display:flex;flex-direction:column;padding:12px 0;flex:1;overflow-y:auto">
+      <div style="padding:15px 24px 7.5px;font-family:'Chakra Petch',sans-serif;font-size:13.5px;letter-spacing:3px;color:#5f665c">DATABASE</div>
+
+      <button onClick="{{ go.dashboard }}" style="display:flex;align-items:center;gap:16.5px;width:100%;padding:12px 21px;background:{{ nav.dashboard.bg }};color:{{ nav.dashboard.fg }};border:none;border-left:3px solid {{ nav.dashboard.bar }};font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;text-align:left" style-hover="background:#171c15">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>Dashboard</button>
+
+      <button onClick="{{ go.items }}" style="display:flex;align-items:center;gap:16.5px;width:100%;padding:12px 21px;background:{{ nav.items.bg }};color:{{ nav.items.fg }};border:none;border-left:3px solid {{ nav.items.bar }};font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;text-align:left" style-hover="background:#171c15">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>Items</button>
+
+      <button onClick="{{ go.ammo }}" style="display:flex;align-items:center;gap:16.5px;width:100%;padding:12px 21px;background:{{ nav.ammo.bg }};color:{{ nav.ammo.fg }};border:none;border-left:3px solid {{ nav.ammo.bar }};font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;text-align:left" style-hover="background:#171c15">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></svg>Ammo</button>
+
+      <button onClick="{{ go.tasks }}" style="display:flex;align-items:center;gap:16.5px;width:100%;padding:12px 21px;background:{{ nav.tasks.bg }};color:{{ nav.tasks.fg }};border:none;border-left:3px solid {{ nav.tasks.bar }};font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;text-align:left" style-hover="background:#171c15">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>Tasks</button>
+
+      <button onClick="{{ go.traders }}" style="display:flex;align-items:center;gap:16.5px;width:100%;padding:12px 21px;background:{{ nav.traders.bg }};color:{{ nav.traders.fg }};border:none;border-left:3px solid {{ nav.traders.bar }};font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;text-align:left" style-hover="background:#171c15">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Traders</button>
+
+      <button onClick="{{ go.hideout }}" style="display:flex;align-items:center;gap:16.5px;width:100%;padding:12px 21px;background:{{ nav.hideout.bg }};color:{{ nav.hideout.fg }};border:none;border-left:3px solid {{ nav.hideout.bar }};font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;text-align:left" style-hover="background:#171c15">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z"/><path d="M6 18h12"/><path d="M6 14h12"/><path d="M6 10h12"/></svg>Hideout</button>
+
+      <button onClick="{{ go.maps }}" style="display:flex;align-items:center;gap:16.5px;width:100%;padding:12px 21px;background:{{ nav.maps.bg }};color:{{ nav.maps.fg }};border:none;border-left:3px solid {{ nav.maps.bar }};font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;text-align:left" style-hover="background:#171c15">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M9 4v13"/><path d="M15 7v13"/></svg>Maps</button>
+
+      <div style="padding:21px 24px 7.5px;font-family:'Chakra Petch',sans-serif;font-size:13.5px;letter-spacing:3px;color:#5f665c">OPERATOR · SOON</div>
+
+      <button onClick="{{ go.progression }}" style="display:flex;align-items:center;gap:16.5px;width:100%;padding:12px 21px;background:{{ nav.progression.bg }};color:{{ nav.progression.fg }};border:none;border-left:3px solid {{ nav.progression.bar }};font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;text-align:left" style-hover="background:#171c15">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg><span style="flex:1">Progression</span><span style="font-family:'JetBrains Mono';font-size:12px;font-weight:600;letter-spacing:.7.5px;color:#0d100e;background:#8b9184;padding:1.5px 6px">SOON</span></button>
+
+      <button onClick="{{ go.scan }}" style="display:flex;align-items:center;gap:16.5px;width:100%;padding:12px 21px;background:{{ nav.scan.bg }};color:{{ nav.scan.fg }};border:none;border-left:3px solid {{ nav.scan.bar }};font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;text-align:left" style-hover="background:#171c15">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg><span style="flex:1">Scan Stash</span><span style="font-family:'JetBrains Mono';font-size:12px;font-weight:600;letter-spacing:.7.5px;color:#0d100e;background:var(--accent);padding:1.5px 6px">SOON</span></button>
+    </nav>
+
+    <div style="padding:16.5px 24px;border-top:1.5px solid #262d25;font-family:'JetBrains Mono';font-size:14.25px;color:#5f665c;letter-spacing:.4.5px">
+      <button onClick="{{ onToggleConn }}" title="toggle connectivity" style="display:flex;align-items:center;gap:9px;background:none;border:none;padding:0;cursor:pointer;font-family:'JetBrains Mono';font-size:14.25px;color:#5f665c;letter-spacing:.4.5px"><span style="width:9px;height:9px;background:{{ connColor }};border-radius:50%;animation:tsblink 2.4s infinite"></span>{{ connLabel }}</button>
+      <div style="margin-top:6px;color:#454c44">build slice1 · v0.1.0</div>
+    </div>
+  </aside>
+
+  <div style="flex:1;display:flex;flex-direction:column;min-width:0">
+
+    <header style="flex:none;display:flex;align-items:center;gap:15px;height:69px;padding:0 18px 0 27px;background:#10130f;border-bottom:1.5px solid #262d25">
+      <div style="display:{{ L.mobBtn }};align-items:center;gap:10.5px">
+        <div style="width:33px;height:33px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--accent);color:#10130f"><svg width="19.5" height="19.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V5Z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></div>
+        <div style="font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:16.5px;letter-spacing:1.5px;color:#e6e4da">TARKER</div>
+      </div>
+      <div style="display:{{ L.headerSearch }};font-family:'JetBrains Mono';font-size:16.5px;color:#5f665c;letter-spacing:.7.5px">{{ crumb }}</div>
+      <div style="flex:1"></div>
+      <div style="position:relative;width:420px;display:{{ L.headerSearch }}">
+        <svg style="position:absolute;left:13.5px;top:50%;transform:translateY(-50%)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#5f665c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="ts-search" value="{{ search }}" onInput="{{ onSearch }}" placeholder="Search items, ammo, quests…  ( / )" style="width:100%;background:#0d100e;border:1.5px solid #333b31;color:#e6e4da;font-family:'Barlow Semi Condensed';font-size:18.75px;padding:9px 15px 9px 45px;outline:none" />
+      </div>
+      <button onClick="{{ onToggleMobileSearch }}" style="display:{{ L.mobBtn }};align-items:center;justify-content:center;width:39px;height:39px;flex:none;background:#0d100e;border:1.5px solid #333b31;color:#8b9184;cursor:pointer"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <div style="display:flex;align-items:center;gap:12px;padding-left:12px;border-left:1.5px solid #262d25">
+        <div style="width:39px;height:39px;flex:none;background:#1e241d;border:1.5px solid #333b31;display:flex;align-items:center;justify-content:center;font-family:'Chakra Petch';font-weight:700;font-size:16.5px;color:var(--accent)">37</div>
+        <div style="line-height:1.1;display:{{ L.headerSearch }}"><div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:17.25px;color:#e6e4da">USEC · Operator</div><div style="font-family:'JetBrains Mono';font-size:13.5px;color:#5f665c">Wipe Day 42</div></div>
+      </div>
+    </header>
+
+    <sc-if value="{{ mobileSearchOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="flex:none;padding:12px 18px;background:#10130f;border-bottom:1.5px solid #262d25">
+        <div style="position:relative">
+          <svg style="position:absolute;left:13.5px;top:50%;transform:translateY(-50%)" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#5f665c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input value="{{ search }}" onInput="{{ onSearch }}" placeholder="Search items, ammo, quests…" style="width:100%;background:#0d100e;border:1.5px solid #333b31;color:#e6e4da;font-family:'Barlow Semi Condensed';font-size:18px;padding:9px 15px 9px 45px;outline:none" />
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ offline }}" hint-placeholder-val="{{ false }}">
+      <div style="flex:none;display:flex;align-items:center;gap:12px;padding:10.5px 27px;background:#2a1512;border-bottom:1.5px solid #5a2a24">
+        <span style="width:9px;height:9px;flex:none;background:#c15b4e;border-radius:50%;animation:tsblink 1.4s infinite"></span>
+        <span style="flex:1;font-family:'JetBrains Mono';font-size:15px;color:#e0a59a">Offline — showing last cached snapshot. Prices &amp; quests may be stale.</span>
+        <button onClick="{{ onRetry }}" style="font-family:'Chakra Petch';font-weight:600;font-size:13.5px;letter-spacing:1.5px;color:#e6e4da;background:#3a1a16;border:1.5px solid #6a3128;padding:6px 15px;cursor:pointer" style-hover="background:#4a221c">RETRY</button>
+      </div>
+    </sc-if>
+
+    <div style="flex:1;overflow:auto;position:relative;background:{{ contentBg }};-webkit-overflow-scrolling:touch;overscroll-behavior:contain">
+
+      <sc-if value="{{ show.dashboard }}" hint-placeholder-val="{{ true }}">
+        <div style="padding:{{ L.screenPad }};min-width:{{ L.minW }};max-width:1770px">
+          <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:30px">
+            <div style="width:4.5px;height:33px;background:var(--accent)"></div>
+            <h1 style="margin:0;font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:28.5px;letter-spacing:3.75px;color:#e6e4da">DASHBOARD</h1>
+            <span style="font-family:'JetBrains Mono';font-size:16.5px;color:#5f665c">// operator overview</span>
+          </div>
+
+          <div style="display:grid;grid-template-columns:{{ L.dashCols }};gap:18px;margin-bottom:30px">
+            <div style="background:#141813;border:1.5px solid #262d25;padding:21px 22.5px">
+              <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin-bottom:13.5px">ITEMS TRACKED</div>
+              <div style="font-family:'JetBrains Mono';font-weight:700;font-size:40.5px;color:#e6e4da;line-height:1">{{ dash.items }}</div>
+              <div style="font-family:'JetBrains Mono';font-size:15px;color:#5f665c;margin-top:9px">in local database</div>
+            </div>
+            <div style="background:#141813;border:1.5px solid #262d25;padding:21px 22.5px">
+              <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin-bottom:13.5px">ACTIVE QUESTS</div>
+              <div style="font-family:'JetBrains Mono';font-weight:700;font-size:40.5px;color:#e6e4da;line-height:1">{{ dash.quests }}</div>
+              <div style="font-family:'JetBrains Mono';font-size:15px;color:#c15b4e;margin-top:9px">{{ dash.locked }} locked · prereq</div>
+            </div>
+            <div style="background:#141813;border:1.5px solid #262d25;padding:21px 22.5px">
+              <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin-bottom:13.5px">HIDEOUT PROGRESS</div>
+              <div style="font-family:'JetBrains Mono';font-weight:700;font-size:40.5px;color:#e6e4da;line-height:1">{{ dash.hideoutPct }}</div>
+              <div style="height:6px;background:#0d100e;margin-top:13.5px;border:1.5px solid #262d25"><div style="height:100%;width:{{ dash.hideoutPct }};background:var(--accent)"></div></div>
+            </div>
+            <div style="background:#141813;border:1.5px solid #262d25;padding:21px 22.5px">
+              <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin-bottom:13.5px">SELLABLE SURPLUS</div>
+              <div style="font-family:'JetBrains Mono';font-weight:700;font-size:40.5px;color:#6ea862;line-height:1">{{ dash.surplus }}</div>
+              <div style="font-family:'JetBrains Mono';font-size:15px;color:#5f665c;margin-top:9px">est. flea value · scan soon</div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:{{ L.dashPanels }};gap:18px">
+            <div style="background:#141813;border:1.5px solid #262d25">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:16.5px 22.5px;border-bottom:1.5px solid #262d25">
+                <span style="font-family:'Chakra Petch';font-size:15.75px;letter-spacing:2.25px;color:#e6e4da">NEXT QUESTS</span>
+                <button onClick="{{ go.tasks }}" style="background:none;border:none;color:#8b9184;font-family:'JetBrains Mono';font-size:15px;cursor:pointer" style-hover="color:var(--accent)">view all →</button>
+              </div>
+              <sc-for list="{{ dash.nextQuests }}" as="q" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:16.5px;padding:13.5px 22.5px;border-bottom:1.5px solid #1c221b">
+                  <span style="font-family:'JetBrains Mono';font-size:15px;font-weight:600;color:var(--accent);background:#0d100e;border:1.5px solid #333b31;padding:3px 9px;flex:none">L{{ q.level }}</span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:19.5px;color:#e6e4da;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ q.name }}</div>
+                    <div style="font-family:'JetBrains Mono';font-size:14.25px;color:#8b9184">{{ q.trader }}</div>
+                  </div>
+                  <span style="font-family:'JetBrains Mono';font-size:15px;color:#5f665c">{{ q.objCount }} obj</span>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="background:#141813;border:1.5px solid #262d25">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:16.5px 22.5px;border-bottom:1.5px solid #262d25">
+                <span style="font-family:'Chakra Petch';font-size:15.75px;letter-spacing:2.25px;color:#e6e4da">RECENTLY NEEDED ITEMS</span>
+                <button onClick="{{ go.items }}" style="background:none;border:none;color:#8b9184;font-family:'JetBrains Mono';font-size:15px;cursor:pointer" style-hover="color:var(--accent)">view all →</button>
+              </div>
+              <sc-for list="{{ dash.neededItems }}" as="it" hint-placeholder-count="4">
+                <div onClick="{{ it.onOpen }}" style="display:flex;align-items:center;gap:16.5px;padding:13.5px 22.5px;border-bottom:1.5px solid #1c221b;cursor:pointer" style-hover="background:#191e18">
+                  <div style="width:45px;height:45px;flex:none;background:#0d100e;border:1.5px solid #333b31;border-left:3px solid {{ it.tier }};display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:12px;color:{{ it.tier }}">{{ it.short }}</div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:19.5px;color:#e6e4da;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ it.name }}</div>
+                    <div style="font-family:'JetBrains Mono';font-size:14.25px;color:#8b9184">{{ it.need }}</div>
+                  </div>
+                  <span style="font-family:'JetBrains Mono';font-size:16.5px;color:#6ea862">{{ it.flea }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ show.items }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:{{ L.screenPad }};min-width:{{ L.minW }}">
+          <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:24px">
+            <div style="width:4.5px;height:33px;background:var(--accent)"></div>
+            <h1 style="margin:0;font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:28.5px;letter-spacing:3.75px;color:#e6e4da">ITEMS</h1>
+            <span style="font-family:'JetBrains Mono';font-size:16.5px;color:#5f665c">// {{ items.count }} results</span>
+          </div>
+
+          <div style="display:flex;gap:9px;margin-bottom:18px;flex-wrap:wrap">
+            <sc-for list="{{ items.filters }}" as="f" hint-placeholder-count="6">
+              <button onClick="{{ f.onClick }}" style="font-family:'Chakra Petch';font-size:15px;letter-spacing:1.5px;text-transform:uppercase;padding:7.5px 16.5px;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }};border:1.5px solid {{ f.bd }}">{{ f.label }}</button>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ items.empty }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#141813;border:1.5px solid #262d25;padding:66px 30px;display:flex;flex-direction:column;align-items:center;gap:15px;text-align:center">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#3a433a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M8 11h6"/></svg>
+              <div style="font-family:'Chakra Petch';font-weight:600;font-size:19.5px;letter-spacing:1.5px;color:#8b9184">NO ITEMS FOUND</div>
+              <div style="font-family:'Barlow Semi Condensed';font-size:17.25px;color:#5f665c;max-width:380px">Nothing matches your search and filter. Clear the search box or switch the type filter to ALL.</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ items.has }}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{ L.wide }}" hint-placeholder-val="{{ true }}">
+          <div style="background:#141813;border:1.5px solid #262d25">
+            <div style="display:grid;grid-template-columns:66px 1fr 180px 90px 165px 180px 180px;align-items:center;background:#10130f;border-bottom:1.5px solid #333b31">
+              <div style="padding:12px 15px"></div>
+              <button onClick="{{ items.sortName }}" style="text-align:left;background:none;border:none;padding:12px 15px;font-family:'Chakra Petch';font-size:14.25px;letter-spacing:1.5px;color:#8b9184;cursor:pointer;text-transform:uppercase">Name {{ items.arrowName }}</button>
+              <div style="padding:12px 15px;font-family:'Chakra Petch';font-size:14.25px;letter-spacing:1.5px;color:#8b9184;text-transform:uppercase">Type</div>
+              <div style="padding:12px 15px;font-family:'Chakra Petch';font-size:14.25px;letter-spacing:1.5px;color:#8b9184;text-transform:uppercase">Grid</div>
+              <button onClick="{{ items.sortBase }}" style="text-align:right;background:none;border:none;padding:12px 15px;font-family:'Chakra Petch';font-size:14.25px;letter-spacing:1.5px;color:#8b9184;cursor:pointer;text-transform:uppercase">Base ₽ {{ items.arrowBase }}</button>
+              <button onClick="{{ items.sortTrader }}" style="text-align:right;background:none;border:none;padding:12px 15px;font-family:'Chakra Petch';font-size:14.25px;letter-spacing:1.5px;color:#8b9184;cursor:pointer;text-transform:uppercase">Trader ₽ {{ items.arrowTrader }}</button>
+              <button onClick="{{ items.sortFlea }}" style="text-align:right;background:none;border:none;padding:12px 15px;font-family:'Chakra Petch';font-size:14.25px;letter-spacing:1.5px;color:#8b9184;cursor:pointer;text-transform:uppercase">Flea ₽ {{ items.arrowFlea }}</button>
+            </div>
+            <sc-for list="{{ items.rows }}" as="r" hint-placeholder-count="12">
+              <div onClick="{{ r.onOpen }}" style="display:grid;grid-template-columns:66px 1fr 180px 90px 165px 180px 180px;align-items:center;background:{{ r.bg }};border-bottom:1.5px solid #1c221b;cursor:pointer;border-left:3px solid {{ r.tier }};outline:{{ r.kbOutline }};outline-offset:-2px" style-hover="background:#20261e">
+                <div style="padding:7.5px 12px"><div style="width:42px;height:42px;background:#0d100e;border:1.5px solid #333b31;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:11.25px;color:{{ r.tier }}">{{ r.short }}</div></div>
+                <div style="padding:9px 15px;min-width:0"><div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:19.5px;color:#e6e4da;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.name }}</div><div style="font-family:'JetBrains Mono';font-size:13.5px;color:#5f665c">{{ r.short }}</div></div>
+                <div style="padding:9px 15px"><span style="font-family:'JetBrains Mono';font-size:14.25px;color:{{ r.tier }};text-transform:uppercase;letter-spacing:.7.5px">{{ r.typeLabel }}</span></div>
+                <div style="padding:9px 15px;font-family:'JetBrains Mono';font-size:16.5px;color:#8b9184">{{ r.size }}</div>
+                <div style="padding:9px 15px;text-align:right;font-family:'JetBrains Mono';font-size:18px;color:#b8b6ac">{{ r.base }}</div>
+                <div style="padding:9px 15px;text-align:right;font-family:'JetBrains Mono';font-size:18px;color:{{ r.traderColor }}">{{ r.trader }}</div>
+                <div style="padding:9px 15px;text-align:right;font-family:'JetBrains Mono';font-size:18px;color:{{ r.fleaColor }}">{{ r.flea }}</div>
+              </div>
+            </sc-for>
+          </div>
+          </sc-if>
+          <sc-if value="{{ L.narrow }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <sc-for list="{{ items.rows }}" as="r" hint-placeholder-count="8">
+                <div onClick="{{ r.onOpen }}" style="background:#141813;border:1.5px solid #262d25;border-left:3px solid {{ r.tier }};padding:13.5px 15px;cursor:pointer;display:flex;align-items:center;gap:13.5px" style-hover="background:#191e18">
+                  <div style="width:48px;height:48px;flex:none;background:#0d100e;border:1.5px solid #333b31;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:11.25px;color:{{ r.tier }}">{{ r.short }}</div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:19.5px;color:#e6e4da;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.name }}</div>
+                    <div style="display:flex;align-items:center;gap:12px;margin-top:3px"><span style="font-family:'JetBrains Mono';font-size:13.5px;color:{{ r.tier }};text-transform:uppercase;letter-spacing:.7.5px">{{ r.typeLabel }}</span><span style="font-family:'JetBrains Mono';font-size:13.5px;color:#5f665c">{{ r.size }}</span></div>
+                  </div>
+                  <div style="text-align:right;flex:none">
+                    <div style="font-family:'JetBrains Mono';font-weight:600;font-size:18.75px;color:{{ r.fleaColor }}">{{ r.flea }}</div>
+                    <div style="font-family:'JetBrains Mono';font-size:12.75px;color:#5f665c">flea</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ show.ammo }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:{{ L.screenPad }};min-width:{{ L.minWWide }}">
+          <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:12px">
+            <div style="width:4.5px;height:33px;background:var(--accent)"></div>
+            <h1 style="margin:0;font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:28.5px;letter-spacing:3.75px;color:#e6e4da">AMMO</h1>
+            <span style="font-family:'JetBrains Mono';font-size:16.5px;color:#5f665c">// {{ ammo.count }} rounds · click for full ballistic profile</span>
+          </div>
+
+          <div style="display:flex;gap:9px;margin-bottom:15px;flex-wrap:wrap">
+            <sc-for list="{{ ammo.chips }}" as="c" hint-placeholder-count="8">
+              <button onClick="{{ c.onClick }}" style="font-family:'Chakra Petch';font-size:15px;letter-spacing:1.5px;text-transform:uppercase;padding:7.5px 15px;cursor:pointer;background:{{ c.bg }};color:{{ c.fg }};border:1.5px solid {{ c.bd }}">{{ c.label }}</button>
+            </sc-for>
+          </div>
+
+          <div style="display:flex;margin-bottom:15px">
+            <button onClick="{{ ammo.viewTableChip.onClick }}" style="font-family:'Chakra Petch';font-size:15px;letter-spacing:1.5px;padding:7.5px 24px;cursor:pointer;background:{{ ammo.viewTableChip.bg }};color:{{ ammo.viewTableChip.fg }};border:1.5px solid {{ ammo.viewTableChip.bd }}">{{ ammo.viewTableChip.label }}</button>
+            <button onClick="{{ ammo.viewCompareChip.onClick }}" style="font-family:'Chakra Petch';font-size:15px;letter-spacing:1.5px;padding:7.5px 24px;cursor:pointer;background:{{ ammo.viewCompareChip.bg }};color:{{ ammo.viewCompareChip.fg }};border:1.5px solid {{ ammo.viewCompareChip.bd }};border-left:none">{{ ammo.viewCompareChip.label }}</button>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:21px;margin-bottom:18px;flex-wrap:wrap">
+            <span style="font-family:'JetBrains Mono';font-size:15px;color:#8b9184">PEN TIER</span>
+            <div style="display:flex;align-items:center;gap:7.5px"><span style="width:13.5px;height:13.5px;background:#c15b4e"></span><span style="font-family:'JetBrains Mono';font-size:15px;color:#8b9184">&lt;25</span></div>
+            <div style="display:flex;align-items:center;gap:7.5px"><span style="width:13.5px;height:13.5px;background:#e0913c"></span><span style="font-family:'JetBrains Mono';font-size:15px;color:#8b9184">25-34</span></div>
+            <div style="display:flex;align-items:center;gap:7.5px"><span style="width:13.5px;height:13.5px;background:#e8c53f"></span><span style="font-family:'JetBrains Mono';font-size:15px;color:#8b9184">35-44</span></div>
+            <div style="display:flex;align-items:center;gap:7.5px"><span style="width:13.5px;height:13.5px;background:#9ccb4f"></span><span style="font-family:'JetBrains Mono';font-size:15px;color:#8b9184">45-59</span></div>
+            <div style="display:flex;align-items:center;gap:7.5px"><span style="width:13.5px;height:13.5px;background:#6ea862"></span><span style="font-family:'JetBrains Mono';font-size:15px;color:#8b9184">60+</span></div>
+          </div>
+
+          <sc-if value="{{ ammo.empty }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#141813;border:1.5px solid #262d25;padding:66px 30px;display:flex;flex-direction:column;align-items:center;gap:15px;text-align:center">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#3a433a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/></svg>
+              <div style="font-family:'Chakra Petch';font-weight:600;font-size:19.5px;letter-spacing:1.5px;color:#8b9184">NO ROUNDS IN CALIBER</div>
+              <div style="font-family:'Barlow Semi Condensed';font-size:17.25px;color:#5f665c;max-width:360px">Reset the caliber filter to ALL to see every round.</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ ammo.tableView }}" hint-placeholder-val="{{ true }}">
+          <sc-if value="{{ L.wide }}" hint-placeholder-val="{{ true }}">
+          <div style="background:#141813;border:1.5px solid #262d25">
+            <div style="display:grid;grid-template-columns:66px 1fr 96px 186px 108px 108px 96px 96px 120px 36px;align-items:center;background:#10130f;border-bottom:1.5px solid #333b31">
+              <div style="padding:12px 12px"></div>
+              <div style="padding:12px 15px;font-family:'Chakra Petch';font-size:14.25px;letter-spacing:1.5px;color:#8b9184;text-transform:uppercase">Round</div>
+              <button onClick="{{ ammo.sortDmg }}" style="text-align:right;background:none;border:none;padding:12px 12px;font-family:'Chakra Petch';font-size:14.25px;letter-spacing:1.5px;color:#8b9184;cursor:pointer;text-transform:uppercase">DMG {{ ammo.arrowDmg }}</button>
+              <button onClick="{{ ammo.sortPen }}" style="text-align:right;background:none;border:none;padding:12px 12px;font-family:'Chakra Petch';font-size:14.25px;letter-spacing:1.5px;color:#8b9184;cursor:pointer;text-transform:uppercase">PEN {{ ammo.arrowPen }}</button>
+              <button onClick="{{ ammo.sortPenC }}" style="text-align:right;background:none;border:none;padding:12px 12px;font-family:'Chakra Petch';font-size:14.25px;letter-spacing:1.5px;color:#8b9184;cursor:pointer;text-transform:uppercase">PEN % {{ ammo.arrowPenC }}</button>
+              <button onClick="{{ ammo.sortArmor }}" style="text-align:right;background:none;border:none;padding:12px 12px;font-family:'Chakra Petch';font-size:14.25px;letter-spacing:1.5px;color:#8b9184;cursor:pointer;text-transform:uppercase">ARMOR {{ ammo.arrowArmor }}</button>
+              <button onClick="{{ ammo.sortFrag }}" style="text-align:right;background:none;border:none;padding:12px 12px;font-family:'Chakra Petch';font-size:14.25px;letter-spacing:1.5px;color:#8b9184;cursor:pointer;text-transform:uppercase">FRAG {{ ammo.arrowFrag }}</button>
+              <button onClick="{{ ammo.sortRico }}" style="text-align:right;background:none;border:none;padding:12px 12px;font-family:'Chakra Petch';font-size:14.25px;letter-spacing:1.5px;color:#8b9184;cursor:pointer;text-transform:uppercase">RICO {{ ammo.arrowRico }}</button>
+              <button onClick="{{ ammo.sortVel }}" style="text-align:right;background:none;border:none;padding:12px 12px;font-family:'Chakra Petch';font-size:14.25px;letter-spacing:1.5px;color:#8b9184;cursor:pointer;text-transform:uppercase">VELOCITY {{ ammo.arrowVel }}</button>
+              <div style="padding:12px 6px"></div>
+            </div>
+            <sc-for list="{{ ammo.rows }}" as="a" hint-placeholder-count="13">
+              <div onClick="{{ a.onOpen }}" style="display:grid;grid-template-columns:66px 1fr 96px 186px 108px 108px 96px 96px 120px 36px;align-items:center;background:{{ a.bg }};border-bottom:1.5px solid #1c221b;cursor:pointer;border-left:3px solid {{ a.penColor }};outline:{{ a.kbOutline }};outline-offset:-2px" style-hover="background:#20261e">
+                <div style="padding:7.5px 12px"><div style="width:42px;height:42px;background:#0d100e;border:1.5px solid #333b31;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:11.25px;color:{{ a.penColor }}">{{ a.calShort }}</div></div>
+                <div style="padding:9px 15px;min-width:0"><div style="display:flex;align-items:center;gap:9px"><span style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:19.5px;color:#e6e4da">{{ a.name }}</span><sc-if value="{{ a.tracer }}" hint-placeholder-val="{{ false }}"><span style="font-family:'JetBrains Mono';font-size:11.25px;letter-spacing:.7.5px;color:#9ccb4f;border:1.5px solid #3a4a2a;padding:1.5px 6px">TRACER</span></sc-if></div><div style="font-family:'JetBrains Mono';font-size:13.5px;color:#5f665c">{{ a.caliber }}</div></div>
+                <div style="padding:9px 12px;text-align:right;font-family:'JetBrains Mono';font-weight:600;font-size:18.75px;color:#e6e4da">{{ a.damageLabel }}</div>
+                <div style="padding:9px 12px;text-align:right;display:flex;align-items:center;justify-content:flex-end;gap:12px"><span style="font-family:'JetBrains Mono';font-weight:700;font-size:18.75px;color:{{ a.penColor }};min-width:27px">{{ a.pen }}</span><span style="width:66px;height:7.5px;background:#0d100e;border:1.5px solid #262d25"><span style="display:block;height:100%;width:{{ a.penBar }};background:{{ a.penColor }}"></span></span></div>
+                <div style="padding:9px 12px;text-align:right;font-family:'JetBrains Mono';font-size:17.25px;color:#b8b6ac">{{ a.penChancePct }}</div>
+                <div style="padding:9px 12px;text-align:right;font-family:'JetBrains Mono';font-size:17.25px;color:#b8b6ac">{{ a.armorDamage }}</div>
+                <div style="padding:9px 12px;text-align:right;font-family:'JetBrains Mono';font-size:17.25px;color:#b8b6ac">{{ a.fragPct }}</div>
+                <div style="padding:9px 12px;text-align:right;font-family:'JetBrains Mono';font-size:17.25px;color:#8b9184">{{ a.ricochetPct }}</div>
+                <div style="padding:9px 12px;text-align:right;font-family:'JetBrains Mono';font-size:17.25px;color:#8b9184">{{ a.velocity }}<span style="font-size:12.75px;color:#5f665c"> m/s</span></div>
+                <div style="padding:9px 6px;color:#5f665c;transform:{{ a.chev }}"><svg width="19.5" height="19.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></div>
+              </div>
+            </sc-for>
+          </div>
+          </sc-if>
+          <sc-if value="{{ L.narrow }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <sc-for list="{{ ammo.rows }}" as="a" hint-placeholder-count="8">
+                <div onClick="{{ a.onOpen }}" style="background:#141813;border:1.5px solid #262d25;border-left:3px solid {{ a.penColor }};padding:13.5px 15px;cursor:pointer" style-hover="background:#191e18">
+                  <div style="display:flex;align-items:center;gap:12px;margin-bottom:13.5px">
+                    <div style="width:42px;height:42px;flex:none;background:#0d100e;border:1.5px solid #333b31;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:11.25px;color:{{ a.penColor }}">{{ a.calShort }}</div>
+                    <div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:9px"><span style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:19.5px;color:#e6e4da">{{ a.name }}</span><sc-if value="{{ a.tracer }}" hint-placeholder-val="{{ false }}"><span style="font-family:'JetBrains Mono';font-size:11.25px;letter-spacing:.7.5px;color:#9ccb4f;border:1.5px solid #3a4a2a;padding:1.5px 6px">TRACER</span></sc-if></div><div style="font-family:'JetBrains Mono';font-size:13.5px;color:#5f665c">{{ a.caliber }}</div></div>
+                    <div style="text-align:right"><div style="font-family:'JetBrains Mono';font-weight:700;font-size:22.5px;color:{{ a.penColor }}">{{ a.pen }}</div><div style="font-family:'JetBrains Mono';font-size:11.25px;color:#5f665c">PEN</div></div>
+                  </div>
+                  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:9px">
+                    <div style="background:#0d100e;border:1.5px solid #262d25;padding:7.5px 9px"><div style="font-family:'Chakra Petch';font-size:11.25px;letter-spacing:1px;color:#5f665c">DMG</div><div style="font-family:'JetBrains Mono';font-weight:600;font-size:16.5px;color:#e6e4da">{{ a.damageLabel }}</div></div>
+                    <div style="background:#0d100e;border:1.5px solid #262d25;padding:7.5px 9px"><div style="font-family:'Chakra Petch';font-size:11.25px;letter-spacing:1px;color:#5f665c">ARMOR</div><div style="font-family:'JetBrains Mono';font-weight:600;font-size:16.5px;color:#b8b6ac">{{ a.armorDamage }}</div></div>
+                    <div style="background:#0d100e;border:1.5px solid #262d25;padding:7.5px 9px"><div style="font-family:'Chakra Petch';font-size:11.25px;letter-spacing:1px;color:#5f665c">FRAG</div><div style="font-family:'JetBrains Mono';font-weight:600;font-size:16.5px;color:#b8b6ac">{{ a.fragPct }}</div></div>
+                    <div style="background:#0d100e;border:1.5px solid #262d25;padding:7.5px 9px"><div style="font-family:'Chakra Petch';font-size:11.25px;letter-spacing:1px;color:#5f665c">VEL</div><div style="font-family:'JetBrains Mono';font-weight:600;font-size:16.5px;color:#8b9184">{{ a.velocity }}</div></div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          </sc-if>
+
+          <sc-if value="{{ ammo.compareView }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#141813;border:1.5px solid #262d25;padding:15px 21px 21px">
+              <div style="display:flex;align-items:center;gap:21px;padding:9px 0 12px;font-family:'JetBrains Mono';font-size:13.5px;color:#5f665c;flex-wrap:wrap">
+                <span style="display:flex;align-items:center;gap:7.5px"><span style="width:15px;height:9px;background:#6ea862"></span>PEN (heat scale)</span>
+                <span style="display:flex;align-items:center;gap:7.5px"><span style="width:15px;height:9px;background:#6c7566"></span>DMG</span>
+                <span>armor matrix I–VI = class defeated · derived from PEN · click a round for full profile</span>
+              </div>
+              <sc-for list="{{ ammo.compare }}" as="c" hint-placeholder-count="10">
+                <div onClick="{{ c.onOpen }}" style="display:grid;grid-template-columns:{{ L.cmpCols }};gap:21px;align-items:center;padding:13.5px 6px;border-top:1.5px solid #1c221b;cursor:pointer" style-hover="background:#191e18">
+                  <div style="display:flex;align-items:center;gap:12px;min-width:0">
+                    <div style="width:36px;height:36px;flex:none;background:#0d100e;border:1.5px solid #333b31;border-left:3px solid {{ c.penColor }};display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:10.5px;color:{{ c.penColor }}">{{ c.calShort }}</div>
+                    <div style="min-width:0"><div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:17.25px;color:#e6e4da;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.name }}</div><div style="font-family:'JetBrains Mono';font-size:12px;color:#5f665c">{{ c.caliber }}</div></div>
+                  </div>
+                  <div>
+                    <div style="display:flex;align-items:center;gap:9px;margin-bottom:7.5px"><span style="font-family:'JetBrains Mono';font-size:11.25px;color:#5f665c;width:30px">PEN</span><span style="flex:1;height:16.5px;background:#0d100e;border:1.5px solid #262d25"><span style="display:block;height:100%;width:{{ c.penBar }};background:{{ c.penColor }}"></span></span><span style="font-family:'JetBrains Mono';font-weight:700;font-size:15px;color:{{ c.penColor }};width:36px;text-align:right">{{ c.pen }}</span></div>
+                    <div style="display:flex;align-items:center;gap:9px"><span style="font-family:'JetBrains Mono';font-size:11.25px;color:#5f665c;width:30px">DMG</span><span style="flex:1;height:16.5px;background:#0d100e;border:1.5px solid #262d25"><span style="display:block;height:100%;width:{{ c.dmgBar }};background:#6c7566"></span></span><span style="font-family:'JetBrains Mono';font-weight:600;font-size:15px;color:#b8b6ac;width:36px;text-align:right">{{ c.dmg }}</span></div>
+                  </div>
+                  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:4.5px">
+                    <sc-for list="{{ c.classes }}" as="k" hint-placeholder-count="6">
+                      <div style="height:30px;display:flex;align-items:center;justify-content:center;background:{{ k.color }};border:1.5px solid #262d25;font-family:'Chakra Petch';font-weight:700;font-size:12px;color:{{ k.fg }}">{{ k.label }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <div style="margin-top:18px;display:flex;align-items:center;gap:12px;font-family:'JetBrains Mono';font-size:15px;color:#8b7a3c;background:#111a11;border:1.5px solid #24401f;padding:12px 18px">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color:#6ea862" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span style="color:#8fb87f">API-BACKED — tarkov.dev exposes a dedicated <span style="color:#9ccb4f">ammo</span> query (damage, penetrationPower, armorDamage, fragmentation/penetration/ricochetChance, initialSpeed, projectileCount, tracer, bleed &amp; recoil modifiers + nested item price). Add the query + local type; values shown are mocked to that shape. Armor-class read in the drawer is derived from penetrationPower (no shots-to-pen field).</span>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ show.tasks }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:{{ L.screenPad }};min-width:{{ L.minW }}">
+          <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:24px">
+            <div style="width:4.5px;height:33px;background:var(--accent)"></div>
+            <h1 style="margin:0;font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:28.5px;letter-spacing:3.75px;color:#e6e4da">TASKS</h1>
+            <span style="font-family:'JetBrains Mono';font-size:16.5px;color:#5f665c">// {{ tasks.count }} quests</span>
+          </div>
+          <div style="display:flex;gap:9px;margin-bottom:18px;flex-wrap:wrap">
+            <sc-for list="{{ tasks.traderChips }}" as="c" hint-placeholder-count="6">
+              <button onClick="{{ c.onClick }}" style="font-family:'Chakra Petch';font-size:15px;letter-spacing:1.5px;text-transform:uppercase;padding:7.5px 16.5px;cursor:pointer;background:{{ c.bg }};color:{{ c.fg }};border:1.5px solid {{ c.bd }}">{{ c.label }}</button>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ tasks.empty }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#141813;border:1.5px solid #262d25;padding:66px 30px;display:flex;flex-direction:column;align-items:center;gap:15px;text-align:center">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#3a433a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
+              <div style="font-family:'Chakra Petch';font-weight:600;font-size:19.5px;letter-spacing:1.5px;color:#8b9184">NO QUESTS MATCH</div>
+              <div style="font-family:'Barlow Semi Condensed';font-size:17.25px;color:#5f665c;max-width:360px">No quests for this trader in the current slice. Reset the filter to ALL TRADERS.</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ tasks.has }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#141813;border:1.5px solid #262d25">
+              <sc-for list="{{ tasks.rows }}" as="t" hint-placeholder-count="8">
+                <div onClick="{{ t.onOpen }}" style="display:grid;grid-template-columns:48px 1fr 165px 150px 108px 36px;align-items:center;cursor:pointer;background:{{ t.bg }};outline:{{ t.kbOutline }};outline-offset:-2px;border-bottom:1.5px solid #1c221b;border-left:3px solid {{ t.bar }}" style-hover="background:#191e18">
+                  <div style="padding:13.5px 0 13.5px 18px">
+                    <sc-if value="{{ t.locked }}" hint-placeholder-val="{{ false }}"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#c15b4e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></sc-if>
+                  </div>
+                  <div style="padding:13.5px 15px;min-width:0"><div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:20.25px;color:#e6e4da;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.name }}</div><sc-if value="{{ t.locked }}" hint-placeholder-val="{{ false }}"><div style="font-family:'JetBrains Mono';font-size:13.5px;color:#c15b4e">requires {{ t.prereq }}</div></sc-if></div>
+                  <div style="padding:13.5px 15px;font-family:'JetBrains Mono';font-size:16.5px;color:#8b9184">{{ t.trader }}</div>
+                  <div style="padding:13.5px 15px;font-family:'JetBrains Mono';font-size:15px;color:#5f665c">{{ t.map }}</div>
+                  <div style="padding:13.5px 15px"><span style="font-family:'JetBrains Mono';font-size:15px;font-weight:600;color:var(--accent);border:1.5px solid #333b31;padding:3px 9px">LVL {{ t.level }}</span></div>
+                  <div style="padding:13.5px 12px;color:#5f665c"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ show.taskDetail }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:{{ L.screenPad }};min-width:{{ L.minW }};max-width:1500px">
+          <button onClick="{{ taskDetail.onBack }}" style="display:inline-flex;align-items:center;gap:9px;background:none;border:none;padding:0;margin-bottom:21px;cursor:pointer;font-family:'JetBrains Mono';font-size:15.75px;color:#8b9184" style-hover="color:var(--accent)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>All tasks</button>
+
+          <div style="background:#141813;border:1.5px solid #262d25;border-left:4.5px solid var(--accent);padding:24px 27px;margin-bottom:18px">
+            <div style="display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap">
+              <div style="flex:1;min-width:0">
+                <div style="font-family:'Chakra Petch';font-weight:600;font-size:27px;letter-spacing:.7.5px;color:#e6e4da;line-height:1.1">{{ taskDetail.name }}</div>
+                <div style="display:flex;gap:9px;margin-top:13.5px;flex-wrap:wrap">
+                  <span style="display:flex;align-items:center;gap:7.5px;font-family:'JetBrains Mono';font-size:15px;color:#e6e4da;background:#0d100e;border:1.5px solid #333b31;padding:4.5px 12px"><span style="width:22.5px;height:22.5px;display:flex;align-items:center;justify-content:center;background:#1e241d;font-family:'Chakra Petch';font-weight:700;font-size:13.5px;color:var(--accent)">{{ taskDetail.traderInitial }}</span>{{ taskDetail.trader }}</span>
+                  <span style="font-family:'JetBrains Mono';font-size:15px;font-weight:600;color:var(--accent);background:#0d100e;border:1.5px solid #333b31;padding:4.5px 12px">LVL {{ taskDetail.level }}</span>
+                  <span style="display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono';font-size:15px;color:#8b9184;background:#0d100e;border:1.5px solid #333b31;padding:4.5px 12px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/></svg>{{ taskDetail.map }}</span>
+                  <sc-if value="{{ taskDetail.kappa }}" hint-placeholder-val="{{ true }}"><span style="font-family:'Chakra Petch';font-weight:600;font-size:13.5px;letter-spacing:1.5px;color:#0d100e;background:#c9a24b;padding:4.5px 12px">KAPPA</span></sc-if>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="background:#141813;border:1.5px solid #262d25;padding:21px 24px;margin-bottom:18px">
+            <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin-bottom:15px">PREREQUISITE CHAIN</div>
+            <div style="display:flex;align-items:stretch;gap:12px;overflow-x:auto;padding-bottom:6px">
+              <sc-if value="{{ taskDetail.hasPrereqs }}" hint-placeholder-val="{{ false }}">
+                <sc-for list="{{ taskDetail.prereqs }}" as="p" hint-placeholder-count="1">
+                  <div style="display:flex;align-items:center;gap:12px;flex:none">
+                    <div style="min-width:165px;padding:13.5px 16.5px;background:#10130f;border:1.5px solid #333b31"><div style="font-family:'JetBrains Mono';font-size:12px;letter-spacing:1.5px;color:#5f665c;margin-bottom:4.5px">REQUIRES</div><div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:18px;color:#b8b6ac">{{ p.name }}</div></div>
+                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#5f665c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  </div>
+                </sc-for>
+              </sc-if>
+              <sc-if value="{{ taskDetail.noPrereqs }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;align-items:center;gap:12px;flex:none">
+                  <div style="min-width:150px;padding:13.5px 16.5px;background:#10130f;border:1.5px dashed #333b31;display:flex;align-items:center"><span style="font-family:'JetBrains Mono';font-size:15px;color:#5f665c">start of line</span></div>
+                  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#5f665c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </div>
+              </sc-if>
+              <div style="min-width:180px;padding:13.5px 16.5px;background:#1a1e12;border:1.5px solid var(--accent);flex:none"><div style="font-family:'JetBrains Mono';font-size:12px;letter-spacing:1.5px;color:var(--accent);margin-bottom:4.5px">THIS TASK</div><div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;color:#e6e4da">{{ taskDetail.name }}</div></div>
+              <sc-if value="{{ taskDetail.hasUnlocks }}" hint-placeholder-val="{{ false }}">
+                <sc-for list="{{ taskDetail.unlocks }}" as="u" hint-placeholder-count="1">
+                  <div style="display:flex;align-items:center;gap:12px;flex:none">
+                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#5f665c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    <div style="min-width:165px;padding:13.5px 16.5px;background:#10130f;border:1.5px solid #2e4a2b"><div style="font-family:'JetBrains Mono';font-size:12px;letter-spacing:1.5px;color:#6ea862;margin-bottom:4.5px">UNLOCKS</div><div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:18px;color:#b8b6ac">{{ u.name }}</div></div>
+                  </div>
+                </sc-for>
+              </sc-if>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:{{ L.dashPanels }};gap:18px;align-items:start">
+            <div style="background:#141813;border:1.5px solid #262d25">
+              <div style="padding:16.5px 22.5px;border-bottom:1.5px solid #262d25;font-family:'Chakra Petch';font-size:15.75px;letter-spacing:2.25px;color:#e6e4da">OBJECTIVES</div>
+              <sc-for list="{{ taskDetail.objectives }}" as="o" hint-placeholder-count="2">
+                <div style="display:flex;align-items:flex-start;gap:15px;padding:15px 22.5px;border-bottom:1.5px solid #1c221b">
+                  <span style="font-family:'JetBrains Mono';font-weight:700;font-size:19.5px;color:var(--accent);min-width:42px">{{ o.count }}×</span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-family:'Barlow Semi Condensed';font-size:18.75px;color:#e6e4da">{{ o.desc }}</div>
+                    <div style="display:flex;align-items:center;gap:9px;margin-top:6px">
+                      <span style="font-family:'JetBrains Mono';font-size:12px;letter-spacing:1.5px;color:{{ o.typeColor }};border:1.5px solid {{ o.typeColor }};padding:1.5px 7.5px">{{ o.typeLabel }}</span>
+                      <sc-if value="{{ o.fir }}" hint-placeholder-val="{{ true }}"><span style="display:flex;align-items:center;gap:4.5px;font-family:'JetBrains Mono';font-size:12px;font-weight:600;color:#5aa9a0;border:1.5px solid #2f4f4c;background:#0f1817;padding:1.5px 7.5px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>FIR</span></sc-if>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="background:#141813;border:1.5px solid #262d25">
+              <div style="padding:16.5px 22.5px;border-bottom:1.5px solid #262d25;font-family:'Chakra Petch';font-size:15.75px;letter-spacing:2.25px;color:#e6e4da">REWARDS</div>
+              <div style="padding:9px 22.5px 18px">
+                <sc-for list="{{ taskDetail.rewards }}" as="r" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1.5px solid #1c221b">
+                    <span style="width:9px;height:9px;flex:none;background:{{ r.color }}"></span>
+                    <span style="flex:1;font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;color:#e6e4da">{{ r.label }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ show.traders }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:{{ L.screenPad }};min-width:{{ L.minW }}">
+          <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:24px">
+            <div style="width:4.5px;height:33px;background:var(--accent)"></div>
+            <h1 style="margin:0;font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:28.5px;letter-spacing:3.75px;color:#e6e4da">TRADERS</h1>
+            <span style="font-family:'JetBrains Mono';font-size:16.5px;color:#5f665c">// roster · future data</span>
+          </div>
+          <div style="display:grid;grid-template-columns:{{ L.splitCols }};gap:18px;align-items:start">
+            <div style="background:#141813;border:1.5px solid #262d25">
+              <sc-for list="{{ traders.roster }}" as="tr" hint-placeholder-count="8">
+                <div onClick="{{ tr.onClick }}" style="display:flex;align-items:center;gap:16.5px;padding:13.5px 18px;border-bottom:1.5px solid #1c221b;cursor:pointer;background:{{ tr.bg }};border-left:3px solid {{ tr.bar }}" style-hover="background:#191e18">
+                  <div style="width:48px;height:48px;flex:none;background:#0d100e;border:1.5px solid #333b31;display:flex;align-items:center;justify-content:center;font-family:'Chakra Petch';font-weight:700;font-size:19.5px;color:{{ tr.fg }}">{{ tr.initial }}</div>
+                  <div style="flex:1;min-width:0"><div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:19.5px;color:{{ tr.fg }}">{{ tr.name }}</div><div style="font-family:'JetBrains Mono';font-size:13.5px;color:#8b9184">{{ tr.role }}</div></div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="background:#141813;border:1.5px solid #262d25">
+              <div style="display:flex;align-items:center;gap:21px;padding:24px 27px;border-bottom:1.5px solid #262d25">
+                <div style="width:78px;height:78px;flex:none;background:#0d100e;border:1.5px solid #333b31;display:flex;align-items:center;justify-content:center;font-family:'Chakra Petch';font-weight:700;font-size:33px;color:var(--accent)">{{ traders.detail.initial }}</div>
+                <div style="flex:1">
+                  <div style="font-family:'Chakra Petch';font-weight:600;font-size:25.5px;letter-spacing:1.5px;color:#e6e4da">{{ traders.detail.name }}</div>
+                  <div style="font-family:'JetBrains Mono';font-size:15.75px;color:#8b9184">{{ traders.detail.role }} · currency {{ traders.detail.currency }}</div>
+                </div>
+                <div style="text-align:right">
+                  <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;color:var(--accent)">
+                    <svg width="21" height="21" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26"/></svg>
+                    <span style="font-family:'JetBrains Mono';font-weight:700;font-size:22.5px;color:#e6e4da">{{ traders.detail.rep }}</span>
+                  </div>
+                  <div style="font-family:'JetBrains Mono';font-size:13.5px;color:#5f665c">reputation</div>
+                </div>
+                <div style="text-align:right;padding-left:21px;border-left:1.5px solid #262d25">
+                  <div style="display:flex;align-items:center;gap:7.5px;justify-content:flex-end;color:#8b9184"><svg width="19.5" height="19.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span style="font-family:'JetBrains Mono';font-weight:600;font-size:21px;color:#e6e4da">{{ traders.detail.reset }}</span></div>
+                  <div style="font-family:'JetBrains Mono';font-size:13.5px;color:#5f665c">restock</div>
+                </div>
+              </div>
+
+              <div style="padding:21px 27px">
+                <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin-bottom:12px">LOYALTY LEVELS</div>
+                <div style="display:grid;grid-template-columns:90px 1fr 1fr 135px;background:#10130f;border:1.5px solid #262d25;border-bottom:none">
+                  <div style="padding:9px 15px;font-family:'Chakra Petch';font-size:13.5px;letter-spacing:1.5px;color:#5f665c">LL</div>
+                  <div style="padding:9px 15px;font-family:'Chakra Petch';font-size:13.5px;letter-spacing:1.5px;color:#5f665c">REP REQ</div>
+                  <div style="padding:9px 15px;font-family:'Chakra Petch';font-size:13.5px;letter-spacing:1.5px;color:#5f665c">SALES REQ</div>
+                  <div style="padding:9px 15px;font-family:'Chakra Petch';font-size:13.5px;letter-spacing:1.5px;color:#5f665c;text-align:right">COMM</div>
+                </div>
+                <sc-for list="{{ traders.detail.loyalty }}" as="l" hint-placeholder-count="4">
+                  <div style="display:grid;grid-template-columns:90px 1fr 1fr 135px;background:{{ l.bg }};border:1.5px solid #262d25;border-top:none">
+                    <div style="padding:10.5px 15px;font-family:'JetBrains Mono';font-weight:600;font-size:18px;color:{{ l.fg }}">{{ l.ll }}</div>
+                    <div style="padding:10.5px 15px;font-family:'JetBrains Mono';font-size:16.5px;color:#b8b6ac">{{ l.rep }}</div>
+                    <div style="padding:10.5px 15px;font-family:'JetBrains Mono';font-size:16.5px;color:#b8b6ac">{{ l.sales }}</div>
+                    <div style="padding:10.5px 15px;font-family:'JetBrains Mono';font-size:16.5px;color:#8b9184;text-align:right">{{ l.comm }}</div>
+                  </div>
+                </sc-for>
+
+                <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin:24px 0 12px">SAMPLE BARTERS</div>
+                <sc-for list="{{ traders.detail.barters }}" as="b" hint-placeholder-count="3">
+                  <div style="display:flex;align-items:center;gap:15px;padding:12px 15px;background:#10130f;border:1.5px solid #262d25;margin-bottom:9px">
+                    <span style="font-family:'Barlow Semi Condensed';font-size:18px;color:#b8b6ac;flex:1">{{ b.give }}</span>
+                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color:var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    <span style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:18px;color:#e6e4da;flex:1;text-align:right">{{ b.get }}</span>
+                  </div>
+                </sc-for>
+
+                <div style="margin-top:21px;display:flex;align-items:center;gap:12px;font-family:'JetBrains Mono';font-size:15px;background:#1a1710;border:1.5px solid #3a3115;padding:12px 18px">
+                  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color:var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                  <span style="color:#c9a24b">GAP FLAG — no Trader type in types.ts. Only Task.traderName + SellVenue.source exist. Loyalty, rep, resets & barters are mocked; need a new tarkov.dev traders query.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ show.hideout }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:{{ L.screenPad }};min-width:{{ L.minW }};max-width:1380px">
+          <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:24px">
+            <div style="width:4.5px;height:33px;background:var(--accent)"></div>
+            <h1 style="margin:0;font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:28.5px;letter-spacing:3.75px;color:#e6e4da">HIDEOUT</h1>
+            <span style="font-family:'JetBrains Mono';font-size:16.5px;color:#5f665c">// {{ hideout.count }} stations</span>
+          </div>
+          <sc-for list="{{ hideout.stations }}" as="s" hint-placeholder-count="8">
+            <div style="background:#141813;border:1.5px solid #262d25;margin-bottom:12px">
+              <div onClick="{{ s.onToggle }}" style="display:flex;align-items:center;gap:18px;padding:16.5px 22.5px;cursor:pointer;background:{{ s.bg }}" style-hover="background:#191e18">
+                <svg width="25.5" height="25.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color:var(--accent)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z"/><path d="M6 18h12"/><path d="M6 14h12"/></svg>
+                <span style="flex:1;font-family:'Chakra Petch';font-weight:600;font-size:21px;letter-spacing:1.5px;color:#e6e4da">{{ s.name }}</span>
+                <span style="font-family:'JetBrains Mono';font-size:15px;color:#8b9184">{{ s.levelCount }} levels</span>
+                <span style="color:#5f665c;transform:{{ s.chev }}"><svg width="22.5" height="22.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+              </div>
+              <sc-if value="{{ s.open }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:3px 22.5px 18px">
+                  <sc-for list="{{ s.levels }}" as="lv" hint-placeholder-count="3">
+                    <div style="margin-top:12px;border:1.5px solid #262d25;background:#10130f">
+                      <div style="display:flex;align-items:center;gap:12px;padding:10.5px 18px;border-bottom:1.5px solid #1c221b">
+                        <span style="font-family:'JetBrains Mono';font-weight:700;font-size:16.5px;color:#0d100e;background:var(--accent);padding:3px 12px">LVL {{ lv.level }}</span>
+                        <span style="font-family:'JetBrains Mono';font-size:15px;color:#5f665c">{{ lv.reqCount }} item requirements</span>
+                      </div>
+                      <sc-for list="{{ lv.reqs }}" as="rq" hint-placeholder-count="3">
+                        <div style="display:flex;align-items:center;gap:15px;padding:9px 18px;border-bottom:1.5px solid #191e18">
+                          <div style="width:36px;height:36px;flex:none;background:#0d100e;border:1.5px solid #333b31;border-left:3px solid {{ rq.tier }};display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:10.5px;color:{{ rq.tier }}">{{ rq.short }}</div>
+                          <span style="flex:1;font-family:'Barlow Semi Condensed';font-size:18.75px;color:#e6e4da">{{ rq.name }}</span>
+                          <span style="font-family:'JetBrains Mono';font-weight:600;font-size:18px;color:var(--accent)">×{{ rq.count }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ show.maps }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:{{ L.screenPad }};min-width:{{ L.minW }};max-width:1500px">
+          <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:24px">
+            <div style="width:4.5px;height:33px;background:var(--accent)"></div>
+            <h1 style="margin:0;font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:28.5px;letter-spacing:3.75px;color:#e6e4da">MAPS</h1>
+            <span style="font-family:'JetBrains Mono';font-size:16.5px;color:#5f665c">// extract &amp; boss reference</span>
+          </div>
+          <div style="display:grid;grid-template-columns:{{ L.splitCols }};gap:18px;align-items:start">
+            <div style="background:#141813;border:1.5px solid #262d25">
+              <sc-for list="{{ maps.roster }}" as="m" hint-placeholder-count="8">
+                <div onClick="{{ m.onClick }}" style="display:flex;align-items:center;gap:15px;padding:15px 18px;border-bottom:1.5px solid #1c221b;cursor:pointer;background:{{ m.bg }};border-left:3px solid {{ m.bar }}" style-hover="background:#191e18">
+                  <div style="flex:1;min-width:0"><div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:19.5px;color:{{ m.fg }}">{{ m.name }}</div><div style="font-family:'JetBrains Mono';font-size:13.5px;color:#8b9184">{{ m.duration }}</div></div>
+                  <span style="font-family:'JetBrains Mono';font-size:14.25px;color:#5f665c">{{ m.quests }} q</span>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="background:#141813;border:1.5px solid #262d25">
+              <div style="padding:24px 27px;border-bottom:1.5px solid #262d25">
+                <div style="font-family:'Chakra Petch';font-weight:600;font-size:25.5px;letter-spacing:1.5px;color:#e6e4da">{{ maps.detail.name }}</div>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px">
+                  <div style="background:#0d100e;border:1.5px solid #262d25;padding:12px 15px"><div style="font-family:'Chakra Petch';font-size:12px;letter-spacing:1.5px;color:#5f665c">PLAYERS</div><div style="font-family:'JetBrains Mono';font-weight:600;font-size:19.5px;color:#e6e4da;margin-top:3px">{{ maps.detail.players }}</div></div>
+                  <div style="background:#0d100e;border:1.5px solid #262d25;padding:12px 15px"><div style="font-family:'Chakra Petch';font-size:12px;letter-spacing:1.5px;color:#5f665c">RAID</div><div style="font-family:'JetBrains Mono';font-weight:600;font-size:19.5px;color:#e6e4da;margin-top:3px">{{ maps.detail.duration }}</div></div>
+                  <div style="background:#0d100e;border:1.5px solid #262d25;padding:12px 15px"><div style="font-family:'Chakra Petch';font-size:12px;letter-spacing:1.5px;color:#5f665c">QUESTS</div><div style="font-family:'JetBrains Mono';font-weight:600;font-size:19.5px;color:var(--accent);margin-top:3px">{{ maps.detail.quests }}</div></div>
+                  <div style="background:#0d100e;border:1.5px solid #262d25;padding:12px 15px"><div style="font-family:'Chakra Petch';font-size:12px;letter-spacing:1.5px;color:#5f665c">EXTRACTS</div><div style="font-family:'JetBrains Mono';font-weight:600;font-size:19.5px;color:#e6e4da;margin-top:3px"><sc-for list="{{ maps.detail.extracts }}" as="e" hint-placeholder-count="1">·</sc-for></div></div>
+                </div>
+              </div>
+
+              <div style="padding:21px 27px">
+                <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin-bottom:12px">EXTRACTS</div>
+                <sc-for list="{{ maps.detail.extracts }}" as="e" hint-placeholder-count="3">
+                  <div style="display:flex;align-items:center;gap:15px;padding:12px 15px;background:#10130f;border:1.5px solid #262d25;margin-bottom:9px">
+                    <span style="width:9px;height:9px;flex:none;background:{{ e.dot }};border-radius:50%"></span>
+                    <span style="flex:1;font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;color:#e6e4da">{{ e.name }}</span>
+                    <span style="font-family:'JetBrains Mono';font-size:13.5px;color:#5f665c">{{ e.req }}</span>
+                    <span style="font-family:'JetBrains Mono';font-size:13.5px;letter-spacing:.7.5px;color:{{ e.sideColor }};border:1.5px solid #333b31;padding:3px 9px;min-width:69px;text-align:center">{{ e.side }}</span>
+                  </div>
+                </sc-for>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+                  <div style="background:#10130f;border:1.5px solid #262d25;padding:16.5px 18px">
+                    <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin-bottom:12px">BOSS</div>
+                    <sc-for list="{{ maps.detail.bosses }}" as="b" hint-placeholder-count="1">
+                      <div style="display:flex;align-items:center;justify-content:space-between"><span style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:19.5px;color:#e6e4da">{{ b.name }}</span><span style="font-family:'JetBrains Mono';font-weight:600;font-size:16.5px;color:#c15b4e">{{ b.chance }}</span></div>
+                    </sc-for>
+                  </div>
+                  <div style="background:#10130f;border:1.5px solid #262d25;padding:16.5px 18px">
+                    <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin-bottom:12px">HOT ZONES</div>
+                    <div style="font-family:'Barlow Semi Condensed';font-size:18px;color:#b8b6ac">{{ maps.detail.hot }}</div>
+                  </div>
+                </div>
+
+                <div style="margin-top:21px;display:flex;align-items:center;gap:12px;font-family:'JetBrains Mono';font-size:15px;background:#1a1710;border:1.5px solid #3a3115;padding:12px 18px">
+                  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color:var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                  <span style="color:#c9a24b">GAP FLAG — no Map type in slice1 types.ts. tarkov.dev exposes a maps query (name, players, extracts, bosses, spawns); extract requirements &amp; boss chances shown are mocked to that shape.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ show.progression }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:{{ L.screenPad }};min-width:{{ L.minW }};max-width:1650px">
+          <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:9px">
+            <div style="width:4.5px;height:33px;background:#8b9184"></div>
+            <h1 style="margin:0;font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:28.5px;letter-spacing:3.75px;color:#e6e4da">PROGRESSION</h1>
+            <span style="font-family:'JetBrains Mono';font-size:15px;font-weight:600;letter-spacing:.7.5px;color:#0d100e;background:var(--accent);padding:3px 10.5px">LOCAL PREVIEW</span>
+          </div>
+          <p style="font-family:'Barlow Semi Condensed';font-size:19.5px;color:#8b9184;margin:0 0 24px;max-width:960px">Track PMC level, completed quests and hideout station levels. Edits below are live and held in-memory for this session — a signed-in account store (Slice 2) will persist and sync them across devices. Quests whose prerequisites aren't complete stay locked.</p>
+
+          <div style="display:grid;grid-template-columns:{{ L.threeCols }};gap:18px;margin-bottom:18px">
+            <div style="background:#141813;border:1.5px solid #262d25;padding:21px 22.5px">
+              <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin-bottom:15px">PMC LEVEL</div>
+              <div style="display:flex;align-items:center;gap:15px">
+                <button onClick="{{ progression.onDec }}" style="width:42px;height:42px;flex:none;background:#0d100e;border:1.5px solid #333b31;color:#e6e4da;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="border-color:var(--accent);color:var(--accent)">−</button>
+                <span style="flex:1;text-align:center;font-family:'JetBrains Mono';font-weight:700;font-size:39px;color:var(--accent);line-height:1">{{ progression.pmcLevel }}</span>
+                <button onClick="{{ progression.onInc }}" style="width:42px;height:42px;flex:none;background:#0d100e;border:1.5px solid #333b31;color:#e6e4da;font-size:24px;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="border-color:var(--accent);color:var(--accent)">+</button>
+              </div>
+            </div>
+            <div style="background:#141813;border:1.5px solid #262d25;padding:21px 22.5px">
+              <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin-bottom:15px">QUESTS COMPLETE</div>
+              <div style="font-family:'JetBrains Mono';font-weight:700;font-size:36px;color:#e6e4da;line-height:1">{{ progression.questDone }}<span style="font-size:19.5px;color:#5f665c"> / {{ progression.questTotal }}</span></div>
+              <div style="height:7.5px;background:#0d100e;margin-top:15px;border:1.5px solid #262d25"><div style="height:100%;width:{{ progression.questPct }};background:#6ea862"></div></div>
+            </div>
+            <div style="background:#141813;border:1.5px solid #262d25;padding:21px 22.5px">
+              <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin-bottom:15px">HIDEOUT MODULES</div>
+              <div style="font-family:'JetBrains Mono';font-weight:700;font-size:36px;color:#e6e4da;line-height:1">{{ progression.hideoutLv }}<span style="font-size:19.5px;color:#5f665c"> / {{ progression.hideoutMax }}</span></div>
+              <div style="height:7.5px;background:#0d100e;margin-top:15px;border:1.5px solid #262d25"><div style="height:100%;width:{{ progression.hideoutPct }};background:var(--accent)"></div></div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:{{ L.dashPanels }};gap:18px;align-items:start">
+            <div style="background:#141813;border:1.5px solid #262d25">
+              <div style="padding:16.5px 22.5px;border-bottom:1.5px solid #262d25;font-family:'Chakra Petch';font-size:15.75px;letter-spacing:2.25px;color:#e6e4da">QUEST CHECKLIST</div>
+              <sc-for list="{{ progression.groups }}" as="g" hint-placeholder-count="4">
+                <div style="padding:12px 22.5px 4.5px;font-family:'Chakra Petch';font-size:13.5px;letter-spacing:2.25px;color:#5f665c;background:#10130f;border-bottom:1.5px solid #1c221b">{{ g.trader }}</div>
+                <sc-for list="{{ g.tasks }}" as="t" hint-placeholder-count="2">
+                  <div onClick="{{ t.onToggle }}" style="display:flex;align-items:center;gap:15px;padding:12px 22.5px;border-bottom:1.5px solid #1c221b;cursor:pointer" style-hover="background:#191e18">
+                    <span style="width:24px;height:24px;flex:none;background:{{ t.boxBg }};border:1.5px solid {{ t.boxBd }};display:flex;align-items:center;justify-content:center">
+                      <sc-if value="{{ t.done }}" hint-placeholder-val="{{ false }}"><svg width="16.5" height="16.5" viewBox="0 0 24 24" fill="none" stroke="#0d100e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></sc-if>
+                      <sc-if value="{{ t.locked }}" hint-placeholder-val="{{ false }}"><svg width="13.5" height="13.5" viewBox="0 0 24 24" fill="none" stroke="#5f665c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></sc-if>
+                    </span>
+                    <div style="flex:1;min-width:0"><span style="font-family:'Barlow Semi Condensed';font-size:18.75px;color:{{ t.nameColor }};text-decoration:{{ t.deco }}">{{ t.name }}</span><sc-if value="{{ t.locked }}" hint-placeholder-val="{{ false }}"><div style="font-family:'JetBrains Mono';font-size:12.75px;color:#5f665c">requires {{ t.prereq }}</div></sc-if></div>
+                    <span style="font-family:'JetBrains Mono';font-size:13.5px;color:#5f665c">L{{ t.level }}</span>
+                  </div>
+                </sc-for>
+              </sc-for>
+            </div>
+
+            <div style="background:#141813;border:1.5px solid #262d25">
+              <div style="padding:16.5px 22.5px;border-bottom:1.5px solid #262d25;font-family:'Chakra Petch';font-size:15.75px;letter-spacing:2.25px;color:#e6e4da">HIDEOUT STATIONS</div>
+              <sc-for list="{{ progression.stations }}" as="s" hint-placeholder-count="8">
+                <div style="display:flex;align-items:center;gap:15px;padding:13.5px 22.5px;border-bottom:1.5px solid #1c221b">
+                  <div style="flex:1;min-width:0"><div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;color:#e6e4da">{{ s.name }}</div><div style="font-family:'JetBrains Mono';font-size:13.5px;color:#5f665c">level {{ s.cur }} / {{ s.max }}</div></div>
+                  <div style="display:flex;gap:6px">
+                    <sc-for list="{{ s.pips }}" as="p" hint-placeholder-count="3">
+                      <button onClick="{{ p.onClick }}" style="width:30px;height:22.5px;background:{{ p.color }};border:1.5px solid #333b31;cursor:pointer;padding:0"></button>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ show.scan }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:{{ L.screenPad }};min-width:{{ L.minW }};max-width:1650px">
+          <div style="display:flex;align-items:baseline;gap:18px;margin-bottom:9px">
+            <div style="width:4.5px;height:33px;background:var(--accent)"></div>
+            <h1 style="margin:0;font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:28.5px;letter-spacing:3.75px;color:#e6e4da">SCAN · KEEP / SELL</h1>
+            <span style="font-family:'JetBrains Mono';font-size:16.5px;color:#5f665c">// stash triage</span>
+          </div>
+          <p style="font-family:'Barlow Semi Condensed';font-size:19.5px;color:#8b9184;margin:0 0 24px;max-width:1020px">Drop a stash screenshot → per-item KEEP / PARTIAL / SELL verdicts from the RequirementsIndex, then sell surplus in one tap. Vision OCR isn't wired yet — run the demo scan to preview the flow with mock detections.</p>
+
+          <div style="display:grid;grid-template-columns:{{ L.scanCols }};gap:21px;align-items:start">
+            <div>
+              <sc-if value="{{ scan.isResults }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#10130f;border:1.5px solid #333b31;padding:18px;display:flex;align-items:center;gap:15px">
+                  <div style="width:48px;height:48px;flex:none;background:#141813;border:1.5px solid #333b31;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6ea862" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></div>
+                  <div style="flex:1;min-width:0"><div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:17.25px;color:#e6e4da">stash_2026-07-01.png</div><div style="font-family:'JetBrains Mono';font-size:13.5px;color:#6ea862">6 items detected</div></div>
+                  <button onClick="{{ scan.onReset }}" style="font-family:'Chakra Petch';font-size:13.5px;letter-spacing:1.5px;color:#8b9184;background:#141813;border:1.5px solid #333b31;padding:7.5px 15px;cursor:pointer" style-hover="color:#e6e4da">RESCAN</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ scan.isEmpty }}" hint-placeholder-val="{{ true }}">
+                <div style="border:2.25px dashed #3a433a;background:#10130f;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;padding:36px 24px;text-align:center">
+                  <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="#8b9184" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+                  <div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:19.5px;color:#e6e4da">Drop stash screenshot</div>
+                  <div style="font-family:'JetBrains Mono';font-size:14.25px;color:#5f665c">PNG / JPG · vision OCR (soon)</div>
+                  <button onClick="{{ scan.onStart }}" style="margin-top:6px;font-family:'Chakra Petch';font-weight:600;font-size:15px;letter-spacing:1.5px;color:#0d100e;background:var(--accent);border:none;padding:10.5px 24px;cursor:pointer">RUN DEMO SCAN</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ scan.isScanning }}" hint-placeholder-val="{{ false }}">
+                <div style="border:1.5px solid #333b31;background:#10130f;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;padding:39px 24px;text-align:center">
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" style="animation:tsspin 0.9s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                  <div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;color:#e6e4da">Reading stash grid…</div>
+                  <div style="font-family:'JetBrains Mono';font-size:13.5px;color:#5f665c">matching against RequirementsIndex</div>
+                </div>
+              </sc-if>
+
+              <div style="margin-top:18px;background:#141813;border:1.5px solid #262d25;padding:18px">
+                <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin-bottom:13.5px">NEEDS HORIZON</div>
+                <div style="display:flex;flex-direction:column;gap:7.5px">
+                  <sc-for list="{{ scan.horizons }}" as="h" hint-placeholder-count="3">
+                    <button onClick="{{ h.onClick }}" style="text-align:left;font-family:'Barlow Semi Condensed';font-weight:600;font-size:18px;padding:10.5px 15px;cursor:pointer;background:{{ h.bg }};color:{{ h.fg }};border:1.5px solid {{ h.bd }}">{{ h.label }}</button>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="margin-top:15px;display:flex;flex-direction:column;gap:7.5px">
+                <div style="display:flex;align-items:center;gap:12px"><span style="width:16.5px;height:16.5px;background:#6ea862"></span><span style="font-family:'JetBrains Mono';font-size:15px;color:#8b9184">KEEP — needed by quest/hideout</span></div>
+                <div style="display:flex;align-items:center;gap:12px"><span style="width:16.5px;height:16.5px;background:var(--accent)"></span><span style="font-family:'JetBrains Mono';font-size:15px;color:#8b9184">PARTIAL — keep some, sell rest</span></div>
+                <div style="display:flex;align-items:center;gap:12px"><span style="width:16.5px;height:16.5px;background:#c15b4e"></span><span style="font-family:'JetBrains Mono';font-size:15px;color:#8b9184">SELL — surplus</span></div>
+              </div>
+            </div>
+
+            <div>
+              <sc-if value="{{ scan.isEmpty }}" hint-placeholder-val="{{ true }}">
+                <div style="background:#141813;border:1.5px solid #262d25;padding:72px 30px;display:flex;flex-direction:column;align-items:center;gap:15px;text-align:center">
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#3a433a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg>
+                  <div style="font-family:'Chakra Petch';font-weight:600;font-size:19.5px;letter-spacing:1.5px;color:#8b9184">AWAITING STASH</div>
+                  <div style="font-family:'Barlow Semi Condensed';font-size:17.25px;color:#5f665c;max-width:400px">Drop a screenshot or run the demo scan. Each detected item gets a KEEP / PARTIAL / SELL verdict against your current needs horizon.</div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ scan.isScanning }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#141813;border:1.5px solid #262d25">
+                  <sc-for list="{{ scan.skeleton }}" as="s" hint-placeholder-count="6">
+                    <div style="display:flex;align-items:center;gap:15px;padding:13.5px 18px;border-bottom:1.5px solid #1c221b;animation:tspulse 1.2s ease-in-out infinite">
+                      <div style="width:42px;height:42px;flex:none;background:#20261e"></div>
+                      <div style="flex:1;height:15px;background:#20261e"></div>
+                      <div style="width:96px;height:15px;background:#20261e"></div>
+                      <div style="width:120px;height:15px;background:#20261e"></div>
+                      <div style="width:72px;height:15px;background:#20261e"></div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ scan.isResults }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;align-items:center;gap:15px;padding:15px 18px;background:#141813;border:1.5px solid #262d25;border-bottom:none;flex-wrap:wrap">
+                  <div style="flex:1;min-width:0"><div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184">SURPLUS TO SELL</div><div style="font-family:'JetBrains Mono';font-size:14.25px;color:#5f665c;margin-top:3px">{{ scan.surplusCount }} stacks remaining</div></div>
+                  <div style="font-family:'JetBrains Mono';font-weight:700;font-size:24px;color:#6ea862">{{ scan.surplusTotal }}</div>
+                  <button onClick="{{ scan.onSellAll }}" style="font-family:'Chakra Petch';font-weight:600;font-size:14.25px;letter-spacing:1.5px;color:#0d100e;background:#6ea862;border:none;padding:12px 21px;cursor:pointer" style-hover="background:#7fbf72">SELL ALL SURPLUS</button>
+                </div>
+                <div style="background:#141813;border:1.5px solid #262d25">
+                  <div style="display:grid;grid-template-columns:60px 1fr 120px 174px 1fr 120px 132px;background:#10130f;border-bottom:1.5px solid #333b31">
+                    <div style="padding:12px 12px"></div>
+                    <div style="padding:12px 15px;font-family:'Chakra Petch';font-size:13.5px;letter-spacing:1.5px;color:#8b9184">ITEM</div>
+                    <div style="padding:12px 15px;font-family:'Chakra Petch';font-size:13.5px;letter-spacing:1.5px;color:#8b9184">VERDICT</div>
+                    <div style="padding:12px 15px;font-family:'Chakra Petch';font-size:13.5px;letter-spacing:1.5px;color:#8b9184;text-align:right">OWN / KEEP / SURPLUS</div>
+                    <div style="padding:12px 15px;font-family:'Chakra Petch';font-size:13.5px;letter-spacing:1.5px;color:#8b9184">REASON</div>
+                    <div style="padding:12px 15px;font-family:'Chakra Petch';font-size:13.5px;letter-spacing:1.5px;color:#8b9184;text-align:right">BEST SELL</div>
+                    <div style="padding:12px 15px;font-family:'Chakra Petch';font-size:13.5px;letter-spacing:1.5px;color:#8b9184;text-align:center">ACTION</div>
+                  </div>
+                  <sc-for list="{{ scan.rows }}" as="r" hint-placeholder-count="6">
+                    <div style="display:grid;grid-template-columns:60px 1fr 120px 174px 1fr 120px 132px;align-items:center;background:{{ r.bg }};border-bottom:1.5px solid #1c221b;border-left:4.5px solid {{ r.verdictColor }};opacity:{{ r.rowOpacity }}">
+                      <div style="padding:9px 12px"><div style="width:42px;height:42px;background:#0d100e;border:1.5px solid #333b31;border-left:3px solid {{ r.tier }};display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:10.5px;color:{{ r.tier }}">{{ r.short }}</div></div>
+                      <div style="padding:9px 15px;min-width:0"><div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:18px;color:#e6e4da;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.name }}</div><div style="font-family:'JetBrains Mono';font-size:12.75px;color:{{ r.firColor }}">{{ r.firLabel }}</div></div>
+                      <div style="padding:9px 15px"><span style="font-family:'Chakra Petch';font-weight:600;font-size:14.25px;letter-spacing:.7.5px;color:{{ r.verdictColor }};border:1.5px solid {{ r.verdictColor }};padding:3px 9px">{{ r.verdict }}</span></div>
+                      <div style="padding:9px 15px;text-align:right;font-family:'JetBrains Mono';font-size:16.5px;color:#b8b6ac">{{ r.own }} / <span style="color:#6ea862">{{ r.keep }}</span> / <span style="color:#c15b4e">{{ r.surplus }}</span></div>
+                      <div style="padding:9px 15px;font-family:'Barlow Semi Condensed';font-size:16.5px;color:#8b9184">{{ r.reason }}</div>
+                      <div style="padding:9px 15px;text-align:right;font-family:'JetBrains Mono';font-size:16.5px;color:#6ea862">{{ r.sell }}</div>
+                      <div style="padding:9px 12px;text-align:center">
+                        <sc-if value="{{ r.hasSurplus }}" hint-placeholder-val="{{ true }}"><button onClick="{{ r.onSell }}" style="font-family:'Chakra Petch';font-size:12.75px;letter-spacing:1px;color:#c15b4e;background:none;border:1.5px solid #5a2a24;padding:4.5px 12px;cursor:pointer" style-hover="background:#2a1512">SELL</button></sc-if>
+                      </div>
+                    </div>
+                  </sc-for>
+                  <div style="display:flex;align-items:center;gap:12px;font-family:'JetBrains Mono';font-size:15px;background:#1a1710;padding:12px 18px">
+                    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="color:var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                    <span style="color:#c9a24b">GAP FLAG — verdict / own-keep-surplus / horizon is the intended RequirementsIndex output. Detection is mocked; no vision pipeline exists yet.</span>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+
+  <nav style="display:{{ L.tabbar }};position:fixed;left:0;right:0;bottom:0;z-index:35;background:#10130f;border-top:1.5px solid #262d25;justify-content:space-around;padding:6px 3px 9px">
+    <button onClick="{{ go.dashboard }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;background:none;border:none;padding:6px 0;cursor:pointer;color:{{ nav.dashboard.fg }};font-family:'Chakra Petch';font-size:11.25px;letter-spacing:.75px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>DASH</button>
+    <button onClick="{{ go.items }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;background:none;border:none;padding:6px 0;cursor:pointer;color:{{ nav.items.fg }};font-family:'Chakra Petch';font-size:11.25px;letter-spacing:.75px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>ITEMS</button>
+    <button onClick="{{ go.ammo }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;background:none;border:none;padding:6px 0;cursor:pointer;color:{{ nav.ammo.fg }};font-family:'Chakra Petch';font-size:11.25px;letter-spacing:.75px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></svg>AMMO</button>
+    <button onClick="{{ go.tasks }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;background:none;border:none;padding:6px 0;cursor:pointer;color:{{ nav.tasks.fg }};font-family:'Chakra Petch';font-size:11.25px;letter-spacing:.75px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>TASKS</button>
+    <button onClick="{{ go.maps }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;background:none;border:none;padding:6px 0;cursor:pointer;color:{{ nav.maps.fg }};font-family:'Chakra Petch';font-size:11.25px;letter-spacing:.75px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M9 4v13"/><path d="M15 7v13"/></svg>MAPS</button>
+    <button onClick="{{ go.hideout }}" style="display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;background:none;border:none;padding:6px 0;cursor:pointer;color:{{ nav.hideout.fg }};font-family:'Chakra Petch';font-size:11.25px;letter-spacing:.75px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 8.35V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8.35A2 2 0 0 1 3.26 6.5l8-3.2a2 2 0 0 1 1.48 0l8 3.2A2 2 0 0 1 22 8.35Z"/><path d="M6 18h12"/><path d="M6 14h12"/></svg>BASE</button>
+  </nav>
+
+  <sc-if value="{{ show.detail }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ go.closeDetail }}" style="position:fixed;inset:0;background:rgba(6,8,7,.6);z-index:40"></div>
+    <div style="position:fixed;top:0;right:0;bottom:0;width:630px;background:#12160f;border-left:1.5px solid #333b31;z-index:41;display:flex;flex-direction:column;box-shadow:-15px 0 60px rgba(0,0,0,.5)">
+      <div style="display:flex;align-items:flex-start;gap:21px;padding:27px;border-bottom:1.5px solid #262d25">
+        <div style="width:96px;height:{{ detail.tileH }};flex:none;background:#0d100e;border:1.5px solid #333b31;border-left:4.5px solid {{ detail.tier }};display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:13.5px;color:{{ detail.tier }}">{{ detail.short }}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-family:'Chakra Petch';font-weight:600;font-size:24px;letter-spacing:.7.5px;color:#e6e4da;line-height:1.15">{{ detail.name }}</div>
+          <div style="font-family:'JetBrains Mono';font-size:15px;color:#5f665c;margin-top:4.5px">{{ detail.id }}</div>
+          <div style="display:flex;gap:7.5px;margin-top:12px;flex-wrap:wrap">
+            <sc-for list="{{ detail.types }}" as="ty" hint-placeholder-count="2"><span style="font-family:'JetBrains Mono';font-size:13.5px;text-transform:uppercase;letter-spacing:.7.5px;color:{{ detail.tier }};border:1.5px solid #333b31;padding:3px 9px">{{ ty }}</span></sc-for>
+          </div>
+        </div>
+        <button onClick="{{ go.closeDetail }}" style="background:none;border:1.5px solid #333b31;color:#8b9184;width:39px;height:39px;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="color:#e6e4da;border-color:#5f665c"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+      </div>
+
+      <div style="flex:1;overflow-y:auto;padding:24px 27px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:27px">
+          <div style="background:#0d100e;border:1.5px solid #262d25;padding:13.5px 16.5px"><div style="font-family:'Chakra Petch';font-size:12.75px;letter-spacing:1.5px;color:#5f665c">GRID SIZE</div><div style="font-family:'JetBrains Mono';font-weight:600;font-size:21px;color:#e6e4da;margin-top:4.5px">{{ detail.size }}</div></div>
+          <div style="background:#0d100e;border:1.5px solid #262d25;padding:13.5px 16.5px"><div style="font-family:'Chakra Petch';font-size:12.75px;letter-spacing:1.5px;color:#5f665c">BASE PRICE</div><div style="font-family:'JetBrains Mono';font-weight:600;font-size:21px;color:#e6e4da;margin-top:4.5px">{{ detail.base }}</div></div>
+        </div>
+
+        <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin-bottom:12px">NEEDED BY · QUESTS</div>
+        <sc-if value="{{ detail.hasTasks }}" hint-placeholder-val="{{ true }}">
+          <sc-for list="{{ detail.tasks }}" as="q" hint-placeholder-count="2">
+            <div style="display:flex;align-items:center;gap:15px;padding:12px 15px;background:#10130f;border:1.5px solid #262d25;border-left:3px solid var(--accent);margin-bottom:9px">
+              <span style="font-family:'JetBrains Mono';font-weight:600;font-size:18px;color:var(--accent);min-width:45px">{{ q.count }}×</span>
+              <div style="flex:1;min-width:0"><div style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;color:#e6e4da">{{ q.taskName }}</div><div style="font-family:'JetBrains Mono';font-size:13.5px;color:#5f665c">min level {{ q.minPlayerLevel }}</div></div>
+              <sc-if value="{{ q.foundInRaid }}" hint-placeholder-val="{{ true }}"><span style="display:flex;align-items:center;gap:4.5px;font-family:'JetBrains Mono';font-size:12.75px;font-weight:600;color:#5aa9a0;border:1.5px solid #2f4f4c;background:#0f1817;padding:3px 7.5px"><svg width="13.5" height="13.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg>FIR</span></sc-if>
+            </div>
+          </sc-for>
+        </sc-if>
+        <sc-if value="{{ detail.noTasks }}" hint-placeholder-val="{{ false }}"><div style="font-family:'JetBrains Mono';font-size:15.75px;color:#5f665c;padding:3px 0 6px">— none</div></sc-if>
+
+        <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin:24px 0 12px">NEEDED BY · HIDEOUT</div>
+        <sc-if value="{{ detail.hasHideout }}" hint-placeholder-val="{{ true }}">
+          <sc-for list="{{ detail.hideout }}" as="h" hint-placeholder-count="2">
+            <div style="display:flex;align-items:center;gap:15px;padding:12px 15px;background:#10130f;border:1.5px solid #262d25;border-left:3px solid #7d9b6a;margin-bottom:9px">
+              <span style="font-family:'JetBrains Mono';font-weight:600;font-size:18px;color:var(--accent);min-width:45px">{{ h.count }}×</span>
+              <div style="flex:1"><span style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;color:#e6e4da">{{ h.stationName }}</span></div>
+              <span style="font-family:'JetBrains Mono';font-size:15px;color:#8b9184;border:1.5px solid #333b31;padding:3px 9px">LVL {{ h.level }}</span>
+            </div>
+          </sc-for>
+        </sc-if>
+        <sc-if value="{{ detail.noHideout }}" hint-placeholder-val="{{ false }}"><div style="font-family:'JetBrains Mono';font-size:15.75px;color:#5f665c;padding:3px 0 6px">— none</div></sc-if>
+
+        <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin:24px 0 12px">SELL FOR</div>
+        <sc-for list="{{ detail.sellFor }}" as="v" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16.5px;background:{{ v.bg }};border:1.5px solid {{ v.bd }};margin-bottom:7.5px">
+            <div style="display:flex;align-items:center;gap:12px"><span style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;color:{{ v.nameColor }}">{{ v.source }}</span><sc-if value="{{ v.best }}" hint-placeholder-val="{{ false }}"><span style="font-family:'Chakra Petch';font-size:12px;letter-spacing:.7.5px;color:#0d100e;background:#6ea862;padding:1.5px 7.5px">BEST</span></sc-if></div>
+            <span style="font-family:'JetBrains Mono';font-weight:600;font-size:19.5px;color:{{ v.priceColor }}">{{ v.price }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ show.ammoDetail }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeAmmo }}" style="position:fixed;inset:0;background:rgba(6,8,7,.6);z-index:40"></div>
+    <div style="position:fixed;top:0;right:0;bottom:0;width:630px;background:#12160f;border-left:1.5px solid #333b31;z-index:41;display:flex;flex-direction:column;box-shadow:-15px 0 60px rgba(0,0,0,.5)">
+      <div style="display:flex;align-items:flex-start;gap:21px;padding:27px;border-bottom:1.5px solid #262d25">
+        <div style="width:78px;height:78px;flex:none;background:#0d100e;border:1.5px solid #333b31;border-left:4.5px solid {{ ammoDetail.tierColor }};display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-size:15px;color:{{ ammoDetail.tierColor }}">{{ ammoDetail.calShort }}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-family:'Chakra Petch';font-weight:600;font-size:24px;letter-spacing:.7.5px;color:#e6e4da;line-height:1.15">{{ ammoDetail.name }}</div>
+          <div style="font-family:'JetBrains Mono';font-size:15px;color:#8b9184;margin-top:4.5px">{{ ammoDetail.caliber }}</div>
+          <div style="display:flex;gap:7.5px;margin-top:12px;flex-wrap:wrap">
+            <span style="font-family:'JetBrains Mono';font-size:13.5px;text-transform:uppercase;letter-spacing:.7.5px;color:{{ ammoDetail.tierColor }};border:1.5px solid #333b31;padding:3px 9px">{{ ammoDetail.ammoType }}</span>
+            <sc-if value="{{ ammoDetail.tracer }}" hint-placeholder-val="{{ false }}"><span style="font-family:'JetBrains Mono';font-size:13.5px;letter-spacing:.7.5px;color:#9ccb4f;border:1.5px solid #3a4a2a;padding:3px 9px">{{ ammoDetail.tracerLabel }}</span></sc-if>
+          </div>
+        </div>
+        <button onClick="{{ closeAmmo }}" style="background:none;border:1.5px solid #333b31;color:#8b9184;width:39px;height:39px;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="color:#e6e4da;border-color:#5f665c"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+      </div>
+
+      <div style="flex:1;overflow-y:auto;padding:24px 27px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:27px">
+          <div style="background:#0d100e;border:1.5px solid #262d25;padding:13.5px 16.5px"><div style="font-family:'Chakra Petch';font-size:12.75px;letter-spacing:1.5px;color:#5f665c">DAMAGE</div><div style="font-family:'JetBrains Mono';font-weight:700;font-size:24px;color:#e6e4da;margin-top:4.5px">{{ ammoDetail.damage }}</div><div style="font-family:'JetBrains Mono';font-size:12.75px;color:#5f665c">{{ ammoDetail.totalDamage }}</div></div>
+          <div style="background:#0d100e;border:1.5px solid #262d25;padding:13.5px 16.5px"><div style="font-family:'Chakra Petch';font-size:12.75px;letter-spacing:1.5px;color:#5f665c">PENETRATION</div><div style="font-family:'JetBrains Mono';font-weight:700;font-size:24px;margin-top:4.5px;color:{{ ammoDetail.tierColor }}">{{ ammoDetail.pen }}</div></div>
+          <div style="background:#0d100e;border:1.5px solid #262d25;padding:13.5px 16.5px"><div style="font-family:'Chakra Petch';font-size:12.75px;letter-spacing:1.5px;color:#5f665c">ARMOR DMG</div><div style="font-family:'JetBrains Mono';font-weight:700;font-size:24px;color:#e6e4da;margin-top:4.5px">{{ ammoDetail.armorDamage }}</div></div>
+        </div>
+
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px">
+          <span style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184">VS ARMOR CLASS</span>
+          <span style="font-family:'JetBrains Mono';font-size:12.75px;color:#5f665c">derived · not from API</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:9px">
+          <sc-for list="{{ ammoDetail.classes }}" as="c" hint-placeholder-count="6">
+            <div style="height:45px;display:flex;align-items:center;justify-content:center;background:{{ c.color }};border:1.5px solid #262d25;font-family:'Chakra Petch';font-weight:700;font-size:16.5px;color:{{ c.fg }}">{{ c.label }}</div>
+          </sc-for>
+        </div>
+        <div style="font-family:'JetBrains Mono';font-size:14.25px;color:#8b9184;margin-bottom:27px">{{ ammoDetail.classNote }}</div>
+
+        <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin-bottom:13.5px">CHANCES</div>
+        <sc-for list="{{ ammoDetail.chances }}" as="c" hint-placeholder-count="3">
+          <div style="margin-bottom:13.5px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4.5px"><span style="font-family:'Barlow Semi Condensed';font-size:17.25px;color:#b8b6ac">{{ c.label }}</span><span style="font-family:'JetBrains Mono';font-weight:600;font-size:17.25px;color:{{ c.color }}">{{ c.pct }}</span></div>
+            <div style="height:7.5px;background:#0d100e;border:1.5px solid #262d25"><div style="height:100%;width:{{ c.bar }};background:{{ c.color }}"></div></div>
+          </div>
+        </sc-for>
+
+        <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin:24px 0 12px">BALLISTICS</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+          <sc-for list="{{ ammoDetail.ballistics }}" as="b" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10.5px 15px;background:#0d100e;border:1.5px solid #262d25"><span style="font-family:'Chakra Petch';font-size:12.75px;letter-spacing:1.5px;color:#5f665c">{{ b.label }}</span><span style="font-family:'JetBrains Mono';font-weight:600;font-size:17.25px;color:#e6e4da">{{ b.val }}</span></div>
+          </sc-for>
+        </div>
+
+        <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin:24px 0 12px">EFFECT MODIFIERS</div>
+        <sc-for list="{{ ammoDetail.mods }}" as="m" hint-placeholder-count="5">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 15px;border-bottom:1.5px solid #1c221b"><span style="font-family:'Barlow Semi Condensed';font-size:17.25px;color:#b8b6ac">{{ m.label }}</span><span style="font-family:'JetBrains Mono';font-weight:600;font-size:17.25px;color:{{ m.color }}">{{ m.val }}</span></div>
+        </sc-for>
+
+        <div style="font-family:'Chakra Petch';font-size:14.25px;letter-spacing:2.25px;color:#8b9184;margin:24px 0 12px">MARKET</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16.5px;background:#131c13;border:1.5px solid #2e4a2b">
+          <span style="font-family:'Barlow Semi Condensed';font-weight:600;font-size:18.75px;color:#e6e4da">Flea (per round)</span>
+          <span style="font-family:'JetBrains Mono';font-weight:600;font-size:19.5px;color:#6ea862">{{ ammoDetail.price }}</span>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#0d100e"/><g transform="translate(50 50)"><path d="M0 -22 -18 -14 -18 6 C-18 18 -9 24 0 27 9 24 18 18 18 6 L18 -14Z" fill="none" stroke="currentColor" style="color:var(--accent)" stroke-width="4"/><path d="M0 -6 L0 8 M0 15 L0 15.5" stroke="currentColor" style="color:var(--accent)" stroke-width="4" stroke-linecap="round"/></g></svg></template>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:820},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#e8b923&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#e8b923&quot;,&quot;#c9964b&quot;,&quot;#5aa9a0&quot;,&quot;#c15b4e&quot;],&quot;section&quot;:&quot;Theme&quot;},&quot;layout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;auto&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;desktop&quot;,&quot;narrow&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;zebra&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Density&quot;},&quot;gridBackdrop&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Theme&quot;}}">
+class Component extends DCLogic {
+  state = {
+    screen: 'dashboard', selectedItemId: null, search: '',
+    itemType: 'all', itemSort: { key: 'name', dir: 1 },
+    ammoSort: { key: 'penetrationPower', dir: -1 }, ammoCaliber: 'all', selectedAmmo: null, ammoView: 'table',
+    taskTrader: 'all', taskDetailId: null,
+    traderId: 'prapor', hideoutOpenId: 'generator', horizon: 'all',
+    mapId: 'customs',
+    scanStage: 'empty', scanSold: [],
+    conn: 'online', narrow: false, showMobileSearch: false, kbIndex: -1,
+    prog: { pmcLevel: 15, completed: { t1: true, t4: true, t7: true }, hideout: { stash: 2, generator: 1, water: 0, medstation: 1, workbench: 0, intel: 0, lavatory: 0, bitcoin: 0 } }
+  };
+
+  componentDidMount() {
+    this._onResize = () => { const n = window.innerWidth < 860; if (n !== this.state.narrow) this.setState({ narrow: n }); };
+    this._onResize();
+    window.addEventListener('resize', this._onResize);
+    this._onKey = (e) => {
+      const tag = (e.target.tagName || '').toLowerCase();
+      const typing = tag === 'input' || tag === 'textarea';
+      if (e.key === '/' && !typing) { e.preventDefault(); const el = document.getElementById('ts-search'); if (el) el.focus(); return; }
+      if (e.key === 'Escape') { if (typing) { e.target.blur(); } else { this.setState({ selectedItemId: null, selectedAmmo: null, taskDetailId: null, showMobileSearch: false, kbIndex: -1 }); } return; }
+      if (typing) return;
+      const list = this._kbList || [];
+      if (!list.length) return;
+      if (e.key === 'ArrowDown' || e.key === 'j') { e.preventDefault(); this.setState(s => ({ kbIndex: Math.min(list.length - 1, s.kbIndex + 1) })); }
+      else if (e.key === 'ArrowUp' || e.key === 'k') { e.preventDefault(); this.setState(s => ({ kbIndex: Math.max(0, (s.kbIndex < 0 ? 0 : s.kbIndex) - 1) })); }
+      else if (e.key === 'Enter') { const fn = list[this.state.kbIndex]; if (fn) fn(); }
+    };
+    document.addEventListener('keydown', this._onKey);
+  }
+  componentWillUnmount() { if (this._onResize) window.removeEventListener('resize', this._onResize); if (this._onKey) document.removeEventListener('keydown', this._onKey); }
+
+  M(n) { return '\u20BD' + Math.round(n).toLocaleString('en-US'); }
+
+  typeColor(types) {
+    const m = { barter: '#b98a3c', keys: '#c9a24b', medical: '#7fa8c9', mods: '#7d9b6a', weapon: '#a88b6a', provisions: '#c9964b', armor: '#6f7f8c', container: '#8a7a5c', info: '#9a86c4', ammo: '#c68a5a' };
+    for (const t of types) if (m[t]) return m[t];
+    return '#7d8478';
+  }
+  penColor(p) { if (p >= 60) return '#6ea862'; if (p >= 45) return '#9ccb4f'; if (p >= 35) return '#e8c53f'; if (p >= 25) return '#e0913c'; return '#c15b4e'; }
+  // Derived (NOT from API): rough armor-class defeated read off penetrationPower. tarkov.dev has no shots-to-pen field.
+  penClass(p) { if (p >= 60) return 6; if (p >= 50) return 5; if (p >= 40) return 4; if (p >= 30) return 3; if (p >= 20) return 2; return 1; }
+  caliberShort(c) { return c.split(/[x/ ]/)[0]; }
+  pct(v) { return Math.round(v * 100) + '%'; }
+
+  seed() {
+    this.itemsData = [
+      { id: '5c0530ee86f774697952d952', name: 'LEDX Skin Transilluminator', shortName: 'LEDX', width: 1, height: 1, basePrice: 100000, types: ['medical', 'barter'], sellFor: [{ source: 'Therapist', priceRUB: 55000 }, { source: 'Flea Market', priceRUB: 968500 }] },
+      { id: '57347ca924597744596b4e71', name: 'Graphics card', shortName: 'GPU', width: 1, height: 2, basePrice: 168435, types: ['barter'], sellFor: [{ source: 'Mechanic', priceRUB: 168435 }, { source: 'Flea Market', priceRUB: 434000 }] },
+      { id: '59faff1d86f7746c51718c9c', name: 'Physical Bitcoin', shortName: '0.2BTC', width: 1, height: 1, basePrice: 100000, types: ['barter'], sellFor: [{ source: 'Skier', priceRUB: 100000 }, { source: 'Flea Market', priceRUB: 512000 }] },
+      { id: '590c621186f774138d11ea29', name: 'Defibrillator', shortName: 'Defib', width: 2, height: 2, basePrice: 33769, types: ['medical', 'barter'], sellFor: [{ source: 'Therapist', priceRUB: 33769 }, { source: 'Flea Market', priceRUB: 168000 }] },
+      { id: '5734770f24597738025ee254', name: 'Ophthalmoscope', shortName: 'Ophtal', width: 1, height: 1, basePrice: 15678, types: ['barter'], sellFor: [{ source: 'Therapist', priceRUB: 15678 }, { source: 'Flea Market', priceRUB: 102000 }] },
+      { id: '5c05308086f7746b2101e90b', name: 'Military cable', shortName: 'Mil.cbl', width: 1, height: 1, basePrice: 5000, types: ['barter'], sellFor: [{ source: 'Mechanic', priceRUB: 5000 }, { source: 'Flea Market', priceRUB: 41500 }] },
+      { id: '5734779624597737e04bf329', name: 'Capacitors', shortName: 'Capacit', width: 1, height: 1, basePrice: 6540, types: ['barter'], sellFor: [{ source: 'Mechanic', priceRUB: 6540 }, { source: 'Flea Market', priceRUB: 31000 }] },
+      { id: '57347c5b245977448d35f6e1', name: 'Bolts', shortName: 'Bolts', width: 1, height: 1, basePrice: 630, types: ['barter'], sellFor: [{ source: 'Jaeger', priceRUB: 630 }, { source: 'Flea Market', priceRUB: 8400 }] },
+      { id: '57347c77245977448d35f6e2', name: 'Screw nuts', shortName: 'Nuts', width: 1, height: 1, basePrice: 480, types: ['barter'], sellFor: [{ source: 'Jaeger', priceRUB: 480 }, { source: 'Flea Market', priceRUB: 7200 }] },
+      { id: '5734781f24597737e04bf32a', name: 'Wires', shortName: 'Wires', width: 1, height: 1, basePrice: 5250, types: ['barter'], sellFor: [{ source: 'Mechanic', priceRUB: 5250 }, { source: 'Flea Market', priceRUB: 22000 }] },
+      { id: '590a3efd86f77437d351a25b', name: 'Set of tools', shortName: 'Tools', width: 2, height: 2, basePrice: 4500, types: ['barter'], sellFor: [{ source: 'Mechanic', priceRUB: 4500 }, { source: 'Flea Market', priceRUB: 38000 }] },
+      { id: '544fb45d4bdc2dee738b4568', name: 'Salewa first aid kit', shortName: 'Salewa', width: 1, height: 2, basePrice: 13355, types: ['medical'], sellFor: [{ source: 'Therapist', priceRUB: 13355 }, { source: 'Flea Market', priceRUB: 31500 }] },
+      { id: '5780cf7f2459777de4559322', name: 'Metal fuel tank', shortName: 'MFuel', width: 2, height: 2, basePrice: 79000, types: ['barter'], sellFor: [{ source: 'Skier', priceRUB: 79000 }, { source: 'Flea Market', priceRUB: 86000 }] },
+      { id: '5d1b371186f774253763a656', name: 'Gunpowder Kite', shortName: 'Kite', width: 1, height: 1, basePrice: 2360, types: ['barter'], sellFor: [{ source: 'Mechanic', priceRUB: 2360 }, { source: 'Flea Market', priceRUB: 17400 }] },
+      { id: '5c052e6986f7746b207bc3c9', name: 'VPX Flash Storage Module', shortName: 'VPX', width: 1, height: 1, basePrice: 45000, types: ['barter'], sellFor: [{ source: 'Mechanic', priceRUB: 45000 }, { source: 'Flea Market', priceRUB: 210000 }] },
+      { id: '590c657e86f77412b013051d', name: 'GreenBat lithium battery', shortName: 'GreenBat', width: 1, height: 1, basePrice: 21000, types: ['barter'], sellFor: [{ source: 'Mechanic', priceRUB: 21000 }, { source: 'Flea Market', priceRUB: 68000 }] }
+    ];
+
+    this.reqIndex = {
+      '5c0530ee86f774697952d952': { neededByTasks: [{ taskName: 'Hippocratic Vow', count: 1, foundInRaid: true, minPlayerLevel: 42 }, { taskName: 'Private Clinic', count: 1, foundInRaid: true, minPlayerLevel: 24 }], neededByHideout: [{ stationName: 'Medstation', level: 3, count: 1 }, { stationName: 'Intelligence Center', level: 3, count: 1 }] },
+      '57347ca924597744596b4e71': { neededByTasks: [{ taskName: 'Chemical - Part 4', count: 2, foundInRaid: false, minPlayerLevel: 16 }], neededByHideout: [{ stationName: 'Bitcoin Farm', level: 1, count: 1 }] },
+      '59faff1d86f7746c51718c9c': { neededByTasks: [], neededByHideout: [] },
+      '590c621186f774138d11ea29': { neededByTasks: [{ taskName: 'Health Care Privacy - P1', count: 1, foundInRaid: true, minPlayerLevel: 20 }], neededByHideout: [{ stationName: 'Medstation', level: 2, count: 2 }] },
+      '5734770f24597738025ee254': { neededByTasks: [{ taskName: 'Sanitary Standards - P1', count: 2, foundInRaid: false, minPlayerLevel: 14 }], neededByHideout: [{ stationName: 'Medstation', level: 1, count: 1 }] },
+      '5c05308086f7746b2101e90b': { neededByTasks: [], neededByHideout: [{ stationName: 'Bitcoin Farm', level: 2, count: 4 }, { stationName: 'Intelligence Center', level: 2, count: 3 }] },
+      '5734779624597737e04bf329': { neededByTasks: [{ taskName: 'Supplier', count: 5, foundInRaid: false, minPlayerLevel: 6 }], neededByHideout: [{ stationName: 'Intelligence Center', level: 1, count: 2 }] },
+      '57347c5b245977448d35f6e1': { neededByTasks: [{ taskName: 'The Survivalist Path', count: 3, foundInRaid: false, minPlayerLevel: 8 }], neededByHideout: [{ stationName: 'Workbench', level: 1, count: 4 }, { stationName: 'Water Collector', level: 1, count: 3 }] },
+      '57347c77245977448d35f6e2': { neededByTasks: [], neededByHideout: [{ stationName: 'Workbench', level: 1, count: 6 }, { stationName: 'Lavatory', level: 1, count: 4 }] },
+      '5734781f24597737e04bf32a': { neededByTasks: [{ taskName: 'The Extortionist', count: 2, foundInRaid: false, minPlayerLevel: 10 }], neededByHideout: [{ stationName: 'Lavatory', level: 2, count: 5 }] },
+      '590a3efd86f77437d351a25b': { neededByTasks: [{ taskName: 'Gunsmith - Part 1', count: 1, foundInRaid: true, minPlayerLevel: 2 }], neededByHideout: [{ stationName: 'Workbench', level: 2, count: 1 }] },
+      '544fb45d4bdc2dee738b4568': { neededByTasks: [{ taskName: 'Shortage', count: 3, foundInRaid: true, minPlayerLevel: 5 }], neededByHideout: [] },
+      '5780cf7f2459777de4559322': { neededByTasks: [], neededByHideout: [{ stationName: 'Generator', level: 3, count: 2 }] },
+      '5c052e6986f7746b207bc3c9': { neededByTasks: [{ taskName: 'Test Drive - Part 1', count: 1, foundInRaid: true, minPlayerLevel: 24 }], neededByHideout: [{ stationName: 'Intelligence Center', level: 3, count: 1 }] },
+      '590c657e86f77412b013051d': { neededByTasks: [], neededByHideout: [{ stationName: 'Generator', level: 1, count: 3 }, { stationName: 'Bitcoin Farm', level: 1, count: 2 }] }
+    };
+
+    // Faithful to tarkov.dev `Ammo` type: fragmentation/penetration/ricochet chances are 0–1 floats (as the API returns them).
+    this.ammoData = [
+      { caliber: '5.45x39', name: 'BS gs', ammoType: 'bullet', damage: 40, penetrationPower: 51, armorDamage: 60, fragmentationChance: 0.27, penetrationChance: 0.65, ricochetChance: 0.03, initialSpeed: 890, projectileCount: 1, tracer: false, weight: 0.007, stackMaxSize: 60, lightBleedModifier: 0.5, heavyBleedModifier: 0.5, staminaBurnPerDamage: 0.61, accuracyModifier: 0, recoilModifier: 0, priceRUB: 480 },
+      { caliber: '5.45x39', name: 'BT gs', ammoType: 'bullet', damage: 47, penetrationPower: 37, armorDamage: 44, fragmentationChance: 0.30, penetrationChance: 0.52, ricochetChance: 0.04, initialSpeed: 880, projectileCount: 1, tracer: false, weight: 0.008, stackMaxSize: 60, lightBleedModifier: 0.5, heavyBleedModifier: 0.5, staminaBurnPerDamage: 0.61, accuracyModifier: 0, recoilModifier: 0, priceRUB: 210 },
+      { caliber: '5.45x39', name: 'PS gs', ammoType: 'bullet', damage: 50, penetrationPower: 26, armorDamage: 36, fragmentationChance: 0.16, penetrationChance: 0.38, ricochetChance: 0.06, initialSpeed: 890, projectileCount: 1, tracer: false, weight: 0.008, stackMaxSize: 60, lightBleedModifier: 0.6, heavyBleedModifier: 0.6, staminaBurnPerDamage: 0.61, accuracyModifier: 0, recoilModifier: 0, priceRUB: 105 },
+      { caliber: '5.56x45', name: 'M995', ammoType: 'bullet', damage: 42, penetrationPower: 53, armorDamage: 65, fragmentationChance: 0.20, penetrationChance: 0.68, ricochetChance: 0.02, initialSpeed: 1013, projectileCount: 1, tracer: false, weight: 0.0113, stackMaxSize: 60, lightBleedModifier: 0.5, heavyBleedModifier: 0.5, staminaBurnPerDamage: 0.71, accuracyModifier: -0.05, recoilModifier: 0, priceRUB: 1360 },
+      { caliber: '5.56x45', name: 'M855A1', ammoType: 'bullet', damage: 49, penetrationPower: 44, armorDamage: 48, fragmentationChance: 0.26, penetrationChance: 0.58, ricochetChance: 0.03, initialSpeed: 945, projectileCount: 1, tracer: false, weight: 0.0126, stackMaxSize: 60, lightBleedModifier: 0.5, heavyBleedModifier: 0.5, staminaBurnPerDamage: 0.71, accuracyModifier: 0.03, recoilModifier: 0, priceRUB: 512 },
+      { caliber: '7.62x39', name: 'BP gzh', ammoType: 'bullet', damage: 58, penetrationPower: 47, armorDamage: 63, fragmentationChance: 0.19, penetrationChance: 0.60, ricochetChance: 0.03, initialSpeed: 730, projectileCount: 1, tracer: false, weight: 0.0164, stackMaxSize: 60, lightBleedModifier: 0.5, heavyBleedModifier: 0.5, staminaBurnPerDamage: 0.79, accuracyModifier: 0, recoilModifier: 0, priceRUB: 495 },
+      { caliber: '7.62x51', name: 'M993', ammoType: 'bullet', damage: 67, penetrationPower: 70, armorDamage: 68, fragmentationChance: 0.13, penetrationChance: 0.78, ricochetChance: 0.01, initialSpeed: 910, projectileCount: 1, tracer: false, weight: 0.0242, stackMaxSize: 40, lightBleedModifier: 0.4, heavyBleedModifier: 0.4, staminaBurnPerDamage: 1.0, accuracyModifier: -0.02, recoilModifier: 0, priceRUB: 2140 },
+      { caliber: '7.62x51', name: 'M80', ammoType: 'bullet', damage: 80, penetrationPower: 41, armorDamage: 56, fragmentationChance: 0.15, penetrationChance: 0.55, ricochetChance: 0.03, initialSpeed: 833, projectileCount: 1, tracer: false, weight: 0.0246, stackMaxSize: 40, lightBleedModifier: 0.5, heavyBleedModifier: 0.5, staminaBurnPerDamage: 1.0, accuracyModifier: 0, recoilModifier: 0, priceRUB: 178 },
+      { caliber: '7.62x54R', name: 'SNB gzh', ammoType: 'bullet', damage: 58, penetrationPower: 54, armorDamage: 65, fragmentationChance: 0.30, penetrationChance: 0.66, ricochetChance: 0.02, initialSpeed: 780, projectileCount: 1, tracer: false, weight: 0.0212, stackMaxSize: 20, lightBleedModifier: 0.4, heavyBleedModifier: 0.4, staminaBurnPerDamage: 1.1, accuracyModifier: -0.03, recoilModifier: 0.05, priceRUB: 980 },
+      { caliber: '7.62x54R', name: 'LPS gzh', ammoType: 'bullet', damage: 84, penetrationPower: 41, armorDamage: 45, fragmentationChance: 0.12, penetrationChance: 0.53, ricochetChance: 0.03, initialSpeed: 800, projectileCount: 1, tracer: false, weight: 0.0212, stackMaxSize: 20, lightBleedModifier: 0.5, heavyBleedModifier: 0.5, staminaBurnPerDamage: 1.1, accuracyModifier: 0, recoilModifier: 0, priceRUB: 96 },
+      { caliber: '.338 LM', name: 'AP', ammoType: 'bullet', damage: 122, penetrationPower: 79, armorDamage: 78, fragmentationChance: 0.08, penetrationChance: 0.85, ricochetChance: 0.01, initialSpeed: 915, projectileCount: 1, tracer: false, weight: 0.0311, stackMaxSize: 10, lightBleedModifier: 0.3, heavyBleedModifier: 0.3, staminaBurnPerDamage: 1.3, accuracyModifier: -0.04, recoilModifier: 0, priceRUB: 8300 },
+      { caliber: '9x19', name: 'AP 6.3', ammoType: 'bullet', damage: 52, penetrationPower: 30, armorDamage: 42, fragmentationChance: 0.04, penetrationChance: 0.44, ricochetChance: 0.05, initialSpeed: 460, projectileCount: 1, tracer: false, weight: 0.006, stackMaxSize: 50, lightBleedModifier: 0.7, heavyBleedModifier: 0.7, staminaBurnPerDamage: 0.5, accuracyModifier: 0, recoilModifier: 0, priceRUB: 122 },
+      { caliber: '12/70', name: 'Flechette', ammoType: 'buckshot', damage: 25, penetrationPower: 31, armorDamage: 32, fragmentationChance: 0.0, penetrationChance: 0.40, ricochetChance: 0.08, initialSpeed: 400, projectileCount: 8, tracer: false, weight: 0.06, stackMaxSize: 20, lightBleedModifier: 0.8, heavyBleedModifier: 0.8, staminaBurnPerDamage: 0.4, accuracyModifier: 0, recoilModifier: 0, priceRUB: 517 },
+      { caliber: '.300 BLK', name: 'M62 Tracer', ammoType: 'bullet', damage: 63, penetrationPower: 51, armorDamage: 58, fragmentationChance: 0.17, penetrationChance: 0.63, ricochetChance: 0.03, initialSpeed: 856, projectileCount: 1, tracer: true, tracerColor: 'green', weight: 0.0126, stackMaxSize: 60, lightBleedModifier: 0.5, heavyBleedModifier: 0.5, staminaBurnPerDamage: 0.8, accuracyModifier: 0, recoilModifier: 0, priceRUB: 640 }
+    ];
+
+    this.tasksData = [
+      { id: 't1', name: 'Debut', minPlayerLevel: 1, traderName: 'Prapor', prerequisiteTaskIds: [], itemObjectives: [{ name: 'MP-133 shotgun', count: 2, foundInRaid: false }, { name: 'Leather jacket', count: 3, foundInRaid: false }] },
+      { id: 't2', name: 'Shootout Picnic', minPlayerLevel: 1, traderName: 'Prapor', prerequisiteTaskIds: ['t1'], itemObjectives: [] },
+      { id: 't3', name: 'The Survivalist Path', minPlayerLevel: 8, traderName: 'Jaeger', prerequisiteTaskIds: ['t2'], itemObjectives: [{ name: 'Bolts', count: 3, foundInRaid: false }, { name: 'Aramid fiber', count: 2, foundInRaid: true }] },
+      { id: 't4', name: 'Background Check', minPlayerLevel: 8, traderName: 'Therapist', prerequisiteTaskIds: [], itemObjectives: [{ name: 'Salewa first aid kit', count: 2, foundInRaid: true }] },
+      { id: 't5', name: 'Shortage', minPlayerLevel: 5, traderName: 'Therapist', prerequisiteTaskIds: [], itemObjectives: [{ name: 'Salewa first aid kit', count: 3, foundInRaid: true }] },
+      { id: 't6', name: 'Sanitary Standards - Part 1', minPlayerLevel: 14, traderName: 'Therapist', prerequisiteTaskIds: ['t4'], itemObjectives: [{ name: 'Ophthalmoscope', count: 2, foundInRaid: false }, { name: '医 Medical bloodset', count: 3, foundInRaid: false }] },
+      { id: 't7', name: 'Gunsmith - Part 1', minPlayerLevel: 2, traderName: 'Mechanic', prerequisiteTaskIds: [], itemObjectives: [{ name: 'MP-133 w/ mods', count: 1, foundInRaid: true }] },
+      { id: 't8', name: 'Supplier', minPlayerLevel: 6, traderName: 'Peacekeeper', prerequisiteTaskIds: [], itemObjectives: [{ name: 'Screw nuts', count: 5, foundInRaid: false }, { name: 'Wires', count: 5, foundInRaid: false }] },
+      { id: 't9', name: 'Introduction', minPlayerLevel: 12, traderName: 'Ragman', prerequisiteTaskIds: [], itemObjectives: [{ name: 'Cash register', count: 2, foundInRaid: true }] },
+      { id: 't10', name: 'The Extortionist', minPlayerLevel: 10, traderName: 'Skier', prerequisiteTaskIds: ['t2'], itemObjectives: [{ name: 'Wires', count: 2, foundInRaid: false }, { name: 'Bank case', count: 1, foundInRaid: true }] },
+      { id: 't11', name: 'Chemical - Part 4', minPlayerLevel: 16, traderName: 'Skier', prerequisiteTaskIds: ['t10'], itemObjectives: [{ name: 'Graphics card', count: 2, foundInRaid: false }] },
+      { id: 't12', name: 'Private Clinic', minPlayerLevel: 24, traderName: 'Therapist', prerequisiteTaskIds: ['t6'], itemObjectives: [{ name: 'LEDX Skin Transilluminator', count: 1, foundInRaid: true }, { name: 'Ophthalmoscope', count: 4, foundInRaid: true }] }
+    ];
+
+    this.hideoutData = [
+      { id: 'stash', name: 'Stash', levels: [{ level: 1, itemRequirements: [] }, { level: 2, itemRequirements: [{ short: 'Nuts', name: 'Screw nuts', count: 5, tier: '#b98a3c' }, { short: 'Bolts', name: 'Bolts', count: 3, tier: '#b98a3c' }] }] },
+      { id: 'generator', name: 'Generator', levels: [{ level: 1, itemRequirements: [{ short: 'GreenBat', name: 'GreenBat lithium battery', count: 3, tier: '#b98a3c' }, { short: 'Wires', name: 'Wires', count: 4, tier: '#b98a3c' }, { short: 'Fuel', name: 'Metal fuel tank', count: 1, tier: '#b98a3c' }] }, { level: 2, itemRequirements: [{ short: 'Capacit', name: 'Capacitors', count: 3, tier: '#b98a3c' }, { short: 'Mil.cbl', name: 'Military cable', count: 4, tier: '#b98a3c' }] }, { level: 3, itemRequirements: [{ short: 'MFuel', name: 'Metal fuel tank', count: 2, tier: '#b98a3c' }, { short: 'GreenBat', name: 'GreenBat lithium battery', count: 6, tier: '#b98a3c' }] }] },
+      { id: 'water', name: 'Water Collector', levels: [{ level: 1, itemRequirements: [{ short: 'Bolts', name: 'Bolts', count: 3, tier: '#b98a3c' }, { short: 'Wires', name: 'Wires', count: 3, tier: '#b98a3c' }] }] },
+      { id: 'medstation', name: 'Medstation', levels: [{ level: 1, itemRequirements: [{ short: 'Ophtal', name: 'Ophthalmoscope', count: 1, tier: '#b98a3c' }, { short: 'Salewa', name: 'Salewa first aid kit', count: 2, tier: '#7fa8c9' }] }, { level: 2, itemRequirements: [{ short: 'Defib', name: 'Defibrillator', count: 2, tier: '#7fa8c9' }] }, { level: 3, itemRequirements: [{ short: 'LEDX', name: 'LEDX Skin Transilluminator', count: 1, tier: '#7fa8c9' }] }] },
+      { id: 'workbench', name: 'Workbench', levels: [{ level: 1, itemRequirements: [{ short: 'Bolts', name: 'Bolts', count: 4, tier: '#b98a3c' }, { short: 'Nuts', name: 'Screw nuts', count: 6, tier: '#b98a3c' }] }, { level: 2, itemRequirements: [{ short: 'Tools', name: 'Set of tools', count: 1, tier: '#b98a3c' }] }] },
+      { id: 'intel', name: 'Intelligence Center', levels: [{ level: 1, itemRequirements: [{ short: 'Capacit', name: 'Capacitors', count: 2, tier: '#b98a3c' }] }, { level: 2, itemRequirements: [{ short: 'Mil.cbl', name: 'Military cable', count: 3, tier: '#b98a3c' }] }, { level: 3, itemRequirements: [{ short: 'VPX', name: 'VPX Flash Storage Module', count: 1, tier: '#b98a3c' }, { short: 'LEDX', name: 'LEDX Skin Transilluminator', count: 1, tier: '#7fa8c9' }] }] },
+      { id: 'lavatory', name: 'Lavatory', levels: [{ level: 1, itemRequirements: [{ short: 'Nuts', name: 'Screw nuts', count: 4, tier: '#b98a3c' }] }, { level: 2, itemRequirements: [{ short: 'Wires', name: 'Wires', count: 5, tier: '#b98a3c' }] }] },
+      { id: 'bitcoin', name: 'Bitcoin Farm', levels: [{ level: 1, itemRequirements: [{ short: 'GPU', name: 'Graphics card', count: 1, tier: '#b98a3c' }, { short: 'GreenBat', name: 'GreenBat lithium battery', count: 2, tier: '#b98a3c' }] }, { level: 2, itemRequirements: [{ short: 'Mil.cbl', name: 'Military cable', count: 4, tier: '#b98a3c' }] }] }
+    ];
+
+    this.tradersData = [
+      { id: 'prapor', name: 'Prapor', role: 'Warrant Officer', initial: 'P', currency: 'RUB', rep: '0.42', reset: '3h 00m', barters: [{ give: '2× AA battery', get: 'Bolts' }, { give: '5× Duct tape', get: 'Weapon parts' }, { give: '1× Salewa', get: 'Grenade' }] },
+      { id: 'therapist', name: 'Therapist', role: 'Doctor', initial: 'T', currency: 'RUB', rep: '0.61', reset: '3h 00m', barters: [{ give: '4× Med kit', get: 'IFAK' }, { give: '2× Bandage', get: 'Splint' }, { give: '1× Ophthalmoscope', get: 'Sanitary kit' }] },
+      { id: 'skier', name: 'Skier', role: 'Businessman', initial: 'S', currency: 'EUR', rep: '0.38', reset: '3h 00m', barters: [{ give: '3× Roler watch', get: 'MP5' }, { give: '2× Chainlet', get: '5.56 M855' }, { give: '1× GPU', get: 'Cash reward' }] },
+      { id: 'peacekeeper', name: 'Peacekeeper', role: 'UN Officer', initial: 'PK', currency: 'USD', rep: '0.29', reset: '3h 00m', barters: [{ give: '5× Wires', get: 'M4A1 upper' }, { give: '2× Tools', get: 'PVS-14' }, { give: '3× WD-40', get: '.338 AP' }] },
+      { id: 'mechanic', name: 'Mechanic', role: 'Gunsmith', initial: 'M', currency: 'RUB', rep: '0.55', reset: '3h 00m', barters: [{ give: '2× GPU', get: 'Thermal scope' }, { give: '4× Capacitors', get: 'Muzzle brake' }, { give: '1× VPX', get: 'RSASS receiver' }] },
+      { id: 'ragman', name: 'Ragman', role: 'Clothing Trader', initial: 'R', currency: 'RUB', rep: '0.47', reset: '3h 00m', barters: [{ give: '5× Fleece', get: 'Rig' }, { give: '2× Leather', get: 'Backpack' }, { give: '3× Zibbo', get: 'Armor plate' }] },
+      { id: 'jaeger', name: 'Jaeger', role: 'Huntsman', initial: 'J', currency: 'RUB', rep: '0.33', reset: '3h 00m', barters: [{ give: '3× Bolts', get: 'SKS' }, { give: '2× Pine air freshener', get: '7.62x39 BP' }, { give: '1× Kite', get: 'Hunting knife' }] },
+      { id: 'fence', name: 'Fence', role: 'Middleman', initial: 'F', currency: 'RUB', rep: '0.00', reset: '3h 00m', barters: [{ give: 'Assorted', get: 'Random FIR gear' }] }
+    ];
+
+    this.loyaltyTpl = [
+      { ll: 'LL1', rep: '0.00', sales: '\u20BD0', comm: '6%' },
+      { ll: 'LL2', rep: '0.20', sales: '\u20BD1,500,000', comm: '4%' },
+      { ll: 'LL3', rep: '0.42', sales: '\u20BD5,300,000', comm: '3%' },
+      { ll: 'LL4', rep: '0.70', sales: '\u20BD16,000,000', comm: '2%' }
+    ];
+
+    this.scanData = [
+      { short: 'LEDX', name: 'LEDX Skin Transilluminator', tier: '#7fa8c9', own: 2, keepAll: 3, keepCur: 1, keepNext: 2, reason: 'Hideout Medstation L3 · Private Clinic', sell: 55000, sellSrc: 'Therapist', fir: 'yes' },
+      { short: 'GPU', name: 'Graphics card', tier: '#b98a3c', own: 3, keepAll: 1, keepCur: 1, keepNext: 1, reason: 'Bitcoin Farm L1 · Chemical P4', sell: 168435, sellSrc: 'Mechanic', fir: 'no' },
+      { short: 'Bolts', name: 'Bolts', tier: '#b98a3c', own: 12, keepAll: 7, keepCur: 4, keepNext: 5, reason: 'Workbench + Water Collector', sell: 630, sellSrc: 'Jaeger', fir: 'no' },
+      { short: '0.2BTC', name: 'Physical Bitcoin', tier: '#b98a3c', own: 4, keepAll: 0, keepCur: 0, keepNext: 0, reason: 'No active requirements', sell: 512000, sellSrc: 'Flea Market', fir: 'no' },
+      { short: 'Salewa', name: 'Salewa first aid kit', tier: '#7fa8c9', own: 5, keepAll: 5, keepCur: 3, keepNext: 5, reason: 'Shortage · Background Check', sell: 13355, sellSrc: 'Therapist', fir: 'yes' },
+      { short: 'Kite', name: 'Gunpowder Kite', tier: '#b98a3c', own: 3, keepAll: 2, keepCur: 0, keepNext: 1, reason: 'Barter unlock (uncertain)', sell: 2360, sellSrc: 'Mechanic', fir: 'unsure' }
+    ];
+    // Task detail extras — objectives (full TaskObjective interface: giveItem/findItem/shoot/mark/visit/buildWeapon), map, rewards, unlock chain.
+    this.taskExtra = {
+      t1:  { map: 'Factory',     kappa: true, xp: 1100, cash: 15000, repTrader: 'Prapor',     repAmt: '+0.02', unlocks: ['Shootout Picnic'],
+             objectives: [{ type: 'giveItem', desc: 'Hand over MP-133 shotguns to Prapor', count: 2, fir: false }, { type: 'giveItem', desc: 'Hand over leather jackets to Prapor', count: 3, fir: false }] },
+      t2:  { map: 'Customs',     kappa: true, xp: 1400, cash: 12000, repTrader: 'Prapor',     repAmt: '+0.01', unlocks: ['The Punisher - Part 1'],
+             objectives: [{ type: 'shoot', desc: 'Eliminate Scavs on Customs', count: 5, fir: false }, { type: 'visit', desc: 'Reach an extract while sprinting', count: 1, fir: false }] },
+      t3:  { map: 'Woods',       kappa: true, xp: 2500, cash: 0,     repTrader: 'Jaeger',      repAmt: '+0.03', unlocks: ['The Survivalist Path - Thrifty'],
+             objectives: [{ type: 'findItem', desc: 'Find in raid Bolts', count: 3, fir: false }, { type: 'giveItem', desc: 'Hand over Aramid fiber fabric', count: 2, fir: true }] },
+      t4:  { map: 'Any',         kappa: true, xp: 1800, cash: 8000,  repTrader: 'Therapist',   repAmt: '+0.02', unlocks: ['Shortage'],
+             objectives: [{ type: 'giveItem', desc: 'Hand over Salewa first aid kits', count: 2, fir: true }] },
+      t5:  { map: 'Any',         kappa: true, xp: 2100, cash: 0,     repTrader: 'Therapist',   repAmt: '+0.03', unlocks: ['Sanitary Standards - Part 1'],
+             objectives: [{ type: 'giveItem', desc: 'Hand over Salewa first aid kits', count: 3, fir: true }] },
+      t6:  { map: 'Shoreline',   kappa: true, xp: 3300, cash: 22000, repTrader: 'Therapist',   repAmt: '+0.03', unlocks: ['Sanitary Standards - Part 2', 'Private Clinic'],
+             objectives: [{ type: 'giveItem', desc: 'Hand over Ophthalmoscopes', count: 2, fir: false }, { type: 'giveItem', desc: 'Hand over Medical bloodsets', count: 3, fir: false }] },
+      t7:  { map: 'Any',         kappa: true, xp: 1500, cash: 0,     repTrader: 'Mechanic',    repAmt: '+0.01', unlocks: ['Gunsmith - Part 2'],
+             objectives: [{ type: 'buildWeapon', desc: 'Modify an MP-133 to meet the spec', count: 1, fir: true }] },
+      t8:  { map: 'Any',         kappa: true, xp: 1900, cash: 14000, repTrader: 'Peacekeeper', repAmt: '+0.02', unlocks: ['Fishing Gear'],
+             objectives: [{ type: 'giveItem', desc: 'Hand over Screw nuts', count: 5, fir: false }, { type: 'giveItem', desc: 'Hand over Wires', count: 5, fir: false }] },
+      t9:  { map: 'Interchange', kappa: true, xp: 2600, cash: 0,     repTrader: 'Ragman',      repAmt: '+0.03', unlocks: ['Make ULTRA Great Again'],
+             objectives: [{ type: 'giveItem', desc: 'Hand over Cash registers', count: 2, fir: true }, { type: 'visit', desc: 'Locate the ULTRA mall power hub', count: 1, fir: false }] },
+      t10: { map: 'Customs',     kappa: true, xp: 2000, cash: 18000, repTrader: 'Skier',       repAmt: '+0.02', unlocks: ['Chemical - Part 1'],
+             objectives: [{ type: 'giveItem', desc: 'Hand over Wires', count: 2, fir: false }, { type: 'giveItem', desc: 'Hand over a Bank case', count: 1, fir: true }] },
+      t11: { map: 'Shoreline',   kappa: true, xp: 4200, cash: 0,     repTrader: 'Skier',       repAmt: '+0.04', unlocks: ['Chemical - Part 5'],
+             objectives: [{ type: 'giveItem', desc: 'Hand over Graphics cards', count: 2, fir: false }, { type: 'mark', desc: 'Mark the fuel tanker with an MS2000', count: 1, fir: false }] },
+      t12: { map: 'Shoreline',   kappa: true, xp: 6100, cash: 35000, repTrader: 'Therapist',   repAmt: '+0.05', unlocks: ['Health Care Privacy - Part 1'],
+             objectives: [{ type: 'giveItem', desc: 'Hand over a LEDX', count: 1, fir: true }, { type: 'giveItem', desc: 'Hand over Ophthalmoscopes', count: 4, fir: true }] }
+    };
+
+    // Maps — no `Map` type modelled in slice1; sourced from tarkov.dev `maps` query (name, players, extracts, bosses) at build.
+    this.mapsData = [
+      { id: 'customs', name: 'Customs', players: '9-12', duration: '40 min', quests: 22, bosses: [{ name: 'Reshala', chance: '35%' }], hot: 'Dorms · Gas Station · New Gas', extracts: [{ name: 'RUAF Roadblock', side: 'PMC', req: 'none', reliable: true }, { name: 'Crossroads', side: 'Shared', req: 'no backpack', reliable: false }, { name: 'ZB-1011', side: 'Shared', req: 'switch / free', reliable: false }, { name: 'Old Gas Station', side: 'Scav', req: 'none', reliable: true }] },
+      { id: 'woods', name: 'Woods', players: '8-14', duration: '45 min', quests: 16, bosses: [{ name: 'Shturman', chance: '35%' }], hot: 'Sawmill · Lumber Yard · USEC camp', extracts: [{ name: 'ZB-016', side: 'Shared', req: 'switch / free', reliable: false }, { name: 'UN Roadblock', side: 'PMC', req: 'none', reliable: true }, { name: 'Outskirts', side: 'Shared', req: 'none', reliable: true }] },
+      { id: 'shoreline', name: 'Shoreline', players: '9-13', duration: '45 min', quests: 24, bosses: [{ name: 'Sanitar', chance: '35%' }], hot: 'Resort · Weather Station · Pier', extracts: [{ name: 'Road to Customs', side: 'PMC', req: 'none', reliable: true }, { name: 'Smugglers Boat', side: 'Shared', req: 'none', reliable: false }, { name: 'Lighthouse', side: 'Shared', req: 'none', reliable: true }] },
+      { id: 'interchange', name: 'Interchange', players: '10-14', duration: '40 min', quests: 14, bosses: [{ name: 'Killa', chance: '25%' }], hot: 'ULTRA mall · IDEA · OLI', extracts: [{ name: 'Emercom Checkpoint', side: 'Shared', req: 'none', reliable: true }, { name: 'Railway', side: 'PMC', req: 'none', reliable: true }, { name: 'Power Station', side: 'Shared', req: 'key / gate', reliable: false }] },
+      { id: 'reserve', name: 'Reserve', players: '9-12', duration: '45 min', quests: 18, bosses: [{ name: 'Glukhar', chance: '42%' }], hot: 'Bunkers · Train station · Hermetic', extracts: [{ name: 'Hole in the Wall', side: 'Shared', req: 'none', reliable: true }, { name: 'Armored Train', side: 'Shared', req: 'timed', reliable: false }, { name: 'D-2', side: 'Shared', req: 'switch + power', reliable: false }] },
+      { id: 'lighthouse', name: 'Lighthouse', players: '9-12', duration: '45 min', quests: 20, bosses: [{ name: 'Zryachiy', chance: '100%' }], hot: 'Water Treatment · Chalets · Rogue base', extracts: [{ name: 'Road to Military', side: 'PMC', req: 'none', reliable: true }, { name: 'Northern Checkpoint', side: 'Shared', req: 'none', reliable: true }, { name: 'Side Tunnel', side: 'Shared', req: 'none', reliable: false }] },
+      { id: 'factory', name: 'Factory', players: '4-6', duration: '20 min', quests: 8, bosses: [{ name: 'Tagilla', chance: '30%' }], hot: 'Tunnel · Office · Gate 3', extracts: [{ name: 'Gate 3', side: 'Shared', req: 'none', reliable: true }, { name: 'Cellars', side: 'Shared', req: 'timed', reliable: false }, { name: 'Gate 0', side: 'PMC', req: 'none', reliable: true }] },
+      { id: 'labs', name: 'The Lab', players: '6-10', duration: '35 min', quests: 6, bosses: [{ name: 'Bloodhounds', chance: 'raiders' }], hot: 'Server room · Test labs · Parking', extracts: [{ name: 'Main Elevator', side: 'Shared', req: 'keycard', reliable: false }, { name: 'Cargo Elevator', side: 'Shared', req: 'power + card', reliable: false }, { name: 'Sewage Conduit', side: 'Shared', req: 'valve', reliable: true }] }
+    ];
+
+    this._seeded = true;
+  }
+
+  progStations() { return [{ id: 'stash', name: 'Stash', max: 4 }, { id: 'generator', name: 'Generator', max: 3 }, { id: 'water', name: 'Water Collector', max: 3 }, { id: 'medstation', name: 'Medstation', max: 3 }, { id: 'workbench', name: 'Workbench', max: 3 }, { id: 'intel', name: 'Intelligence Center', max: 3 }, { id: 'lavatory', name: 'Lavatory', max: 3 }, { id: 'bitcoin', name: 'Bitcoin Farm', max: 3 }]; }
+  setPmc(d) { this.setState(s => ({ prog: { ...s.prog, pmcLevel: Math.max(1, Math.min(79, s.prog.pmcLevel + d)) } })); }
+  toggleTaskDone(id) { this.setState(s => ({ prog: { ...s.prog, completed: { ...s.prog.completed, [id]: !s.prog.completed[id] } } })); }
+  setStationLevel(id, lv) { this.setState(s => ({ prog: { ...s.prog, hideout: { ...s.prog.hideout, [id]: lv } } })); }
+
+  navTo(s) { this.setState({ screen: s, selectedItemId: null, selectedAmmo: null, taskDetailId: null, showMobileSearch: false, kbIndex: -1 }); }
+  openItem(id) { this.setState({ screen: 'items', selectedItemId: id }); }
+  startScan() { this.setState({ scanStage: 'scanning', scanSold: [] }); this._scanT = setTimeout(() => this.setState({ scanStage: 'results' }), 1600); }
+  resetScan() { if (this._scanT) clearTimeout(this._scanT); this.setState({ scanStage: 'empty', scanSold: [] }); }
+  sellRow(name) { this.setState(s => s.scanSold.includes(name) ? {} : { scanSold: [...s.scanSold, name] }); }
+  sellAllSurplus(names) { this.setState({ scanSold: names }); }
+
+  bestTrader(item) { let b = null; for (const s of item.sellFor) if (s.source !== 'Flea Market' && (!b || s.priceRUB > b.priceRUB)) b = s; return b; }
+  bestFlea(item) { return item.sellFor.find(s => s.source === 'Flea Market') || null; }
+
+  arrow(sort, key) { if (sort.key !== key) return ''; return sort.dir > 0 ? '\u2191' : '\u2193'; }
+  chipStyle(active) { return active ? { bg: 'var(--accent)', fg: '#0d100e', bd: 'var(--accent)' } : { bg: 'transparent', fg: '#8b9184', bd: '#333b31' }; }
+
+  renderVals() {
+    if (!this._seeded) this.seed();
+    const st = this.state;
+    const A = this.props.accent || 'var(--accent)';
+    const zebra = this.props.zebra !== false;
+    const grid = this.props.gridBackdrop !== false;
+    const rowBg = (i) => zebra ? (i % 2 ? '#151a13' : '#12160f') : '#12160f';
+    const mkNav = (k) => st.screen === k ? { bg: '#1e241d', fg: A, bar: A } : { bg: 'transparent', fg: '#8b9184', bar: 'transparent' };
+
+    // Layout mode — prop `layout` overrides the width-driven flag so it's viewable in Tweaks without resizing.
+    const lp = this.props.layout || 'auto';
+    const narrow = lp === 'narrow' ? true : lp === 'desktop' ? false : st.narrow;
+    const offline = st.conn === 'offline';
+    const L = {
+      narrow, wide: !narrow,
+      aside: narrow ? 'none' : 'flex',
+      tabbar: narrow ? 'flex' : 'none',
+      headerSearch: narrow ? 'none' : 'block',
+      mobBtn: narrow ? 'flex' : 'none',
+      padX: narrow ? '18px' : '39px',
+      screenPad: narrow ? '21px 18px 96px' : '33px 39px 60px',
+      minW: narrow ? 'auto' : '1160px',
+      minWWide: narrow ? 'auto' : '1300px',
+      dashCols: narrow ? '1fr' : 'repeat(4,1fr)',
+      dashPanels: narrow ? '1fr' : '1fr 1fr',
+      threeCols: narrow ? '1fr' : 'repeat(3,1fr)',
+      splitCols: narrow ? '1fr' : '345px 1fr',
+      scanCols: narrow ? '1fr' : '390px 1fr',
+      cmpCols: narrow ? '1fr' : '165px 1fr 186px',
+      drawerW: narrow ? '100%' : '630px',
+      title: narrow ? '23.25px' : '28.5px'
+    };
+
+    const crumbMap = { dashboard: '/', items: st.selectedItemId ? '/items/' + st.selectedItemId : '/items', ammo: '/ammo', tasks: st.taskDetailId ? '/tasks/' + st.taskDetailId : '/tasks', traders: '/traders', hideout: '/hideout', maps: '/maps', progression: '/progression', scan: '/scan' };
+
+    // Items
+    const q = (st.search || '').toLowerCase();
+    let itemRows = this.itemsData.filter(it => {
+      if (st.itemType !== 'all' && !it.types.includes(st.itemType)) return false;
+      if (q && !(it.name.toLowerCase().includes(q) || it.shortName.toLowerCase().includes(q))) return false;
+      return true;
+    });
+    const sk = st.itemSort.key, sd = st.itemSort.dir;
+    itemRows = itemRows.slice().sort((a, b) => {
+      let av, bv;
+      if (sk === 'name') { av = a.name.toLowerCase(); bv = b.name.toLowerCase(); return av < bv ? -sd : av > bv ? sd : 0; }
+      if (sk === 'base') { av = a.basePrice; bv = b.basePrice; }
+      if (sk === 'trader') { av = (this.bestTrader(a) || {}).priceRUB || 0; bv = (this.bestTrader(b) || {}).priceRUB || 0; }
+      if (sk === 'flea') { av = (this.bestFlea(a) || {}).priceRUB || 0; bv = (this.bestFlea(b) || {}).priceRUB || 0; }
+      return (av - bv) * sd;
+    });
+    const itemVMs = itemRows.map((it, i) => {
+      const bt = this.bestTrader(it), bf = this.bestFlea(it);
+      const fleaBest = bf && (!bt || bf.priceRUB >= bt.priceRUB);
+      return {
+        id: it.id, name: it.name, short: it.shortName, size: it.width + '\u00d7' + it.height,
+        typeLabel: it.types[0], tier: this.typeColor(it.types),
+        base: this.M(it.basePrice), trader: bt ? this.M(bt.priceRUB) : '\u2014', flea: bf ? this.M(bf.priceRUB) : '\u2014',
+        traderColor: (!fleaBest && bt) ? '#e6e4da' : '#8b9184', fleaColor: fleaBest ? '#6ea862' : '#8b9184',
+        bg: rowBg(i), kbOutline: (st.screen === 'items' && st.kbIndex === i) ? '2px solid var(--accent)' : 'none', onOpen: () => this.openItem(it.id)
+      };
+    });
+    const typeSet = ['all', 'barter', 'medical', 'keys', 'mods'];
+    const itemFilters = typeSet.map(t => { const s = this.chipStyle(st.itemType === t); return { label: t === 'all' ? 'ALL' : t, ...s, onClick: () => this.setState({ itemType: t }) }; });
+
+    // Ammo
+    const ak = st.ammoSort.key, ad = st.ammoSort.dir;
+    const ammoCals = ['all', ...Array.from(new Set(this.ammoData.map(a => a.caliber)))];
+    const ammoChips = ammoCals.map(c => { const s = this.chipStyle(st.ammoCaliber === c); return { label: c === 'all' ? 'ALL' : c, ...s, onClick: () => this.setState({ ammoCaliber: c }) }; });
+    const ammoFiltered = this.ammoData.map((a, idx) => ({ ...a, _idx: idx })).filter(a => st.ammoCaliber === 'all' || a.caliber === st.ammoCaliber);
+    const ammoRows = ammoFiltered.slice().sort((a, b) => (a[ak] - b[ak]) * ad).map((a, i) => {
+      const active = st.selectedAmmo === a._idx;
+      return {
+        caliber: a.caliber, calShort: this.caliberShort(a.caliber), name: a.name,
+        damageLabel: a.projectileCount > 1 ? a.damage + '\u00d7' + a.projectileCount : String(a.damage),
+        pen: a.penetrationPower, penColor: this.penColor(a.penetrationPower), penBar: Math.min(100, Math.round(a.penetrationPower / 80 * 100)) + '%',
+        penChancePct: this.pct(a.penetrationChance), armorDamage: a.armorDamage + '%', fragPct: this.pct(a.fragmentationChance), ricochetPct: this.pct(a.ricochetChance),
+        velocity: a.initialSpeed, tracer: a.tracer,
+        bg: active ? '#20261e' : rowBg(i), chev: active ? 'rotate(90deg)' : 'rotate(0deg)',
+        kbOutline: (st.screen === 'ammo' && st.ammoView === 'table' && st.kbIndex === i) ? '2px solid var(--accent)' : 'none',
+        onOpen: () => this.setState({ selectedAmmo: active ? null : a._idx })
+      };
+    });
+    const ammoEmpty = ammoRows.length === 0;
+    const ammoViewTable = st.ammoView === 'table', ammoViewCompare = st.ammoView === 'compare';
+    // Comparison view — bar chart of PEN + DMG across the (filtered) rounds, sorted by penetration, plus a class-defeat matrix.
+    const cmpList = ammoFiltered.slice().sort((a, b) => b.penetrationPower - a.penetrationPower);
+    const maxDmgAll = Math.max(...this.ammoData.map(a => a.damage * a.projectileCount));
+    const ammoCompare = cmpList.map((a, i) => {
+      const dmgTotal = a.damage * a.projectileCount;
+      const cls = this.penClass(a.penetrationPower);
+      return {
+        name: a.name, caliber: a.caliber, calShort: this.caliberShort(a.caliber), penColor: this.penColor(a.penetrationPower),
+        pen: a.penetrationPower, penBar: Math.round(a.penetrationPower / 80 * 100) + '%',
+        dmg: dmgTotal, dmgBar: Math.round(dmgTotal / maxDmgAll * 100) + '%',
+        classes: [1, 2, 3, 4, 5, 6].map(n => ({ on: n <= cls, color: n <= cls ? this.penColor(a.penetrationPower) : '#20261e', fg: n <= cls ? '#0d100e' : '#454c44', label: n })),
+        bg: rowBg(i), onOpen: () => this.setState({ selectedAmmo: a._idx })
+      };
+    });
+    const ammoViewChip = (v, label) => ({ label, onClick: () => this.setState({ ammoView: v }), bg: st.ammoView === v ? '#1e241d' : 'transparent', fg: st.ammoView === v ? A : '#8b9184', bd: st.ammoView === v ? A : '#333b31' });
+
+    // Tasks
+    const traderNames = ['all', ...Array.from(new Set(this.tasksData.map(t => t.traderName)))];
+    const taskChips = traderNames.map(tn => { const s = this.chipStyle(st.taskTrader === tn); return { label: tn === 'all' ? 'ALL TRADERS' : tn, ...s, onClick: () => this.setState({ taskTrader: tn }) }; });
+    const nameById = {}; this.tasksData.forEach(t => nameById[t.id] = t.name);
+    const filteredTasks = this.tasksData.filter(t => st.taskTrader === 'all' || t.traderName === st.taskTrader);
+    const taskRows = filteredTasks.map((t, i) => {
+      const ex = this.taskExtra[t.id] || {};
+      return {
+        name: t.name, trader: t.traderName || '\u2014', level: t.minPlayerLevel, objCount: (ex.objectives || t.itemObjectives).length,
+        map: ex.map || 'Any',
+        locked: t.prerequisiteTaskIds.length > 0, prereq: t.prerequisiteTaskIds.map(id => nameById[id] || id).join(', '),
+        bar: t.prerequisiteTaskIds.length > 0 ? '#c15b4e' : 'transparent', bg: rowBg(i),
+        kbOutline: (st.screen === 'tasks' && !st.taskDetailId && st.kbIndex === i) ? '2px solid var(--accent)' : 'none',
+        onOpen: () => this.setState({ taskDetailId: t.id })
+      };
+    });
+    const tasksEmpty = taskRows.length === 0;
+    // Keyboard-nav target list for the current screen (arrow keys move the cursor, Enter activates).
+    this._kbList = st.screen === 'items' ? itemVMs.map(v => v.onOpen)
+      : (st.screen === 'ammo' && ammoViewTable) ? ammoRows.map(r => r.onOpen)
+      : (st.screen === 'tasks' && !st.taskDetailId) ? taskRows.map(r => r.onOpen)
+      : [];
+
+    // Task detail
+    const objTypeMeta = { giveItem: { label: 'HAND OVER', color: '#c9964b' }, findItem: { label: 'FIND', color: '#7d9b6a' }, shoot: { label: 'ELIMINATE', color: '#c15b4e' }, mark: { label: 'MARK', color: '#9a86c4' }, visit: { label: 'LOCATE', color: '#7fa8c9' }, buildWeapon: { label: 'GUNSMITH', color: '#a88b6a' } };
+    let taskDetail = null, showTaskDetail = false;
+    if (st.screen === 'tasks' && st.taskDetailId) {
+      const t = this.tasksData.find(x => x.id === st.taskDetailId);
+      if (t) {
+        showTaskDetail = true;
+        const ex = this.taskExtra[t.id] || {};
+        const unlocks = ex.unlocks || [];
+        const prereqs = t.prerequisiteTaskIds.map(id => ({ name: nameById[id] || id }));
+        const rewards = [];
+        if (ex.xp) rewards.push({ icon: 'xp', label: '+' + ex.xp.toLocaleString('en-US') + ' EXP', color: '#c9a24b' });
+        if (ex.repTrader) rewards.push({ icon: 'rep', label: ex.repTrader + ' ' + ex.repAmt, color: '#e8b923' });
+        if (ex.cash) rewards.push({ icon: 'cash', label: this.M(ex.cash), color: '#6ea862' });
+        unlocks.forEach(u => rewards.push({ icon: 'unlock', label: 'Unlocks ' + u, color: '#7fa8c9' }));
+        taskDetail = {
+          name: t.name, trader: t.traderName, level: t.minPlayerLevel, map: ex.map || 'Any', kappa: !!ex.kappa,
+          traderInitial: (t.traderName || '?')[0],
+          prereqs, hasPrereqs: prereqs.length > 0, noPrereqs: prereqs.length === 0,
+          unlocks: unlocks.map(u => ({ name: u })), hasUnlocks: unlocks.length > 0,
+          objectives: (ex.objectives || t.itemObjectives.map(o => ({ type: 'giveItem', desc: 'Hand over ' + o.name, count: o.count, fir: o.foundInRaid }))).map(o => ({ desc: o.desc, count: o.count, fir: o.fir, typeLabel: (objTypeMeta[o.type] || {}).label || o.type, typeColor: (objTypeMeta[o.type] || {}).color || '#8b9184' })),
+          rewards, onBack: () => this.setState({ taskDetailId: null })
+        };
+      }
+    }
+
+    // Maps
+    const mapRoster = this.mapsData.map(m => { const active = st.mapId === m.id; return { id: m.id, name: m.name, quests: m.quests, duration: m.duration, active, bg: active ? '#1e241d' : 'transparent', bar: active ? A : 'transparent', fg: active ? '#e6e4da' : '#b8b6ac', onClick: () => this.setState({ mapId: m.id }) }; });
+    const mdRaw = this.mapsData.find(m => m.id === st.mapId) || this.mapsData[0];
+    const mapDetail = {
+      name: mdRaw.name, players: mdRaw.players, duration: mdRaw.duration, quests: String(mdRaw.quests), hot: mdRaw.hot,
+      bosses: mdRaw.bosses.map(b => ({ name: b.name, chance: b.chance })),
+      extracts: mdRaw.extracts.map(e => ({ name: e.name, side: e.side, req: e.req, sideColor: e.side === 'PMC' ? '#7fa8c9' : e.side === 'Scav' ? '#c9964b' : '#8b9184', dot: e.reliable ? '#6ea862' : '#e0913c', reliLabel: e.reliable ? 'reliable' : 'conditional' }))
+    };
+
+    // Traders
+    const roster = this.tradersData.map(tr => {
+      const active = st.traderId === tr.id;
+      return { name: tr.name, role: tr.role, initial: tr.initial, onClick: () => this.setState({ traderId: tr.id }), bg: active ? '#1e241d' : 'transparent', bar: active ? A : 'transparent', fg: active ? '#e6e4da' : '#b8b6ac' };
+    });
+    const td = this.tradersData.find(t => t.id === st.traderId) || this.tradersData[0];
+    const loyalty = this.loyaltyTpl.map((l, i) => ({ ...l, bg: i === 2 ? '#181d14' : '#0d100e', fg: i === 2 ? A : '#e6e4da' }));
+
+    // Hideout
+    const stations = this.hideoutData.map(s => {
+      const open = st.hideoutOpenId === s.id;
+      return {
+        name: s.name, levelCount: s.levels.length, open, bg: open ? '#191e18' : 'transparent', chev: open ? 'rotate(90deg)' : 'rotate(0deg)',
+        levels: s.levels.map(lv => ({ level: lv.level, reqCount: lv.itemRequirements.length, reqs: lv.itemRequirements })),
+        onToggle: () => this.setState({ hideoutOpenId: open ? null : s.id })
+      };
+    });
+
+    // Detail
+    let detail = null, showDetail = false;
+    if (st.selectedItemId) {
+      const it = this.itemsData.find(i => i.id === st.selectedItemId);
+      if (it) {
+        showDetail = true;
+        const req = this.reqIndex[it.id] || { neededByTasks: [], neededByHideout: [] };
+        const best = it.sellFor.reduce((m, s) => s.priceRUB > (m ? m.priceRUB : -1) ? s : m, null);
+        detail = {
+          name: it.name, short: it.shortName, id: it.id, tier: this.typeColor(it.types),
+          size: it.width + '\u00d7' + it.height, base: this.M(it.basePrice), types: it.types, tileH: (it.height >= 2 ? 132 : 96) + 'px',
+          tasks: req.neededByTasks, hasTasks: req.neededByTasks.length > 0, noTasks: req.neededByTasks.length === 0,
+          hideout: req.neededByHideout, hasHideout: req.neededByHideout.length > 0, noHideout: req.neededByHideout.length === 0,
+          sellFor: it.sellFor.slice().sort((a, b) => b.priceRUB - a.priceRUB).map(s => {
+            const isBest = best && s.source === best.source && s.priceRUB === best.priceRUB;
+            return { source: s.source, price: this.M(s.priceRUB), best: isBest, bg: isBest ? '#131c13' : '#10130f', bd: isBest ? '#2e4a2b' : '#262d25', nameColor: isBest ? '#e6e4da' : '#b8b6ac', priceColor: isBest ? '#6ea862' : '#b8b6ac' };
+          })
+        };
+      }
+    }
+
+    // Scan — staged flow: empty(upload) → scanning(skeleton) → results(+ bulk sell surplus)
+    const hKey = st.horizon === 'all' ? 'keepAll' : st.horizon === 'current' ? 'keepCur' : 'keepNext';
+    const horizonDefs = [{ k: 'all', label: 'All future needs' }, { k: 'current', label: 'Current tasks only' }, { k: 'next', label: 'Next 5 levels' }];
+    const horizons = horizonDefs.map(h => { const active = st.horizon === h.k; return { label: h.label, onClick: () => this.setState({ horizon: h.k }), bg: active ? '#1e241d' : '#0d100e', fg: active ? A : '#8b9184', bd: active ? A : '#333b31' }; });
+    const surplusNames = [];
+    let surplusTotal = 0, surplusCount = 0;
+    const scanRows = this.scanData.map((r, i) => {
+      const keep = r[hKey]; const surplus = Math.max(0, r.own - keep);
+      const sold = st.scanSold.includes(r.name);
+      let verdict, vc;
+      if (keep <= 0) { verdict = 'SELL'; vc = '#c15b4e'; }
+      else if (surplus > 0) { verdict = 'PARTIAL'; vc = 'var(--accent)'; }
+      else { verdict = 'KEEP'; vc = '#6ea862'; }
+      if (surplus > 0) { surplusNames.push(r.name); if (!sold) { surplusTotal += surplus * r.sell; surplusCount += 1; } }
+      const firMap = { yes: { firLabel: 'FIR', firColor: '#5aa9a0' }, no: { firLabel: 'any', firColor: '#5f665c' }, unsure: { firLabel: '? verify', firColor: '#e0913c' } };
+      return { short: r.short, name: r.name, tier: r.tier, own: r.own, keep, surplus, hasSurplus: surplus > 0, sold, verdict, verdictColor: vc, reason: r.reason, sell: this.M(r.sell), sellSrc: r.sellSrc, bg: sold ? '#0f120e' : rowBg(i), rowOpacity: sold ? '.4' : '1', onSell: () => this.sellRow(r.name), ...firMap[r.fir] };
+    });
+    const scan = {
+      stage: st.scanStage, isEmpty: st.scanStage === 'empty', isScanning: st.scanStage === 'scanning', isResults: st.scanStage === 'results',
+      rows: scanRows, horizons, surplusTotal: this.M(surplusTotal), surplusCount,
+      canSellAll: surplusCount > 0, skeleton: [0, 1, 2, 3, 4, 5],
+      onStart: () => this.startScan(), onReset: () => this.resetScan(), onSellAll: () => this.sellAllSurplus(surplusNames)
+    };
+
+    // Progression — real interactive state (PMC level, quest checklist, hideout module levels)
+    const doneCount = Object.values(st.prog.completed).filter(Boolean).length;
+    const totalTasks = this.tasksData.length;
+    const stationList = this.progStations();
+    const hideoutLv = stationList.reduce((n, s) => n + (st.prog.hideout[s.id] || 0), 0);
+    const hideoutMax = stationList.reduce((n, s) => n + s.max, 0);
+    const progTraders = Array.from(new Set(this.tasksData.map(t => t.traderName)));
+    const progGroups = progTraders.map(tn => ({
+      trader: tn,
+      tasks: this.tasksData.filter(t => t.traderName === tn).map(t => {
+        const done = !!st.prog.completed[t.id];
+        const locked = t.prerequisiteTaskIds.some(id => !st.prog.completed[id]);
+        return { id: t.id, name: t.name, level: t.minPlayerLevel, done, locked, prereq: t.prerequisiteTaskIds.map(id => nameById[id] || id).join(', '),
+          boxBg: done ? '#6ea862' : 'transparent', boxBd: done ? '#6ea862' : (locked ? '#333b31' : '#5f665c'),
+          nameColor: done ? '#5f665c' : (locked ? '#5f665c' : '#e6e4da'), deco: done ? 'line-through' : 'none',
+          onToggle: locked ? (() => {}) : (() => this.toggleTaskDone(t.id)) };
+      })
+    }));
+    const progStationsVM = stationList.map(s => {
+      const cur = st.prog.hideout[s.id] || 0;
+      return { id: s.id, name: s.name, cur, max: s.max, pct: Math.round(cur / s.max * 100) + '%',
+        pips: Array.from({ length: s.max }, (_, k) => ({ on: k < cur, color: k < cur ? A : '#20261e', onClick: () => this.setStationLevel(s.id, k + 1 === cur ? k : k + 1) })) };
+    });
+    const progression = {
+      pmcLevel: String(st.prog.pmcLevel), onDec: () => this.setPmc(-1), onInc: () => this.setPmc(1),
+      questDone: String(doneCount), questTotal: String(totalTasks), questPct: Math.round(doneCount / totalTasks * 100) + '%',
+      hideoutLv: String(hideoutLv), hideoutMax: String(hideoutMax), hideoutPct: Math.round(hideoutLv / hideoutMax * 100) + '%',
+      groups: progGroups, stations: progStationsVM
+    };
+
+    // Ammo detail
+    let ammoDetail = null, showAmmoDetail = false;
+    if (st.screen === 'ammo' && st.selectedAmmo != null) {
+      const a = this.ammoData[st.selectedAmmo];
+      if (a) {
+        showAmmoDetail = true;
+        const pc = this.penColor(a.penetrationPower);
+        const cls = this.penClass(a.penetrationPower);
+        const mkMod = (label, v, invert) => {
+          const sign = v > 0 ? '+' : '';
+          // invert=true → higher is worse (recoil/bleed): positive shown red
+          const good = invert ? v <= 0 : v >= 0;
+          return { label, val: sign + (Number.isInteger(v * 100) ? (v * 100) : (v * 100).toFixed(1)) + '%', color: v === 0 ? '#8b9184' : (good ? '#6ea862' : '#c15b4e') };
+        };
+        ammoDetail = {
+          name: a.name, caliber: a.caliber, calShort: this.caliberShort(a.caliber), ammoType: a.ammoType.toUpperCase(),
+          tracer: a.tracer, tracerLabel: a.tracer ? 'TRACER · ' + (a.tracerColor || '').toUpperCase() : '',
+          tierColor: pc,
+          damage: a.projectileCount > 1 ? a.damage + '\u00d7' + a.projectileCount : String(a.damage),
+          totalDamage: a.projectileCount > 1 ? '= ' + (a.damage * a.projectileCount) + ' total' : '',
+          pen: String(a.penetrationPower), armorDamage: a.armorDamage + '%',
+          classes: [1, 2, 3, 4, 5, 6].map(n => ({ label: ['I', 'II', 'III', 'IV', 'V', 'VI'][n - 1], filled: n <= cls, color: n <= cls ? pc : '#262d25', fg: n <= cls ? '#0d100e' : '#5f665c' })),
+          classNote: 'penetration power ' + a.penetrationPower + ' \u2248 defeats up to class ' + cls,
+          chances: [
+            { label: 'Penetration', pct: this.pct(a.penetrationChance), bar: Math.round(a.penetrationChance * 100) + '%', color: pc },
+            { label: 'Fragmentation', pct: this.pct(a.fragmentationChance), bar: Math.round(a.fragmentationChance * 100) + '%', color: '#c9964b' },
+            { label: 'Ricochet', pct: this.pct(a.ricochetChance), bar: Math.round(a.ricochetChance * 100) + '%', color: '#7fa8c9' }
+          ],
+          ballistics: [
+            { label: 'INITIAL SPEED', val: a.initialSpeed + ' m/s' },
+            { label: 'PROJECTILES', val: String(a.projectileCount) },
+            { label: 'WEIGHT', val: (a.weight * 1000).toFixed(1) + ' g' },
+            { label: 'STACK MAX', val: String(a.stackMaxSize) }
+          ],
+          mods: [
+            mkMod('Light bleed', a.lightBleedModifier, true),
+            mkMod('Heavy bleed', a.heavyBleedModifier, true),
+            mkMod('Stamina burn', a.staminaBurnPerDamage, true),
+            mkMod('Accuracy', a.accuracyModifier, false),
+            mkMod('Recoil', a.recoilModifier, true)
+          ],
+          price: this.M(a.priceRUB), stack: String(a.stackMaxSize)
+        };
+      }
+    }
+
+    return {
+      contentBg: grid ? 'repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0 1.5px, transparent 1.5px 48px), repeating-linear-gradient(90deg, rgba(255,255,255,.022) 0 1.5px, transparent 1.5px 48px), #0d100e' : '#0d100e',
+      crumb: crumbMap[st.screen] || '/',
+      L, offline, connColor: offline ? '#c15b4e' : '#6ea862', connLabel: offline ? 'tarkov.dev · offline' : 'tarkov.dev · online',
+      onToggleConn: () => this.setState({ conn: offline ? 'online' : 'offline' }), onRetry: () => this.setState({ conn: 'online' }),
+      mobileSearchOpen: st.showMobileSearch, onToggleMobileSearch: () => this.setState({ showMobileSearch: !st.showMobileSearch }),
+      search: st.search, onSearch: (e) => this.setState({ search: e.target.value }),
+      nav: { dashboard: mkNav('dashboard'), items: mkNav('items'), ammo: mkNav('ammo'), tasks: mkNav('tasks'), traders: mkNav('traders'), hideout: mkNav('hideout'), maps: mkNav('maps'), progression: mkNav('progression'), scan: mkNav('scan') },
+      go: {
+        dashboard: () => this.navTo('dashboard'), items: () => this.navTo('items'), ammo: () => this.navTo('ammo'),
+        tasks: () => this.navTo('tasks'), traders: () => this.navTo('traders'), hideout: () => this.navTo('hideout'),
+        maps: () => this.navTo('maps'), progression: () => this.navTo('progression'), scan: () => this.navTo('scan'), closeDetail: () => this.setState({ selectedItemId: null })
+      },
+      show: { dashboard: st.screen === 'dashboard', items: st.screen === 'items', ammo: st.screen === 'ammo', tasks: st.screen === 'tasks' && !showTaskDetail, taskDetail: showTaskDetail, traders: st.screen === 'traders', hideout: st.screen === 'hideout', maps: st.screen === 'maps', progression: st.screen === 'progression', scan: st.screen === 'scan', detail: showDetail, ammoDetail: showAmmoDetail },
+      dash: {
+        items: String(this.itemsData.length), quests: String(this.tasksData.length),
+        locked: String(this.tasksData.filter(t => t.prerequisiteTaskIds.length > 0).length),
+        hideoutPct: '32%', surplus: this.M(1897500),
+        nextQuests: this.tasksData.filter(t => t.prerequisiteTaskIds.length === 0).slice(0, 4).map(t => ({ name: t.name, trader: t.traderName, level: t.minPlayerLevel, objCount: t.itemObjectives.length })),
+        neededItems: [this.itemsData[0], this.itemsData[1], this.itemsData[7], this.itemsData[3]].map(it => {
+          const req = this.reqIndex[it.id] || { neededByTasks: [], neededByHideout: [] };
+          const bf = this.bestFlea(it);
+          const need = req.neededByTasks[0] ? req.neededByTasks[0].taskName : (req.neededByHideout[0] ? req.neededByHideout[0].stationName + ' L' + req.neededByHideout[0].level : 'surplus');
+          return { name: it.name, short: it.shortName, tier: this.typeColor(it.types), need: 'needed · ' + need, flea: bf ? this.M(bf.priceRUB) : '\u2014', onOpen: () => this.openItem(it.id) };
+        })
+      },
+      items: {
+        count: String(itemVMs.length), rows: itemVMs, filters: itemFilters, empty: itemVMs.length === 0, has: itemVMs.length > 0,
+        sortName: () => this.setState({ itemSort: { key: 'name', dir: st.itemSort.key === 'name' ? -st.itemSort.dir : 1 } }),
+        sortBase: () => this.setState({ itemSort: { key: 'base', dir: st.itemSort.key === 'base' ? -st.itemSort.dir : -1 } }),
+        sortTrader: () => this.setState({ itemSort: { key: 'trader', dir: st.itemSort.key === 'trader' ? -st.itemSort.dir : -1 } }),
+        sortFlea: () => this.setState({ itemSort: { key: 'flea', dir: st.itemSort.key === 'flea' ? -st.itemSort.dir : -1 } }),
+        arrowName: this.arrow(st.itemSort, 'name'), arrowBase: this.arrow(st.itemSort, 'base'), arrowTrader: this.arrow(st.itemSort, 'trader'), arrowFlea: this.arrow(st.itemSort, 'flea')
+      },
+      ammo: {
+        rows: ammoRows, count: String(ammoRows.length), chips: ammoChips, empty: ammoEmpty, has: !ammoEmpty,
+        viewTable: ammoViewTable, viewCompare: ammoViewCompare, compare: ammoCompare,
+        tableView: ammoViewTable && !ammoEmpty, compareView: ammoViewCompare && !ammoEmpty,
+        viewTableChip: ammoViewChip('table', 'TABLE'), viewCompareChip: ammoViewChip('compare', 'COMPARE'),
+        sortDmg: () => this.setState({ ammoSort: { key: 'damage', dir: st.ammoSort.key === 'damage' ? -st.ammoSort.dir : -1 } }),
+        sortPen: () => this.setState({ ammoSort: { key: 'penetrationPower', dir: st.ammoSort.key === 'penetrationPower' ? -st.ammoSort.dir : -1 } }),
+        sortPenC: () => this.setState({ ammoSort: { key: 'penetrationChance', dir: st.ammoSort.key === 'penetrationChance' ? -st.ammoSort.dir : -1 } }),
+        sortArmor: () => this.setState({ ammoSort: { key: 'armorDamage', dir: st.ammoSort.key === 'armorDamage' ? -st.ammoSort.dir : -1 } }),
+        sortFrag: () => this.setState({ ammoSort: { key: 'fragmentationChance', dir: st.ammoSort.key === 'fragmentationChance' ? -st.ammoSort.dir : -1 } }),
+        sortRico: () => this.setState({ ammoSort: { key: 'ricochetChance', dir: st.ammoSort.key === 'ricochetChance' ? -st.ammoSort.dir : -1 } }),
+        sortVel: () => this.setState({ ammoSort: { key: 'initialSpeed', dir: st.ammoSort.key === 'initialSpeed' ? -st.ammoSort.dir : -1 } }),
+        arrowDmg: this.arrow(st.ammoSort, 'damage'), arrowPen: this.arrow(st.ammoSort, 'penetrationPower'), arrowPenC: this.arrow(st.ammoSort, 'penetrationChance'), arrowArmor: this.arrow(st.ammoSort, 'armorDamage'), arrowFrag: this.arrow(st.ammoSort, 'fragmentationChance'), arrowRico: this.arrow(st.ammoSort, 'ricochetChance'), arrowVel: this.arrow(st.ammoSort, 'initialSpeed')
+      },
+      ammoDetail: ammoDetail || { classes: [], chances: [], ballistics: [], mods: [] },
+      closeAmmo: () => this.setState({ selectedAmmo: null }),
+      tasks: { count: String(taskRows.length), traderChips: taskChips, rows: taskRows, empty: tasksEmpty, has: !tasksEmpty },
+      taskDetail: taskDetail || { prereqs: [], unlocks: [], objectives: [], rewards: [] },
+      maps: { roster: mapRoster, detail: mapDetail },
+      traders: { roster, detail: { name: td.name, role: td.role, initial: td.initial, currency: td.currency, rep: td.rep, reset: td.reset, loyalty, barters: td.barters } },
+      hideout: { count: String(this.hideoutData.length), stations },
+      detail: detail || { types: [], tasks: [], hideout: [], sellFor: [], hasTasks: false, noTasks: true, hasHideout: false, noHideout: true, tileH: '96px' },
+      scan,
+      progression
+    };
+  }
+}
+</script>
+</body>
+</html>
