@@ -41,3 +41,19 @@ describe("parseTasks", () => {
     expect(tasks[0].itemObjectives).toEqual([{ itemId: "salewa", count: 3, foundInRaid: true }]);
   });
 });
+import { parseHideout } from "../src/queries/hideout.js";
+
+describe("parseHideout", () => {
+  it("flattens station levels + item requirements", () => {
+    const raw = {
+      hideoutStations: [
+        { id: "med", name: "Medstation", levels: [
+          { level: 1, itemRequirements: [{ item: { id: "bandage" }, count: 5 }] },
+        ] },
+      ],
+    };
+    const stations = parseHideout(raw);
+    expect(stations[0]).toMatchObject({ id: "med", name: "Medstation" });
+    expect(stations[0].levels[0]).toEqual({ level: 1, itemRequirements: [{ itemId: "bandage", count: 5 }] });
+  });
+});
