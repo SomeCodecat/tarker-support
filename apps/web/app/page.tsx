@@ -1,12 +1,7 @@
-import { ScreenHeader } from "@/components/ui";
+"use client";
+
+import { DashboardScreen } from "@/components/screens/dashboard/dashboard-screen";
 
 export default function Home() {
-  return (
-    <section className="space-y-[18px]">
-      <ScreenHeader title="Dashboard" subtitle="foundation placeholder" />
-      <p className="font-mono text-mono uppercase tracking-[0.08em] text-muted">
-        dashboard // coming online
-      </p>
-    </section>
-  );
+  return <DashboardScreen />;
 }
