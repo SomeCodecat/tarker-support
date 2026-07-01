@@ -38,13 +38,13 @@ export function ProgressionScreen() {
   const taskGroups = useMemo(() => groupTasksByTrader(tasks), []);
 
   const doneCount = Object.values(progression.completed).filter(Boolean).length;
-  const questPct = doneCount / tasks.length;
+  const questPct = tasks.length ? doneCount / tasks.length : 0;
   const hideoutLevel = progStations.reduce(
     (total, station) => total + (progression.hideout[station.id] ?? 0),
     0,
   );
   const hideoutMax = progStations.reduce((total, station) => total + station.max, 0);
-  const hideoutPct = hideoutLevel / hideoutMax;
+  const hideoutPct = hideoutMax ? hideoutLevel / hideoutMax : 0;
 
   function setPmc(delta: number) {
     setProgression((current) => ({
@@ -54,17 +54,19 @@ export function ProgressionScreen() {
   }
 
   function toggleTask(task: Task) {
-    const locked = task.prerequisiteTaskIds.some(
-      (id) => !progression.completed[id],
-    );
-    if (locked) return;
-    setProgression((current) => ({
-      ...current,
-      completed: {
-        ...current.completed,
-        [task.id]: !current.completed[task.id],
-      },
-    }));
+    setProgression((current) => {
+      const done = Boolean(current.completed[task.id]);
+      const locked = task.prerequisiteTaskIds.some((id) => !current.completed[id]);
+      if (locked && !done) return current;
+
+      return {
+        ...current,
+        completed: {
+          ...current.completed,
+          [task.id]: !done,
+        },
+      };
+    });
   }
 
   function setStationLevel(station: ProgStation, level: number) {
@@ -85,8 +87,15 @@ export function ProgressionScreen() {
       <ScreenHeader
         title="PROGRESSION"
         subtitle="operator"
-        right={<Badge variant="soon">PREVIEW</Badge>}
+        right={<Badge variant="soon">LOCAL PREVIEW</Badge>}
       />
+
+      <p className="font-name text-[13px] text-muted max-w-[640px] mb-[16px]">
+        Track PMC level, completed quests and hideout station levels. Edits below
+        are live and held in-memory for this session — a signed-in account store
+        (Slice 2) will persist and sync them across devices. Quests whose
+        prerequisites aren&rsquo;t complete stay locked.
+      </p>
 
       <div className="grid gap-[12px] min-[860px]:grid-cols-3">
         <Panel title="PMC Level">
@@ -161,7 +170,7 @@ export function ProgressionScreen() {
                       key={task.id}
                       type="button"
                       onClick={() => toggleTask(task)}
-                      disabled={locked}
+                      disabled={locked && !done}
                       className={cn(
                         "flex w-full items-center gap-[10px] border-b border-border-subtle px-[15px] py-[9px] text-left transition-colors",
                         locked ? "cursor-default opacity-55" : "hover:bg-hover",
@@ -169,16 +178,16 @@ export function ProgressionScreen() {
                     >
                       <span
                         className={cn(
-                          "flex size-[22px] shrink-0 items-center justify-center border",
+                          "flex size-[16px] shrink-0 items-center justify-center border",
                           done && "border-good bg-good text-bg",
                           !done && locked && "border-border-strong bg-transparent text-dim",
                           !done && !locked && "border-dim bg-transparent text-dim",
                         )}
                       >
                         {done ? (
-                          <Check className="size-[14px]" strokeWidth={3} />
+                          <Check className="size-[11px]" strokeWidth={3} />
                         ) : locked ? (
-                          <Lock className="size-[12px]" strokeWidth={2.2} />
+                          <Lock className="size-[9px]" strokeWidth={2.2} />
                         ) : null}
                       </span>
                       <span className="min-w-0 flex-1">
@@ -197,7 +206,9 @@ export function ProgressionScreen() {
                           </span>
                         ) : null}
                       </span>
-                      <Badge variant="level">L{task.minPlayerLevel}</Badge>
+                      <span className="font-mono text-[9px] text-dim shrink-0">
+                        L{task.minPlayerLevel}
+                      </span>
                     </button>
                   );
                 })}

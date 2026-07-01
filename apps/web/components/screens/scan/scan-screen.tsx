@@ -1,6 +1,6 @@
 "use client";
 
-import { Camera, LoaderCircle, RotateCcw } from "lucide-react";
+import { Camera, Info, LoaderCircle, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Badge,
@@ -77,6 +77,12 @@ export function ScanScreen() {
         subtitle={"keep \u00b7 sell"}
         right={<Badge variant="soon">PREVIEW</Badge>}
       />
+
+      <p className="font-name text-[13px] text-muted max-w-[680px] mb-[16px]">
+        Drop a stash screenshot → per-item KEEP / PARTIAL / SELL verdicts from
+        the RequirementsIndex, then sell surplus in one tap. Vision OCR isn&rsquo;t
+        wired yet — run the demo scan to preview the flow with mock detections.
+      </p>
 
       <div className="grid items-start gap-[14px] min-[860px]:grid-cols-[260px_1fr]">
         <div className="space-y-[12px]">
@@ -232,7 +238,7 @@ function ResultsPanel({
       <Panel padded={false}>
         <div className="overflow-x-auto">
           <div className="min-w-[860px]">
-            <div className="grid grid-cols-[52px_1.2fr_104px_150px_1.3fr_118px_106px] border-b border-border-strong bg-surface-2">
+            <div className="grid grid-cols-[40px_1fr_80px_116px_1fr_80px_88px] border-b border-border-strong bg-surface-2">
               <HeaderCell />
               <HeaderCell>Item</HeaderCell>
               <HeaderCell>Verdict</HeaderCell>
@@ -249,6 +255,14 @@ function ResultsPanel({
                 onSellRow={onSellRow}
               />
             ))}
+            <div className="flex items-center gap-[8px] bg-[#1a1710] px-[12px] py-[8px] font-mono text-[10px]">
+              <Info className="size-[14px] shrink-0 text-accent" />
+              <span className="text-[#c9a24b]">
+                GAP FLAG — verdict / own-keep-surplus / horizon is the intended
+                RequirementsIndex output. Detection is mocked; no vision pipeline
+                exists yet.
+              </span>
+            </div>
           </div>
         </div>
       </Panel>
@@ -288,14 +302,14 @@ function ScanResultRow({
   return (
     <div
       className={cn(
-        "grid grid-cols-[52px_1.2fr_104px_150px_1.3fr_118px_106px] items-center border-b border-l-[3px] border-b-border-subtle",
+        "grid grid-cols-[40px_1fr_80px_116px_1fr_80px_88px] items-center border-b border-l-[3px] border-b-border-subtle",
         index % 2 === 0 ? "bg-surface" : "bg-elevated",
         row.sold && "bg-sold-bg opacity-40",
       )}
       style={{ borderLeftColor: row.verdictColor }}
     >
       <div className="px-[8px] py-[7px]">
-        <TypeTile short={row.short} color={row.tier} size={36} />
+        <TypeTile short={row.short} color={row.tier} size={28} />
       </div>
       <div className="min-w-0 px-[10px] py-[7px]">
         <div className="truncate text-name font-semibold text-fg">{row.name}</div>

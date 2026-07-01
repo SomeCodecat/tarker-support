@@ -103,6 +103,15 @@ function ItemTableRow({ item, index, onOpen }: { item: Item; index: number; onOp
         index % 2 === 0 ? "bg-surface" : "bg-elevated",
       )}
       onClick={() => onOpen(item.id)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          if (event.key === " ") event.preventDefault();
+          onOpen(item.id);
+        }
+      }}
+      tabIndex={0}
+      role="button"
+      aria-label={item.name}
       style={{ borderLeftColor: color }}
     >
       <td className="w-[52px]">
