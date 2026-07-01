@@ -19,3 +19,25 @@ describe("parseItems", () => {
     expect(items[0].sellFor[0]).toEqual({ source: "Flea Market", priceRUB: 900000 });
   });
 });
+import { parseTasks } from "../src/queries/tasks.js";
+
+describe("parseTasks", () => {
+  it("flattens item objectives with FIR + count", () => {
+    const raw = {
+      tasks: [
+        {
+          id: "t1", name: "Shortage", minPlayerLevel: 5,
+          trader: { name: "Therapist" },
+          taskRequirements: [{ task: { id: "t0" } }],
+          objectives: [
+            { __typename: "TaskObjectiveItem", item: { id: "salewa" }, count: 3, foundInRaid: true },
+            { __typename: "TaskObjectiveBasic" },
+          ],
+        },
+      ],
+    };
+    const tasks = parseTasks(raw);
+    expect(tasks[0]).toMatchObject({ id: "t1", minPlayerLevel: 5, traderName: "Therapist", prerequisiteTaskIds: ["t0"] });
+    expect(tasks[0].itemObjectives).toEqual([{ itemId: "salewa", count: 3, foundInRaid: true }]);
+  });
+});
