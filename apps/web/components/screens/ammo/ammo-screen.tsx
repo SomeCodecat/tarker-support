@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight } from "lucide-react";
+import { Check, ChevronRight } from "lucide-react";
 import { useMemo, useState } from "react";
 import {
   Bar,
@@ -41,7 +41,7 @@ const SORT_HEADERS: Array<{ key: AmmoSortKey; label: string; align?: "right" }> 
   { key: "armorDamage", label: "ARMOR", align: "right" },
   { key: "fragmentationChance", label: "FRAG", align: "right" },
   { key: "ricochetChance", label: "RICO", align: "right" },
-  { key: "initialSpeed", label: "VEL", align: "right" },
+  { key: "initialSpeed", label: "VELOCITY", align: "right" },
 ];
 
 const PEN_TIERS = [
@@ -143,6 +143,8 @@ export function AmmoScreen() {
             onToggleRound={toggleRound}
           />
         )}
+
+        <AmmoDataSourceBanner />
       </section>
 
       <AmmoDetailDrawer
@@ -180,10 +182,9 @@ function AmmoTable({ rows, selectedAmmo, sort, onSort, onToggleRound }: AmmoTabl
   return (
     <>
       <div className="hidden border border-border bg-surface min-[860px]:block">
-        <div className="grid grid-cols-[58px_minmax(180px,1fr)_86px_72px_126px_82px_86px_78px_78px_92px_28px] items-center border-b border-border-strong bg-surface-2">
+        <div className="grid grid-cols-[58px_minmax(180px,1fr)_72px_126px_82px_86px_78px_78px_92px_28px] items-center border-b border-border-strong bg-surface-2">
           <div className="px-[8px] py-[8px]" />
           <HeaderCell>ROUND</HeaderCell>
-          <HeaderCell>CAL</HeaderCell>
           {SORT_HEADERS.map((header) => (
             <SortHeader
               key={header.key}
@@ -262,7 +263,7 @@ function AmmoTableRow({
 
   return (
     <button
-      className={`grid w-full grid-cols-[58px_minmax(180px,1fr)_86px_72px_126px_82px_86px_78px_78px_92px_28px] items-center border-b border-border-subtle border-l-[3px] text-left transition-colors hover:bg-hover ${
+      className={`grid w-full grid-cols-[58px_minmax(180px,1fr)_72px_126px_82px_86px_78px_78px_92px_28px] items-center border-b border-border-subtle border-l-[3px] text-left transition-colors hover:bg-hover ${
         active ? "bg-active-2" : rowTone(rowIndex)
       }`}
       onClick={() => onToggleRound(round.index)}
@@ -277,8 +278,8 @@ function AmmoTableRow({
           <span className="truncate text-name font-semibold text-fg">{round.name}</span>
           {round.tracer ? <TracerTag /> : null}
         </div>
+        <div className="font-mono text-[9px] text-dim">{round.caliber}</div>
       </div>
-      <Cell muted>{round.caliber}</Cell>
       <Cell strong>{damageLabel(round)}</Cell>
       <div className="px-[8px] py-[6px]">
         <div className="flex items-center justify-end gap-[8px]">
@@ -302,6 +303,23 @@ function AmmoTableRow({
         <ChevronRight className={`size-[13px] transition-transform ${active ? "rotate-90" : ""}`} />
       </div>
     </button>
+  );
+}
+
+function AmmoDataSourceBanner() {
+  return (
+    <div className="mt-[12px] flex items-center gap-[8px] border border-[#24401f] bg-[#111a11] px-[12px] py-[8px] font-mono text-[10px]">
+      <Check className="size-[14px] shrink-0 text-[#6ea862]" strokeWidth={2} />
+      <span className="text-[#8fb87f]">
+        API-BACKED — tarkov.dev exposes a dedicated{" "}
+        <span className="text-[#9ccb4f]">ammo</span> query (damage,
+        penetrationPower, armorDamage, fragmentation/penetration/ricochetChance,
+        initialSpeed, projectileCount, tracer, bleed &amp; recoil modifiers +
+        nested item price). Add the query + local type; values shown are mocked
+        to that shape. Armor-class read in the drawer is derived from
+        penetrationPower (no shots-to-pen field).
+      </span>
+    </div>
   );
 }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowLeft, ChevronRight, Lock, Map as MapIcon } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronRight, Lock, Map as MapIcon } from "lucide-react";
 import { Badge, Button, EmptyState, FilterChip, Panel, ScreenHeader } from "@/components/ui";
 import { rub } from "@/lib/format";
 import { taskExtra, tasks } from "@/lib/mock";
@@ -105,7 +105,6 @@ function TaskList({ tasks, nameById, onOpen }: TaskListProps) {
             .map((id) => nameById.get(id) ?? id)
             .join(", ");
           const locked = task.prerequisiteTaskIds.length > 0;
-          const objectiveCount = (extra?.objectives ?? fallbackObjectives(task.itemObjectives)).length;
 
           return (
             <button
@@ -113,7 +112,7 @@ function TaskList({ tasks, nameById, onOpen }: TaskListProps) {
               type="button"
               onClick={() => onOpen(task.id)}
               className={cn(
-                "grid w-full grid-cols-[32px_minmax(0,1fr)_90px] items-center border-l-[3px] text-left transition-colors hover:bg-hover min-[760px]:grid-cols-[32px_minmax(0,1fr)_110px_64px_100px_76px_28px]",
+                "grid w-full grid-cols-[32px_minmax(0,1fr)_90px] items-center border-l-[3px] text-left transition-colors hover:bg-hover min-[760px]:grid-cols-[32px_minmax(0,1fr)_110px_100px_72px_24px]",
                 locked ? "border-l-danger" : "border-l-transparent",
                 index % 2 === 0 ? "bg-surface" : "bg-elevated",
               )}
@@ -133,14 +132,10 @@ function TaskList({ tasks, nameById, onOpen }: TaskListProps) {
                 <div className="mt-[6px] flex flex-wrap gap-[6px] min-[760px]:hidden">
                   <TaskMeta label={task.traderName ?? "—"} />
                   <TaskMeta label={extra?.map ?? "Any"} />
-                  <TaskMeta label={`${objectiveCount} obj`} />
                 </div>
               </div>
               <div className="hidden px-[10px] py-[10px] font-mono text-mono text-muted min-[760px]:block">
                 {task.traderName ?? "—"}
-              </div>
-              <div className="hidden px-[10px] py-[10px] font-mono text-meta uppercase tracking-[0.04em] text-dim min-[760px]:block">
-                {objectiveCount} obj
               </div>
               <div className="hidden px-[10px] py-[10px] font-mono text-meta uppercase tracking-[0.04em] text-dim min-[760px]:block">
                 {extra?.map ?? "Any"}
@@ -211,13 +206,7 @@ function TaskDetail({ task, nameById, onBack }: TaskDetailProps) {
         </div>
       </div>
 
-      <Panel title="PREREQUISITES">
-        <NamePills names={prereqs} empty="— none" tone="danger" />
-      </Panel>
-
-      <Panel title="UNLOCKS">
-        <NamePills names={unlocks} empty="— none" tone="info" />
-      </Panel>
+      <PrerequisiteChain prereqs={prereqs} taskName={task.name} unlocks={unlocks} />
 
       <div className="grid gap-[12px] min-[860px]:grid-cols-2">
         <Panel title="OBJECTIVES" padded={false}>
@@ -273,32 +262,61 @@ function ObjectiveRow({ objective }: { objective: TaskDetailObjective }) {
   );
 }
 
-function NamePills({
-  names,
-  empty,
-  tone,
+function PrerequisiteChain({
+  prereqs,
+  taskName,
+  unlocks,
 }: {
-  names: string[];
-  empty: string;
-  tone: "danger" | "info";
+  prereqs: string[];
+  taskName: string;
+  unlocks: string[];
 }) {
-  if (names.length === 0) {
-    return <div className="font-mono text-mono text-dim">{empty}</div>;
-  }
-
   return (
-    <div className="flex flex-wrap gap-[8px]">
-      {names.map((name) => (
-        <span
-          key={name}
-          className={cn(
-            "border bg-surface-2 px-[9px] py-[7px] text-name font-semibold text-fg-2",
-            tone === "danger" ? "border-border-strong" : "border-good-border",
-          )}
-        >
-          {name}
-        </span>
-      ))}
+    <div className="mb-[12px] border border-border bg-surface px-[16px] py-[14px]">
+      <div className="mb-[10px] font-display text-[10px] uppercase tracking-[0.15em] text-muted">
+        PREREQUISITE CHAIN
+      </div>
+      <div className="flex items-stretch gap-[8px] overflow-x-auto pb-[4px]">
+        {prereqs.length > 0 ? (
+          prereqs.map((name) => (
+            <div key={name} className="flex flex-none items-center gap-[8px]">
+              <div className="min-w-[110px] border border-border-strong bg-[#10130f] px-[11px] py-[9px]">
+                <div className="mb-[3px] font-mono text-[8px] uppercase tracking-[0.12em] text-dim">
+                  REQUIRES
+                </div>
+                <div className="text-[12px] font-semibold text-fg-2">{name}</div>
+              </div>
+              <ArrowRight className="size-[14px] shrink-0 text-dim" strokeWidth={2} />
+            </div>
+          ))
+        ) : (
+          <div className="flex flex-none items-center gap-[8px]">
+            <div className="flex min-w-[100px] items-center border border-dashed border-border-strong bg-[#10130f] px-[11px] py-[9px]">
+              <span className="font-mono text-[10px] text-dim">start of line</span>
+            </div>
+            <ArrowRight className="size-[14px] shrink-0 text-dim" strokeWidth={2} />
+          </div>
+        )}
+
+        <div className="min-w-[120px] flex-none border border-accent bg-[#1a1e12] px-[11px] py-[9px]">
+          <div className="mb-[3px] font-mono text-[8px] uppercase tracking-[0.12em] text-accent">
+            THIS TASK
+          </div>
+          <div className="text-[12px] font-semibold text-fg">{taskName}</div>
+        </div>
+
+        {unlocks.map((name) => (
+          <div key={name} className="flex flex-none items-center gap-[8px]">
+            <ArrowRight className="size-[14px] shrink-0 text-dim" strokeWidth={2} />
+            <div className="min-w-[110px] border border-[#2e4a2b] bg-[#10130f] px-[11px] py-[9px]">
+              <div className="mb-[3px] font-mono text-[8px] uppercase tracking-[0.12em] text-[#6ea862]">
+                UNLOCKS
+              </div>
+              <div className="text-[12px] font-semibold text-fg-2">{name}</div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
