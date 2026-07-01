@@ -43,6 +43,22 @@ importers:
         specifier: latest
         version: 4.1.9(@types/node@26.0.1)(vite@8.1.2(@types/node@26.0.1))
 
+  packages/tools:
+    dependencies:
+      '@tarker/data':
+        specifier: workspace:*
+        version: link:../data
+      zod:
+        specifier: latest
+        version: 4.4.3
+    devDependencies:
+      typescript:
+        specifier: latest
+        version: 6.0.3
+      vitest:
+        specifier: latest
+        version: 4.1.9(@types/node@26.0.1)(vite@8.1.2(@types/node@26.0.1))
+
 packages:
 
   '@emnapi/core@1.11.1':
