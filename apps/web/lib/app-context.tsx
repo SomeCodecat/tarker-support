@@ -46,7 +46,16 @@ export function AppProvider({ children }: { children: ReactNode }) {
       openItem,
       closeItem,
     }),
-    [closeItem, mobileSearchOpen, online, openItem, search, toggleMobileSearch, toggleOnline],
+    [
+      closeItem,
+      mobileSearchOpen,
+      online,
+      openItem,
+      search,
+      selectedItemId,
+      toggleMobileSearch,
+      toggleOnline,
+    ],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -19,7 +19,7 @@ export function ScreenHeader({ title, subtitle, right }: ScreenHeaderProps) {
           </h1>
           {subtitle ? (
             <p className="mt-[2px] font-mono text-meta uppercase tracking-[0.08em] text-dim">
-              // {subtitle}
+              {`// ${subtitle}`}
             </p>
           ) : null}
         </div>

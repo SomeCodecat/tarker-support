@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useSyncExternalStore, type ReactNode } from "react";
 import { AppProvider } from "@/lib/app-context";
 import { Header } from "./header";
 import { ItemDetailDrawer } from "./item-detail-drawer";
@@ -38,17 +38,13 @@ function ShellFrame({ children }: { children: ReactNode }) {
 }
 
 function useMediaQuery(query: string): boolean {
-  const [mounted, setMounted] = useState(false);
-  const [matches, setMatches] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    const media = window.matchMedia(query);
-    const update = () => setMatches(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, [query]);
-
-  return mounted ? matches : false;
+  return useSyncExternalStore(
+    (onChange) => {
+      const media = window.matchMedia(query);
+      media.addEventListener("change", onChange);
+      return () => media.removeEventListener("change", onChange);
+    },
+    () => window.matchMedia(query).matches,
+    () => false,
+  );
 }
