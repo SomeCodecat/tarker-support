@@ -112,3 +112,20 @@ export interface MapLocation {
   extracts: MapExtractPoint[];
 }
 
+export interface TraderBarterItem {
+  name: string;
+  count: number;
+}
+
+export interface TraderBarterOffer {
+  level: number;
+  requiredItems: TraderBarterItem[];
+  rewardItems: TraderBarterItem[];
+}
+
+export interface TraderProfile {
+  id: string; // normalizedName, e.g. "prapor"
+  name: string;
+  currency: string; // currency.shortName, e.g. "RUB" | "USD" | "EUR"
+  barters: TraderBarterOffer[];
+}

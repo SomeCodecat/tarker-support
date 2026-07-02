@@ -147,3 +147,47 @@ describe("parseMaps", () => {
   });
 });
 
+import { parseTraders } from "../src/queries/traders.js";
+
+describe("parseTraders", () => {
+  it("maps normalizedName→id, currency shortName, and barter items (dropping null items)", () => {
+    const raw = {
+      traders: [
+        {
+          normalizedName: "prapor",
+          name: "Prapor",
+          currency: { shortName: "RUB" },
+          barters: [
+            {
+              level: 2,
+              requiredItems: [
+                { count: 2, item: { name: "Propane tank (5L)" } },
+                { count: 2, item: { name: "Fuel conditioner" } },
+              ],
+              rewardItems: [{ count: 1, item: { name: "Metal fuel tank" } }],
+            },
+            {
+              level: 1,
+              requiredItems: [{ count: 1, item: null }],
+              rewardItems: [{ count: 1, item: { name: "Roubles" } }],
+            },
+          ],
+        },
+      ],
+    };
+    const traders = parseTraders(raw);
+    expect(traders[0]).toMatchObject({ id: "prapor", name: "Prapor", currency: "RUB" });
+    expect(traders[0].barters[0]).toEqual({
+      level: 2,
+      requiredItems: [
+        { name: "Propane tank (5L)", count: 2 },
+        { name: "Fuel conditioner", count: 2 },
+      ],
+      rewardItems: [{ name: "Metal fuel tank", count: 1 }],
+    });
+    // null item is dropped from requiredItems
+    expect(traders[0].barters[1].requiredItems).toEqual([]);
+    expect(traders[0].barters[1].rewardItems).toEqual([{ name: "Roubles", count: 1 }]);
+  });
+});
+
