@@ -84,3 +84,35 @@ describe("parseAmmo", () => {
     expect(rounds[0].sellFor[0]).toEqual({ source: "Flea Market", priceRUB: 1360 });
   });
 });
+import { parseTaskDetails } from "../src/queries/taskDetails.js";
+
+describe("parseTaskDetails", () => {
+  it("maps map/kappa/experience, objectives, and finish rewards (cash + standing)", () => {
+    const raw = {
+      tasks: [
+        {
+          id: "g1", name: "Debut", minPlayerLevel: 1, experience: 1100, kappaRequired: true,
+          trader: { name: "Prapor" }, map: { name: "Factory" },
+          taskRequirements: [{ task: { id: "g0" } }],
+          objectives: [
+            { type: "giveItem", description: "Hand over MP-133 shotguns", optional: false, count: 2, foundInRaid: false },
+            { type: "shoot", description: "Eliminate Scavs", optional: false },
+          ],
+          finishRewards: {
+            traderStanding: [{ standing: 0.02, trader: { name: "Prapor" } }],
+            items: [{ count: 15000, item: { name: "Roubles" } }],
+          },
+        },
+      ],
+    };
+    const details = parseTaskDetails(raw);
+    expect(details[0]).toMatchObject({
+      id: "g1", name: "Debut", minPlayerLevel: 1, traderName: "Prapor",
+      mapName: "Factory", experience: 1100, kappaRequired: true, cashReward: 15000,
+      prerequisiteTaskIds: ["g0"],
+    });
+    expect(details[0].objectives[0]).toEqual({ type: "giveItem", description: "Hand over MP-133 shotguns", count: 2, foundInRaid: false, optional: false });
+    expect(details[0].objectives[1]).toEqual({ type: "shoot", description: "Eliminate Scavs", count: 1, foundInRaid: false, optional: false });
+    expect(details[0].standingRewards[0]).toEqual({ traderName: "Prapor", standing: 0.02 });
+  });
+});

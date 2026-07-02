@@ -62,3 +62,30 @@ export interface Ammo {
   recoilModifier: number | null;
   sellFor: SellVenue[];
 }
+
+export interface TaskObjectiveDetail {
+  type: string;
+  description: string;
+  count: number;
+  foundInRaid: boolean;
+  optional: boolean;
+}
+
+export interface TaskStandingReward {
+  traderName: string;
+  standing: number;
+}
+
+export interface TaskDetail {
+  id: string;
+  name: string;
+  minPlayerLevel: number;
+  traderName: string | null;
+  mapName: string | null;
+  experience: number;
+  kappaRequired: boolean;
+  prerequisiteTaskIds: string[];
+  objectives: TaskObjectiveDetail[];
+  cashReward: number;
+  standingRewards: TaskStandingReward[];
+}

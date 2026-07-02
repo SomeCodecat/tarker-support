@@ -6,3 +6,4 @@ export * from "./queries/items";
 export * from "./queries/tasks";
 export * from "./queries/hideout";
 export * from "./queries/ammo";
+export * from "./queries/taskDetails";
