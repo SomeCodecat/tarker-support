@@ -13,7 +13,6 @@ import {
   TypeTile,
 } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { scanRows } from "@/lib/mock";
 import type { ScanRow } from "@/lib/types";
 
 type ScanStage = "empty" | "scanning" | "results";
@@ -26,7 +25,13 @@ const HORIZONS: { key: Horizon; label: string }[] = [
   { key: "next", label: "Next 5 levels" },
 ];
 
-export function ScanScreen() {
+export function ScanScreen({
+  degraded = false,
+  scanRows,
+}: {
+  degraded?: boolean;
+  scanRows: ScanRow[];
+}) {
   const [stage, setStage] = useState<ScanStage>("empty");
   const [horizon, setHorizon] = useState<Horizon>("all");
   const [soldRows, setSoldRows] = useState<string[]>([]);
@@ -40,7 +45,7 @@ export function ScanScreen() {
 
   const rows = useMemo(
     () => buildScanRows(scanRows, horizon, soldRows),
-    [horizon, soldRows],
+    [scanRows, horizon, soldRows],
   );
   const surplusNames = rows.filter((row) => row.surplus > 0).map((row) => row.name);
   const surplusTotal = rows.reduce(
@@ -75,13 +80,19 @@ export function ScanScreen() {
       <ScreenHeader
         title="SCAN"
         subtitle={"keep \u00b7 sell"}
-        right={<Badge variant="soon">PREVIEW</Badge>}
+        right={
+          <div className="flex items-center gap-[8px]">
+            {degraded ? <Badge variant="sample" /> : null}
+            <Badge variant="soon">PREVIEW</Badge>
+          </div>
+        }
       />
 
       <p className="font-name text-[13px] text-muted max-w-[680px] mb-[16px]">
-        Drop a stash screenshot → per-item KEEP / PARTIAL / SELL verdicts from
-        the RequirementsIndex, then sell surplus in one tap. Vision OCR isn&rsquo;t
-        wired yet — run the demo scan to preview the flow with mock detections.
+        Drop a stash screenshot → per-item KEEP / PARTIAL / SELL verdicts
+        computed live from tarkov.dev tasks, hideout and sell prices. Vision OCR
+        isn&rsquo;t wired yet — run the demo scan to preview the flow with a fixed
+        demo stash.
       </p>
 
       <div className="grid items-start gap-[14px] min-[860px]:grid-cols-[260px_1fr]">
@@ -258,9 +269,11 @@ function ResultsPanel({
             <div className="flex items-center gap-[8px] bg-[#1a1710] px-[12px] py-[8px] font-mono text-[10px]">
               <Info className="size-[14px] shrink-0 text-accent" />
               <span className="text-[#c9a24b]">
-                GAP FLAG — verdict / own-keep-surplus / horizon is the intended
-                RequirementsIndex output. Detection is mocked; no vision pipeline
-                exists yet.
+                Live tarkov.dev requirements — verdicts, keep/surplus counts,
+                reasons and best sell prices are computed from live tasks,
+                hideout and prices. Detection is a fixed demo stash (no vision
+                pipeline yet); demo player state: PMC level 15, nothing
+                completed.
               </span>
             </div>
           </div>
