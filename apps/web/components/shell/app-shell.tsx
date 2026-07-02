@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore, type ReactNode } from "react";
 import { AppProvider } from "@/lib/app-context";
+import { ProgressProvider } from "@/lib/progress";
 import { Header } from "./header";
 import { ItemDetailDrawer } from "./item-detail-drawer";
 import { MobileTabBar } from "./mobile-tab-bar";
@@ -11,8 +12,10 @@ import { Sidebar } from "./sidebar";
 export function AppShell({ children }: { children: ReactNode }) {
   return (
     <AppProvider>
-      <ShellFrame>{children}</ShellFrame>
-      <ItemDetailDrawer />
+      <ProgressProvider>
+        <ShellFrame>{children}</ShellFrame>
+        <ItemDetailDrawer />
+      </ProgressProvider>
     </AppProvider>
   );
 }

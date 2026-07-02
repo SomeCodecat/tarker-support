@@ -1,23 +1,12 @@
 "use client";
 
 import { Check, Lock, Minus, Plus } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Badge, Bar, Button, Panel, ScreenHeader, StatTile } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { pct } from "@/lib/format";
+import { useProgress } from "@/lib/progress";
 import type { ProgStation, Task } from "@/lib/types";
-
-interface ProgressionState {
-  pmcLevel: number;
-  completed: Record<string, boolean>;
-  hideout: Record<string, number>;
-}
-
-const INITIAL_PROGRESSION: ProgressionState = {
-  pmcLevel: 15,
-  completed: {},
-  hideout: {},
-};
 
 export function ProgressionScreen({
   degraded = false,
@@ -28,7 +17,12 @@ export function ProgressionScreen({
   stations: ProgStation[];
   tasks: Task[];
 }) {
-  const [progression, setProgression] = useState<ProgressionState>(INITIAL_PROGRESSION);
+  const {
+    progress: progression,
+    setPmc,
+    toggleTask: toggleTaskById,
+    setStationLevel: setStationLevelById,
+  } = useProgress();
   const nameById = useMemo(
     () => Object.fromEntries(tasks.map((task) => [task.id, task.name])),
     [tasks],
@@ -44,40 +38,15 @@ export function ProgressionScreen({
   const hideoutMax = stations.reduce((total, station) => total + station.max, 0);
   const hideoutPct = hideoutMax ? hideoutLevel / hideoutMax : 0;
 
-  function setPmc(delta: number) {
-    setProgression((current) => ({
-      ...current,
-      pmcLevel: Math.max(1, Math.min(79, current.pmcLevel + delta)),
-    }));
-  }
-
   function toggleTask(task: Task) {
-    setProgression((current) => {
-      const done = Boolean(current.completed[task.id]);
-      const locked = task.prerequisiteTaskIds.some((id) => !current.completed[id]);
-      if (locked && !done) return current;
-
-      return {
-        ...current,
-        completed: {
-          ...current.completed,
-          [task.id]: !done,
-        },
-      };
-    });
+    const done = Boolean(progression.completed[task.id]);
+    const locked = task.prerequisiteTaskIds.some((id) => !progression.completed[id]);
+    if (locked && !done) return;
+    toggleTaskById(task.id);
   }
 
   function setStationLevel(station: ProgStation, level: number) {
-    setProgression((current) => {
-      const currentLevel = current.hideout[station.id] ?? 0;
-      return {
-        ...current,
-        hideout: {
-          ...current.hideout,
-          [station.id]: level === currentLevel ? level - 1 : level,
-        },
-      };
-    });
+    setStationLevelById(station.id, level);
   }
 
   return (
@@ -88,15 +57,14 @@ export function ProgressionScreen({
         right={
           <div className="flex items-center gap-[8px]">
             {degraded ? <Badge variant="sample" /> : null}
-            <Badge variant="soon">LOCAL PREVIEW</Badge>
+            <Badge variant="soon">LOCAL SAVE</Badge>
           </div>
         }
       />
 
       <p className="font-name text-[13px] text-muted max-w-[640px] mb-[16px]">
-        Track PMC level, completed quests and hideout station levels. Edits below
-        are live and held in-memory for this session — a signed-in account store
-        (Slice 2) will persist and sync them across devices. Quests whose
+        Track PMC level, completed quests and hideout station levels. Edits below are
+        live and saved locally in this browser — no account sync yet. Quests whose
         prerequisites aren&rsquo;t complete stay locked.
       </p>
 

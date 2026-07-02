@@ -85,18 +85,30 @@ export interface MapInfo {
 }
 
 // MOCK — scan/keep-sell placeholder (slice 3 feature)
+export interface ScanTaskNeed {
+  taskId: string;
+  taskName: string;
+  count: number;
+  foundInRaid: boolean;
+  minPlayerLevel: number;
+}
+
+export interface ScanHideoutNeed {
+  stationId: string;
+  stationName: string;
+  level: number;
+  count: number;
+}
+
 export interface ScanRow {
   short: string;
   name: string;
   tier: string;
   own: number;
-  keepAll: number;
-  keepCur: number;
-  keepNext: number;
-  reason: string;
+  taskNeeds: ScanTaskNeed[];
+  hideoutNeeds: ScanHideoutNeed[];
   sell: number;
   sellSrc: string;
-  fir: "yes" | "no" | "unsure";
 }
 
 export type TaskObjectiveType =
