@@ -1,11 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { EmptyState, FilterChip, Money, ScreenHeader, SortArrow, TypeTile } from "@/components/ui";
+import { Badge, EmptyState, FilterChip, Money, ScreenHeader, SortArrow, TypeTile } from "@/components/ui";
 import { useApp } from "@/lib/app-context";
 import { typeColor } from "@/lib/colors";
 import { rub } from "@/lib/format";
-import { bestFlea, bestTrader, items } from "@/lib/mock";
+import { bestFlea, bestTrader } from "@/lib/mock";
 import { cn } from "@/lib/cn";
 import type { Item } from "@tarker/data";
 
@@ -19,6 +19,7 @@ interface SortState {
 }
 
 const filters: ItemFilter[] = ["all", "barter", "medical", "keys", "mods"];
+const MAX_VISIBLE_ROWS = 200;
 
 function sortArrow(sort: SortState, key: SortKey): "asc" | "desc" | undefined {
   if (sort.key !== key) return undefined;
@@ -200,7 +201,7 @@ function ItemCard({ item, onOpen }: { item: Item; onOpen(id: string): void }) {
   );
 }
 
-export function ItemsScreen() {
+export function ItemsScreen({ degraded = false, items }: { degraded?: boolean; items: Item[] }) {
   const { openItem, search } = useApp();
   const [filter, setFilter] = useState<ItemFilter>("all");
   const [sort, setSort] = useState<SortState>({ key: "name", dir: 1 });
@@ -210,8 +211,9 @@ export function ItemsScreen() {
       items
         .filter((item) => itemMatchesFilter(item, filter, search.trim()))
         .toSorted((a, b) => compareItems(a, b, sort)),
-    [filter, search, sort],
+    [filter, items, search, sort],
   );
+  const visibleRows = rows.slice(0, MAX_VISIBLE_ROWS);
 
   const onSort = (key: SortKey) => setSort((current) => nextSort(current, key));
 
@@ -219,8 +221,11 @@ export function ItemsScreen() {
     <section className="space-y-[16px]">
       <ScreenHeader
         right={
-          <div className="font-mono text-meta uppercase tracking-[0.08em] text-dim">
-            {rows.length} results
+          <div className="flex items-center gap-[8px]">
+            {degraded ? <Badge variant="sample" /> : null}
+            <div className="font-mono text-meta uppercase tracking-[0.08em] text-dim">
+              {rows.length} results
+            </div>
           </div>
         }
         subtitle="database"
@@ -284,7 +289,7 @@ export function ItemsScreen() {
                 </tr>
               </thead>
               <tbody className="[&_td]:border-b [&_td]:border-border-subtle [&_td]:px-[10px] [&_td]:py-[8px]">
-                {rows.map((item, index) => (
+                {visibleRows.map((item, index) => (
                   <ItemTableRow
                     index={index}
                     item={item}
@@ -297,10 +302,16 @@ export function ItemsScreen() {
           </div>
 
           <div className="flex flex-col gap-[6px] min-[860px]:hidden">
-            {rows.map((item) => (
+            {visibleRows.map((item) => (
               <ItemCard item={item} key={item.id} onOpen={openItem} />
             ))}
           </div>
+
+          {rows.length > MAX_VISIBLE_ROWS ? (
+            <div className="mt-[10px] text-center font-mono text-meta text-dim">
+              Showing first {MAX_VISIBLE_ROWS} of {rows.length} — refine with search or a type filter.
+            </div>
+          ) : null}
         </>
       )}
     </section>

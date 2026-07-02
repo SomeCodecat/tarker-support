@@ -3,6 +3,7 @@
 import { Check, ChevronRight } from "lucide-react";
 import { useMemo, useState } from "react";
 import {
+  Badge,
   Bar,
   EmptyState,
   FilterChip,
@@ -11,7 +12,6 @@ import {
   ViewToggle,
 } from "@/components/ui";
 import { penClass, penColor } from "@/lib/colors";
-import { ammo as ammoData } from "@/lib/mock";
 import type { AmmoRound } from "@/lib/types";
 import { AmmoDetailDrawer } from "./ammo-detail-drawer";
 import {
@@ -52,14 +52,14 @@ const PEN_TIERS = [
   { label: "60+", color: "#6ea862" },
 ] as const;
 
-export function AmmoScreen() {
+export function AmmoScreen({ degraded = false, ammo }: { degraded?: boolean; ammo: AmmoRound[] }) {
   const [caliber, setCaliber] = useState("all");
   const [view, setView] = useState<AmmoView>("table");
   const [sort, setSort] = useState<AmmoSort>(DEFAULT_AMMO_SORT);
   const [selectedAmmo, setSelectedAmmo] = useState<number | null>(null);
 
-  const indexedRounds = useMemo(() => indexedAmmo(ammoData), []);
-  const calibers = useMemo(() => ammoCalibers(ammoData), []);
+  const indexedRounds = useMemo(() => indexedAmmo(ammo), [ammo]);
+  const calibers = useMemo(() => ammoCalibers(ammo), [ammo]);
   const filteredRounds = useMemo(
     () => filterAmmo(indexedRounds, caliber),
     [caliber, indexedRounds],
@@ -76,10 +76,10 @@ export function AmmoScreen() {
     [filteredRounds],
   );
   const maxDamage = useMemo(
-    () => Math.max(...ammoData.map((round) => totalDamage(round))),
-    [],
+    () => Math.max(...ammo.map((round) => totalDamage(round))),
+    [ammo],
   );
-  const selectedRound = selectedAmmo === null ? null : ammoData[selectedAmmo] ?? null;
+  const selectedRound = selectedAmmo === null ? null : ammo[selectedAmmo] ?? null;
 
   const toggleRound = (index: number) => {
     setSelectedAmmo((current) => (current === index ? null : index));
@@ -92,8 +92,11 @@ export function AmmoScreen() {
           title="AMMO"
           subtitle="ballistics"
           right={
-            <div className="font-mono text-mono uppercase tracking-[0.08em] text-dim">
-              {filteredRounds.length} rounds
+            <div className="flex items-center gap-[8px]">
+              {degraded ? <Badge variant="sample" /> : null}
+              <div className="font-mono text-mono uppercase tracking-[0.08em] text-dim">
+                {filteredRounds.length} rounds
+              </div>
             </div>
           }
         />
@@ -315,8 +318,7 @@ function AmmoDataSourceBanner() {
         <span className="text-[#9ccb4f]">ammo</span> query (damage,
         penetrationPower, armorDamage, fragmentation/penetration/ricochetChance,
         initialSpeed, projectileCount, tracer, bleed &amp; recoil modifiers +
-        nested item price). Add the query + local type; values shown are mocked
-        to that shape. Armor-class read in the drawer is derived from
+        nested item price). Armor-class read in the drawer is derived from
         penetrationPower (no shots-to-pen field).
       </span>
     </div>

@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 import { z } from "zod";
-import type { Task } from "../types.js";
+import type { Task } from "../types";
 
 export const TASKS_QUERY = gql`
   {

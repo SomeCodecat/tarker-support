@@ -1,9 +1,9 @@
-import type { RequirementsIndex } from "./types.js";
-import { createClient } from "./client.js";
-import { fetchItems } from "./queries/items.js";
-import { fetchTasks } from "./queries/tasks.js";
-import { fetchHideout } from "./queries/hideout.js";
-import { buildRequirementsIndex } from "./requirementsIndex.js";
+import type { RequirementsIndex } from "./types";
+import { createClient } from "./client";
+import { fetchItems } from "./queries/items";
+import { fetchTasks } from "./queries/tasks";
+import { fetchHideout } from "./queries/hideout";
+import { buildRequirementsIndex } from "./requirementsIndex";
 
 export interface LoaderOptions {
   fetcher: () => Promise<RequirementsIndex>;

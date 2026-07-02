@@ -4,13 +4,12 @@ import { useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, ChevronRight, Lock, Map as MapIcon } from "lucide-react";
 import { Badge, Button, EmptyState, FilterChip, Panel, ScreenHeader } from "@/components/ui";
 import { rub } from "@/lib/format";
-import { taskExtra, tasks } from "@/lib/mock";
-import type { Task, TaskDetailObjective, TaskObjectiveItem, TaskObjectiveType } from "@/lib/types";
+import type { Task, TaskDetailObjective, TaskExtra, TaskObjectiveItem } from "@/lib/types";
 import { cn } from "@/lib/cn";
 
 const ALL_TRADERS = "all";
 
-const objTypeMeta: Record<TaskObjectiveType, { label: string; color: string }> = {
+const objTypeMeta: Record<string, { label: string; color: string }> = {
   giveItem: { label: "HAND OVER", color: "#c9964b" },
   findItem: { label: "FIND", color: "#7d9b6a" },
   shoot: { label: "ELIMINATE", color: "#c15b4e" },
@@ -19,13 +18,13 @@ const objTypeMeta: Record<TaskObjectiveType, { label: string; color: string }> =
   buildWeapon: { label: "GUNSMITH", color: "#a88b6a" },
 };
 
-export function TasksScreen() {
+export function TasksScreen({ degraded = false, tasks, taskExtra }: { degraded?: boolean; tasks: Task[]; taskExtra: Record<string, TaskExtra> }) {
   const [traderFilter, setTraderFilter] = useState<string>(ALL_TRADERS);
   const [taskDetailId, setTaskDetailId] = useState<string | null>(null);
 
   const nameById = useMemo(() => {
     return new Map(tasks.map((task) => [task.id, task.name]));
-  }, []);
+  }, [tasks]);
 
   const traderChips = useMemo(() => {
     return [
@@ -34,13 +33,13 @@ export function TasksScreen() {
         new Set(tasks.map((task) => task.traderName).filter((name): name is string => Boolean(name))),
       ),
     ];
-  }, []);
+  }, [tasks]);
 
   const filteredTasks = useMemo(() => {
     return tasks.filter(
       (task) => traderFilter === ALL_TRADERS || task.traderName === traderFilter,
     );
-  }, [traderFilter]);
+  }, [tasks, traderFilter]);
 
   const detailTask = taskDetailId
     ? tasks.find((task) => task.id === taskDetailId) ?? null
@@ -48,7 +47,7 @@ export function TasksScreen() {
 
   if (detailTask) {
     return (
-      <TaskDetail task={detailTask} nameById={nameById} onBack={() => setTaskDetailId(null)} />
+      <TaskDetail task={detailTask} nameById={nameById} onBack={() => setTaskDetailId(null)} taskExtra={taskExtra} />
     );
   }
 
@@ -58,9 +57,12 @@ export function TasksScreen() {
         title="TASKS"
         subtitle="quests"
         right={
-          <span className="font-mono text-mono uppercase tracking-[0.08em] text-dim">
-            {filteredTasks.length} quests
-          </span>
+          <div className="flex items-center gap-[8px]">
+            {degraded ? <Badge variant="sample" /> : null}
+            <span className="font-mono text-mono uppercase tracking-[0.08em] text-dim">
+              {filteredTasks.length} quests
+            </span>
+          </div>
         }
       />
 
@@ -78,7 +80,7 @@ export function TasksScreen() {
       </div>
 
       {filteredTasks.length > 0 ? (
-        <TaskList tasks={filteredTasks} nameById={nameById} onOpen={setTaskDetailId} />
+        <TaskList tasks={filteredTasks} nameById={nameById} onOpen={setTaskDetailId} taskExtra={taskExtra} />
       ) : (
         <EmptyState
           label="NO QUESTS MATCH"
@@ -93,9 +95,10 @@ interface TaskListProps {
   tasks: Task[];
   nameById: Map<string, string>;
   onOpen(taskId: string): void;
+  taskExtra: Record<string, TaskExtra>;
 }
 
-function TaskList({ tasks, nameById, onOpen }: TaskListProps) {
+function TaskList({ tasks, nameById, onOpen, taskExtra }: TaskListProps) {
   return (
     <Panel padded={false} className="overflow-hidden">
       <div className="divide-y divide-border-subtle">
@@ -168,9 +171,10 @@ interface TaskDetailProps {
   task: Task;
   nameById: Map<string, string>;
   onBack(): void;
+  taskExtra: Record<string, TaskExtra>;
 }
 
-function TaskDetail({ task, nameById, onBack }: TaskDetailProps) {
+function TaskDetail({ task, nameById, onBack, taskExtra }: TaskDetailProps) {
   const extra = taskExtra[task.id];
   const prereqs = task.prerequisiteTaskIds.map((id) => nameById.get(id) ?? id);
   const unlocks = extra?.unlocks ?? [];
@@ -333,7 +337,7 @@ function fallbackObjectives(itemObjectives: TaskObjectiveItem[]): TaskDetailObje
   });
 }
 
-function buildRewards(task: Task, extra: (typeof taskExtra)[string] | undefined) {
+function buildRewards(task: Task, extra: TaskExtra | undefined) {
   const rewards: Array<{ label: string; color: string }> = [];
 
   if (!extra) {

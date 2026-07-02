@@ -108,7 +108,7 @@ export type TaskObjectiveType =
   | "buildWeapon";
 
 export interface TaskDetailObjective {
-  type: TaskObjectiveType;
+  type: string;
   desc: string;
   count: number;
   fir: boolean;

@@ -1,54 +1,41 @@
 "use client";
 
 import Link from "next/link";
-import { Panel, ScreenHeader, StatTile, TypeTile } from "@/components/ui";
+import { Badge, Panel, ScreenHeader, StatTile, TypeTile } from "@/components/ui";
 import { useApp } from "@/lib/app-context";
 import { typeColor } from "@/lib/colors";
+import type { DashboardView } from "@/lib/data/dashboard";
 import { rub } from "@/lib/format";
-import { bestFlea, items, requirements, tasks } from "@/lib/mock";
 
-const neededItemIndexes = [0, 1, 7, 3] as const;
-
-function itemNeedLabel(itemId: string): string {
-  const req = requirements[itemId];
-  if (!req) return "needed · surplus";
-
-  const taskNeed = req.neededByTasks[0];
-  if (taskNeed) return `needed · ${taskNeed.taskName}`;
-
-  const hideoutNeed = req.neededByHideout[0];
-  if (hideoutNeed) {
-    return `needed · ${hideoutNeed.stationName} L${hideoutNeed.level}`;
-  }
-
-  return "needed · surplus";
-}
-
-export function DashboardScreen() {
+export function DashboardScreen({
+  degraded = false,
+  view,
+}: {
+  degraded?: boolean;
+  view: DashboardView;
+}) {
   const { openItem } = useApp();
-  const unlockedTasks = tasks
-    .filter((task) => task.prerequisiteTaskIds.length === 0)
-    .slice(0, 4);
-  const neededItems = neededItemIndexes
-    .map((index) => items[index])
-    .filter((item): item is (typeof items)[number] => Boolean(item));
 
   return (
     <section className="space-y-[20px]">
-      <ScreenHeader title="Dashboard" subtitle="operator overview" />
+      <ScreenHeader
+        title="Dashboard"
+        subtitle="operator overview"
+        right={degraded ? <Badge variant="sample" /> : undefined}
+      />
 
       <div className="grid grid-cols-1 gap-[12px] min-[860px]:grid-cols-4">
         <StatTile
           label="Items Tracked"
-          value={items.length}
+          value={view.itemsCount}
           note={<span className="font-mono text-meta">in local database</span>}
         />
         <StatTile
           label="Active Quests"
-          value={tasks.length}
+          value={view.activeQuestCount}
           note={
             <span className="font-mono text-meta text-danger">
-              {tasks.filter((task) => task.prerequisiteTaskIds.length > 0).length} locked · prereq
+              {view.lockedQuestCount} locked · prereq
             </span>
           }
         />
@@ -82,20 +69,20 @@ export function DashboardScreen() {
           }
         >
           <div>
-            {unlockedTasks.map((task) => (
+            {view.nextQuests.map((quest) => (
               <div
                 className="flex items-center gap-[11px] border-b border-border-subtle px-[12px] py-[9px] last:border-b-0"
-                key={task.id}
+                key={quest.id}
               >
                 <span className="shrink-0 border border-border-strong bg-bg px-[6px] py-[2px] font-mono text-mono font-semibold text-accent">
-                  L{task.minPlayerLevel}
+                  L{quest.minPlayerLevel}
                 </span>
                 <div className="min-w-0 flex-1">
-                  <div className="truncate text-name font-semibold text-fg">{task.name}</div>
-                  <div className="font-mono text-meta text-muted">{task.traderName ?? "Unknown"}</div>
+                  <div className="truncate text-name font-semibold text-fg">{quest.name}</div>
+                  <div className="font-mono text-meta text-muted">{quest.traderName ?? "Unknown"}</div>
                 </div>
                 <span className="shrink-0 font-mono text-meta text-dim">
-                  {task.itemObjectives.length} obj
+                  {quest.objectiveCount} obj
                 </span>
               </div>
             ))}
@@ -115,35 +102,30 @@ export function DashboardScreen() {
           }
         >
           <div>
-            {neededItems.map((item) => {
-              const flea = bestFlea(item);
-              return (
-                <button
-                  className="flex w-full items-center gap-[11px] border-b border-border-subtle px-[12px] py-[9px] text-left hover:bg-hover last:border-b-0"
-                  key={item.id}
-                  onClick={() => openItem(item.id)}
-                  type="button"
-                >
-                  <TypeTile
-                    color={typeColor(item.types)}
-                    short={item.shortName}
-                    size={30}
-                    tall={item.height > item.width}
-                  />
-                  <span className="min-w-0 flex-1">
-                    <span className="block truncate text-name font-semibold text-fg">
-                      {item.name}
-                    </span>
-                    <span className="block font-mono text-meta text-muted">
-                      {itemNeedLabel(item.id)}
-                    </span>
+            {view.neededItems.map((item) => (
+              <button
+                className="flex w-full items-center gap-[11px] border-b border-border-subtle px-[12px] py-[9px] text-left hover:bg-hover last:border-b-0"
+                key={item.id}
+                onClick={() => openItem(item.id)}
+                type="button"
+              >
+                <TypeTile
+                  color={typeColor(item.types)}
+                  short={item.shortName}
+                  size={30}
+                  tall={item.tall}
+                />
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-name font-semibold text-fg">
+                    {item.name}
                   </span>
-                  <span className="shrink-0 font-mono text-price font-semibold text-good">
-                    {flea ? rub(flea.priceRUB) : "—"}
-                  </span>
-                </button>
-              );
-            })}
+                  <span className="block font-mono text-meta text-muted">{item.label}</span>
+                </span>
+                <span className="shrink-0 font-mono text-price font-semibold text-good">
+                  {item.fleaPriceRUB !== null ? rub(item.fleaPriceRUB) : "—"}
+                </span>
+              </button>
+            ))}
           </div>
         </Panel>
       </div>

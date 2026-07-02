@@ -3,24 +3,29 @@
 import { ArrowRight, Clock3, Info, Star } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Badge, Panel, ScreenHeader } from "@/components/ui";
-import { loyaltyTemplate, traders } from "@/lib/mock";
+import { loyaltyTemplate } from "@/lib/mock";
 import type { Trader } from "@/lib/types";
 
 const defaultTraderId = "prapor";
 
-export function TradersScreen() {
+export function TradersScreen({ degraded = false, traders }: { degraded?: boolean; traders: Trader[] }) {
   const [traderId, setTraderId] = useState(defaultTraderId);
   const selectedTrader = useMemo(
     () => traders.find((trader) => trader.id === traderId) ?? traders[0],
-    [traderId],
+    [traderId, traders],
   );
 
   return (
     <section className="space-y-[16px]">
-      <ScreenHeader title="TRADERS" subtitle="dealers" />
+      <ScreenHeader
+        title="TRADERS"
+        subtitle="dealers"
+        right={degraded ? <Badge variant="sample" /> : null}
+      />
 
       <div className="grid gap-[12px] min-[860px]:grid-cols-[230px_1fr]">
         <TraderRoster
+          traders={traders}
           activeTraderId={selectedTrader.id}
           onSelectTrader={setTraderId}
         />
@@ -31,11 +36,12 @@ export function TradersScreen() {
 }
 
 interface TraderRosterProps {
+  traders: Trader[];
   activeTraderId: string;
   onSelectTrader: (id: string) => void;
 }
 
-function TraderRoster({ activeTraderId, onSelectTrader }: TraderRosterProps) {
+function TraderRoster({ traders, activeTraderId, onSelectTrader }: TraderRosterProps) {
   return (
     <Panel padded={false} className="overflow-hidden">
       <div className="divide-y divide-border-subtle">
@@ -160,7 +166,6 @@ function TraderDetail({ trader }: { trader: Trader }) {
             <div className="font-display text-label uppercase tracking-[0.18em] text-muted">
               Barters
             </div>
-            <Badge variant="soon">mock</Badge>
           </div>
           <div className="space-y-[6px]">
             {trader.barters.map((barter) => (
@@ -186,9 +191,7 @@ function TraderDetail({ trader }: { trader: Trader }) {
         <div className="mt-[14px] flex items-center gap-[8px] border border-[#3a3115] bg-[#1a1710] px-[12px] py-[8px] font-mono text-[10px]">
           <Info className="shrink-0 text-accent" size={14} />
           <span className="text-[#c9a24b]">
-            GAP FLAG — no Trader type in types.ts. Only Task.traderName +
-            SellVenue.source exist. Loyalty, rep, resets & barters are mocked;
-            need a new tarkov.dev traders query.
+            Live tarkov.dev traders — roster, currency and barter offers are live (top 8 offers per trader, by loyalty level). Reputation, restock timers and loyalty thresholds are player/progress state not exposed by the public API.
           </span>
         </div>
       </div>

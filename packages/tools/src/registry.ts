@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { Item, Task } from "@tarker/data";
-import type { Tool } from "./types.js";
+import type { Tool } from "./types";
 
 export interface ToolDeps {
   fetchItems: () => Promise<Item[]>;

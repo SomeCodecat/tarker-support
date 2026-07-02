@@ -5,7 +5,6 @@ import { useMemo, useState } from "react";
 import { Badge, Bar, Button, Panel, ScreenHeader, StatTile } from "@/components/ui";
 import { cn } from "@/lib/cn";
 import { pct } from "@/lib/format";
-import { progStations, tasks } from "@/lib/mock";
 import type { ProgStation, Task } from "@/lib/types";
 
 interface ProgressionState {
@@ -16,34 +15,33 @@ interface ProgressionState {
 
 const INITIAL_PROGRESSION: ProgressionState = {
   pmcLevel: 15,
-  completed: { t1: true, t4: true, t7: true },
-  hideout: {
-    stash: 2,
-    generator: 1,
-    water: 0,
-    medstation: 1,
-    workbench: 0,
-    intel: 0,
-    lavatory: 0,
-    bitcoin: 0,
-  },
+  completed: {},
+  hideout: {},
 };
 
-export function ProgressionScreen() {
+export function ProgressionScreen({
+  degraded = false,
+  stations,
+  tasks,
+}: {
+  degraded?: boolean;
+  stations: ProgStation[];
+  tasks: Task[];
+}) {
   const [progression, setProgression] = useState<ProgressionState>(INITIAL_PROGRESSION);
   const nameById = useMemo(
     () => Object.fromEntries(tasks.map((task) => [task.id, task.name])),
-    [],
+    [tasks],
   );
-  const taskGroups = useMemo(() => groupTasksByTrader(tasks), []);
+  const taskGroups = useMemo(() => groupTasksByTrader(tasks), [tasks]);
 
   const doneCount = Object.values(progression.completed).filter(Boolean).length;
   const questPct = tasks.length ? doneCount / tasks.length : 0;
-  const hideoutLevel = progStations.reduce(
+  const hideoutLevel = stations.reduce(
     (total, station) => total + (progression.hideout[station.id] ?? 0),
     0,
   );
-  const hideoutMax = progStations.reduce((total, station) => total + station.max, 0);
+  const hideoutMax = stations.reduce((total, station) => total + station.max, 0);
   const hideoutPct = hideoutMax ? hideoutLevel / hideoutMax : 0;
 
   function setPmc(delta: number) {
@@ -87,7 +85,12 @@ export function ProgressionScreen() {
       <ScreenHeader
         title="PROGRESSION"
         subtitle="operator"
-        right={<Badge variant="soon">LOCAL PREVIEW</Badge>}
+        right={
+          <div className="flex items-center gap-[8px]">
+            {degraded ? <Badge variant="sample" /> : null}
+            <Badge variant="soon">LOCAL PREVIEW</Badge>
+          </div>
+        }
       />
 
       <p className="font-name text-[13px] text-muted max-w-[640px] mb-[16px]">
@@ -219,7 +222,7 @@ export function ProgressionScreen() {
 
         <Panel title="Hideout Stations" padded={false}>
           <div className="divide-y divide-border-subtle">
-            {progStations.map((station) => {
+            {stations.map((station) => {
               const currentLevel = progression.hideout[station.id] ?? 0;
               return (
                 <div

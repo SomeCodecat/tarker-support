@@ -4,21 +4,24 @@ import { Info } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Badge, Panel, ScreenHeader, StatTile } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { maps } from "@/lib/mock";
-import type { MapExtract } from "@/lib/types";
+import type { MapExtract, MapInfo } from "@/lib/types";
 
 const DEFAULT_MAP_ID = "customs";
 
-export function MapsScreen() {
+export function MapsScreen({ degraded = false, maps }: { degraded?: boolean; maps: MapInfo[] }) {
   const [mapId, setMapId] = useState(DEFAULT_MAP_ID);
   const detail = useMemo(
     () => maps.find((map) => map.id === mapId) ?? maps[0],
-    [mapId],
+    [mapId, maps],
   );
 
   return (
     <div className="mx-auto max-w-[1500px] space-y-[16px]">
-      <ScreenHeader title="MAPS" subtitle="locations" />
+      <ScreenHeader
+        title="MAPS"
+        subtitle="locations"
+        right={degraded ? <Badge variant="sample" /> : null}
+      />
 
       <div className="grid grid-cols-1 items-start gap-[12px] min-[860px]:grid-cols-[230px_1fr]">
         <Panel padded={false}>
@@ -114,9 +117,7 @@ export function MapsScreen() {
             <div className="mt-[14px] flex items-center gap-[8px] border border-[#3a3115] bg-[#1a1710] px-[12px] py-[8px] font-mono text-[10px]">
               <Info className="shrink-0 text-accent" size={14} />
               <span className="text-[#c9a24b]">
-                GAP FLAG — no Map type in slice1 types.ts. tarkov.dev exposes
-                a maps query (name, players, extracts, bosses, spawns); extract
-                requirements & boss chances shown are mocked to that shape.
+                Live tarkov.dev maps — roster, players, raid time, bosses and extracts are live. Hot zones and per-extract requirement/reliability are approximated (not exposed by the maps schema).
               </span>
             </div>
           </div>

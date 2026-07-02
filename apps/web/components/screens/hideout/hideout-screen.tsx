@@ -2,8 +2,7 @@
 
 import { ChevronRight, Warehouse } from "lucide-react";
 import { useMemo, useState } from "react";
-import { Panel, ScreenHeader } from "@/components/ui";
-import { hideout } from "@/lib/mock";
+import { Badge, Panel, ScreenHeader } from "@/components/ui";
 
 const defaultOpenId = "generator";
 
@@ -26,13 +25,17 @@ interface HideoutDisplayStation {
   levels: HideoutDisplayLevel[];
 }
 
-const stations: HideoutDisplayStation[] = hideout;
-
-export function HideoutScreen() {
+export function HideoutScreen({
+  degraded = false,
+  stations,
+}: {
+  degraded?: boolean;
+  stations: HideoutDisplayStation[];
+}) {
   const [hideoutOpenId, setHideoutOpenId] = useState<string | null>(
     defaultOpenId,
   );
-  const stationCount = useMemo(() => String(stations.length), []);
+  const stationCount = useMemo(() => String(stations.length), [stations.length]);
 
   return (
     <section className="max-w-[920px] space-y-[16px]">
@@ -40,9 +43,12 @@ export function HideoutScreen() {
         title="HIDEOUT"
         subtitle="stations"
         right={
-          <span className="font-mono text-meta uppercase tracking-[0.08em] text-dim">
-            {stationCount} stations
-          </span>
+          <div className="flex items-center gap-[8px]">
+            {degraded ? <Badge variant="sample" /> : null}
+            <span className="font-mono text-meta uppercase tracking-[0.08em] text-dim">
+              {stationCount} stations
+            </span>
+          </div>
         }
       />
 
