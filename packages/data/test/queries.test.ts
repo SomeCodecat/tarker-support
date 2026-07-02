@@ -116,3 +116,34 @@ describe("parseTaskDetails", () => {
     expect(details[0].standingRewards[0]).toEqual({ traderName: "Prapor", standing: 0.02 });
   });
 });
+
+import { parseMaps } from "../src/queries/maps.js";
+
+describe("parseMaps", () => {
+  it("maps bosses (name + chance) and extracts (faction/switch/transfer), dropping null bosses/extracts", () => {
+    const raw = {
+      maps: [
+        {
+          id: "55f2", name: "Customs", normalizedName: "customs", players: "10-12", raidDuration: 35,
+          bosses: [
+            { spawnChance: 0.35, boss: { name: "Reshala" } },
+            { spawnChance: 0.2, boss: null },
+          ],
+          extracts: [
+            { name: "ZB-013", faction: "pmc", switches: [{ id: "s1" }], transferItem: null },
+            { name: "Crossroads", faction: "shared", switches: [], transferItem: null },
+            { name: null, faction: "scav", switches: [], transferItem: null },
+          ],
+        },
+      ],
+    };
+    const maps = parseMaps(raw);
+    expect(maps[0]).toMatchObject({ id: "55f2", name: "Customs", normalizedName: "customs", players: "10-12", raidDuration: 35 });
+    expect(maps[0].bosses).toEqual([{ name: "Reshala", spawnChance: 0.35 }]);
+    expect(maps[0].extracts).toEqual([
+      { name: "ZB-013", faction: "pmc", hasSwitch: true, hasItemRequirement: false },
+      { name: "Crossroads", faction: "shared", hasSwitch: false, hasItemRequirement: false },
+    ]);
+  });
+});
+

@@ -89,3 +89,26 @@ export interface TaskDetail {
   cashReward: number;
   standingRewards: TaskStandingReward[];
 }
+
+export interface MapBossSpawn {
+  name: string;
+  spawnChance: number;
+}
+
+export interface MapExtractPoint {
+  name: string;
+  faction: string | null;
+  hasSwitch: boolean;
+  hasItemRequirement: boolean;
+}
+
+export interface MapLocation {
+  id: string;
+  name: string;
+  normalizedName: string;
+  players: string | null;
+  raidDuration: number | null;
+  bosses: MapBossSpawn[];
+  extracts: MapExtractPoint[];
+}
+
