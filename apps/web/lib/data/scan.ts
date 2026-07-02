@@ -11,11 +11,6 @@ import { scanRows as sampleRows } from "@/lib/mock";
 import type { ScanRow } from "@/lib/types";
 import type { DataResult } from "./result";
 
-// Demo player state — the app has no persisted progress yet (documented in the
-// screen banner): PMC level 15, nothing completed.
-const DEMO_PMC_LEVEL = 15;
-const NEXT_HORIZON_LEVELS = 5;
-
 // Fixed demo stash (no vision pipeline yet). Real tarkov.dev item names,
 // matched case-insensitively against the live items feed.
 const DEMO_DETECTIONS: { name: string; own: number }[] = [
@@ -51,23 +46,6 @@ export async function loadScan(): Promise<DataResult<ScanRow[]>> {
       const taskNeeds = entry?.neededByTasks ?? [];
       const hideoutNeeds = entry?.neededByHideout ?? [];
 
-      const sumTasks = (maxLevel: number | null) =>
-        taskNeeds.reduce(
-          (total, need) =>
-            maxLevel === null || need.minPlayerLevel <= maxLevel ? total + need.count : total,
-          0,
-        );
-      const hideoutTotal = hideoutNeeds.reduce((total, need) => total + need.count, 0);
-
-      const keepAll = sumTasks(null) + hideoutTotal;
-      const keepCur = sumTasks(DEMO_PMC_LEVEL);
-      const keepNext = sumTasks(DEMO_PMC_LEVEL + NEXT_HORIZON_LEVELS) + hideoutTotal;
-
-      const reasons: string[] = [];
-      if (hideoutNeeds[0]) reasons.push(`${hideoutNeeds[0].stationName} L${hideoutNeeds[0].level}`);
-      if (taskNeeds[0]) reasons.push(taskNeeds[0].taskName);
-      const reason = reasons.length > 0 ? reasons.join(" · ") : "No active requirements";
-
       const bestSell = (entry?.sellFor ?? item.sellFor).reduce<
         { source: string; priceRUB: number } | null
       >((best, venue) => (best === null || venue.priceRUB > best.priceRUB ? venue : best), null);
@@ -77,13 +55,21 @@ export async function loadScan(): Promise<DataResult<ScanRow[]>> {
         name: item.name,
         tier: typeColor(item.types),
         own: detection.own,
-        keepAll,
-        keepCur,
-        keepNext,
-        reason,
+        taskNeeds: taskNeeds.map((need) => ({
+          taskId: need.taskId,
+          taskName: need.taskName,
+          count: need.count,
+          foundInRaid: need.foundInRaid,
+          minPlayerLevel: need.minPlayerLevel,
+        })),
+        hideoutNeeds: hideoutNeeds.map((need) => ({
+          stationId: need.stationId,
+          stationName: need.stationName,
+          level: need.level,
+          count: need.count,
+        })),
         sell: bestSell?.priceRUB ?? 0,
         sellSrc: bestSell?.source ?? "—",
-        fir: taskNeeds.some((need) => need.foundInRaid) ? "yes" : "no",
       });
     }
 
@@ -92,7 +78,7 @@ export async function loadScan(): Promise<DataResult<ScanRow[]>> {
     }
 
     console.info(
-      `[scan] built ${data.length} demo-stash rows against ${items.length} live items (demo player state: PMC ${DEMO_PMC_LEVEL}, nothing completed)`,
+      `[scan] built ${data.length} demo-stash rows against ${items.length} live items (verdicts computed client-side from saved progression)`,
     );
     return { data, degraded: false };
   } catch (err) {

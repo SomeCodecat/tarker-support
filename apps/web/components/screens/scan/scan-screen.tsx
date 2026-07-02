@@ -13,6 +13,7 @@ import {
   TypeTile,
 } from "@/components/ui";
 import { cn } from "@/lib/cn";
+import { useProgress, type ProgressState } from "@/lib/progress";
 import type { ScanRow } from "@/lib/types";
 
 type ScanStage = "empty" | "scanning" | "results";
@@ -36,6 +37,7 @@ export function ScanScreen({
   const [horizon, setHorizon] = useState<Horizon>("all");
   const [soldRows, setSoldRows] = useState<string[]>([]);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { progress } = useProgress();
 
   useEffect(() => {
     return () => {
@@ -44,8 +46,8 @@ export function ScanScreen({
   }, []);
 
   const rows = useMemo(
-    () => buildScanRows(scanRows, horizon, soldRows),
-    [scanRows, horizon, soldRows],
+    () => buildScanRows(scanRows, horizon, soldRows, progress),
+    [scanRows, horizon, soldRows, progress],
   );
   const surplusNames = rows.filter((row) => row.surplus > 0).map((row) => row.name);
   const surplusTotal = rows.reduce(
@@ -90,9 +92,9 @@ export function ScanScreen({
 
       <p className="font-name text-[13px] text-muted max-w-[680px] mb-[16px]">
         Drop a stash screenshot → per-item KEEP / PARTIAL / SELL verdicts
-        computed live from tarkov.dev tasks, hideout and sell prices. Vision OCR
-        isn&rsquo;t wired yet — run the demo scan to preview the flow with a fixed
-        demo stash.
+        computed live from tarkov.dev tasks, hideout and sell prices against
+        your saved progression. Vision OCR isn&rsquo;t wired yet — run the demo scan
+        to preview the flow with a fixed demo stash.
       </p>
 
       <div className="grid items-start gap-[14px] min-[860px]:grid-cols-[260px_1fr]">
@@ -270,10 +272,10 @@ function ResultsPanel({
               <Info className="size-[14px] shrink-0 text-accent" />
               <span className="text-[#c9a24b]">
                 Live tarkov.dev requirements — verdicts, keep/surplus counts,
-                reasons and best sell prices are computed from live tasks,
-                hideout and prices. Detection is a fixed demo stash (no vision
-                pipeline yet); demo player state: PMC level 15, nothing
-                completed.
+                reasons and best sell prices recompute from your locally saved
+                progression (PMC level, completed tasks, hideout levels — edit
+                them on the Progression screen). Detection is a fixed demo stash
+                (no vision pipeline yet).
               </span>
             </div>
           </div>
@@ -357,9 +359,8 @@ function ScanResultRow({
   );
 }
 
-function FirChip({ fir }: { fir: ScanRow["fir"] }) {
+function FirChip({ fir }: { fir: "yes" | "no" }) {
   if (fir === "yes") return <Badge variant="fir" />;
-  if (fir === "unsure") return <Badge variant="firUnsure" />;
   return <span className="font-mono text-meta text-dim">any</span>;
 }
 
@@ -378,18 +379,48 @@ interface BuiltScanRow extends ScanRow {
   sold: boolean;
   verdict: Verdict;
   verdictColor: string;
+  reason: string;
+  fir: "yes" | "no";
 }
 
 function buildScanRows(
   sourceRows: ScanRow[],
   horizon: Horizon,
   soldRows: string[],
+  progress: ProgressState,
 ): BuiltScanRow[] {
-  const keepKey = horizon === "all" ? "keepAll" : horizon === "current" ? "keepCur" : "keepNext";
   return sourceRows.map((row) => {
-    const keep = row[keepKey];
+    const remainingTasks = row.taskNeeds.filter(
+      (need) => !progress.completed[need.taskId],
+    );
+    const remainingHideout = row.hideoutNeeds.filter(
+      (need) => (progress.hideout[need.stationId] ?? 0) < need.level,
+    );
+
+    const levelCap =
+      horizon === "current"
+        ? progress.pmcLevel
+        : horizon === "next"
+          ? progress.pmcLevel + 5
+          : null;
+    const horizonTasks =
+      levelCap === null
+        ? remainingTasks
+        : remainingTasks.filter((need) => need.minPlayerLevel <= levelCap);
+    const horizonHideout = horizon === "current" ? [] : remainingHideout;
+
+    const keep =
+      horizonTasks.reduce((total, need) => total + need.count, 0) +
+      horizonHideout.reduce((total, need) => total + need.count, 0);
     const surplus = Math.max(0, row.own - keep);
     const verdict = getVerdict(keep, surplus);
+
+    const reasons: string[] = [];
+    if (remainingHideout[0]) {
+      reasons.push(`${remainingHideout[0].stationName} L${remainingHideout[0].level}`);
+    }
+    if (remainingTasks[0]) reasons.push(remainingTasks[0].taskName);
+
     return {
       ...row,
       keep,
@@ -397,6 +428,8 @@ function buildScanRows(
       sold: soldRows.includes(row.name),
       verdict,
       verdictColor: getVerdictColor(verdict),
+      reason: reasons.length > 0 ? reasons.join(" · ") : "No active requirements",
+      fir: remainingTasks.some((need) => need.foundInRaid) ? "yes" : "no",
     };
   });
 }
