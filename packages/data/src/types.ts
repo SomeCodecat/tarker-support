@@ -36,3 +36,29 @@ export interface RequirementsEntry {
   sellFor: SellVenue[];
 }
 export type RequirementsIndex = Record<string, RequirementsEntry>;
+
+export interface Ammo {
+  itemId: string;
+  name: string;
+  shortName: string;
+  caliber: string | null;
+  ammoType: string;
+  damage: number;
+  penetrationPower: number;
+  armorDamage: number;
+  fragmentationChance: number;
+  penetrationChance: number;
+  ricochetChance: number;
+  initialSpeed: number | null;
+  projectileCount: number | null;
+  tracer: boolean;
+  tracerColor: string | null;
+  weight: number;
+  stackMaxSize: number;
+  lightBleedModifier: number;
+  heavyBleedModifier: number;
+  staminaBurnPerDamage: number | null;
+  accuracyModifier: number | null;
+  recoilModifier: number | null;
+  sellFor: SellVenue[];
+}

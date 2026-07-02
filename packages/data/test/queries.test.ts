@@ -57,3 +57,30 @@ describe("parseHideout", () => {
     expect(stations[0].levels[0]).toEqual({ level: 1, itemRequirements: [{ itemId: "bandage", count: 5 }] });
   });
 });
+import { parseAmmo } from "../src/queries/ammo.js";
+
+describe("parseAmmo", () => {
+  it("flattens nested item name/shortName/sellFor and keeps ballistics", () => {
+    const raw = {
+      ammo: [
+        {
+          caliber: "Caliber556x45NATO", ammoType: "bullet",
+          damage: 42, penetrationPower: 53, armorDamage: 65,
+          fragmentationChance: 0.2, penetrationChance: 0.68, ricochetChance: 0.02,
+          initialSpeed: 1013, projectileCount: 1, tracer: false, tracerColor: null,
+          weight: 0.0113, stackMaxSize: 60, lightBleedModifier: 0.5, heavyBleedModifier: 0.5,
+          staminaBurnPerDamage: 0.71, accuracyModifier: null, recoilModifier: null,
+          item: { id: "m995", name: "5.56x45mm M995", shortName: "M995",
+            sellFor: [{ priceRUB: 1360, vendor: { name: "Flea Market" } }] },
+        },
+      ],
+    };
+    const rounds = parseAmmo(raw);
+    expect(rounds).toHaveLength(1);
+    expect(rounds[0]).toMatchObject({
+      itemId: "m995", name: "5.56x45mm M995", shortName: "M995",
+      caliber: "Caliber556x45NATO", damage: 42, penetrationPower: 53, projectileCount: 1,
+    });
+    expect(rounds[0].sellFor[0]).toEqual({ source: "Flea Market", priceRUB: 1360 });
+  });
+});

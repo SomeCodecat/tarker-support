@@ -5,3 +5,4 @@ export * from "./cache";
 export * from "./queries/items";
 export * from "./queries/tasks";
 export * from "./queries/hideout";
+export * from "./queries/ammo";
